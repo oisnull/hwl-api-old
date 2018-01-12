@@ -119,6 +119,8 @@
     <Content Include="test\js\jquery-1.10.2.min.js" />
     <Content Include="test\js\jquery.form.js" />
     <Content Include="test\js\jsonf.js" />
+    <Content Include="upload\user\circleback.png" />
+    <Content Include="upload\user\default.png" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

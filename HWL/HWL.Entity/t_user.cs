@@ -15,8 +15,21 @@ namespace HWL.Entity
     public partial class t_user
     {
         public int id { get; set; }
+        public string symbol { get; set; }
         public string name { get; set; }
+        public string mobile { get; set; }
+        public string email { get; set; }
         public string password { get; set; }
+        public string head_image { get; set; }
+        public string life_notes { get; set; }
+        public HWL.Entity.UserSex sex { get; set; }
+        public HWL.Entity.UserStatus status { get; set; }
+        public string circle_back_image { get; set; }
+        public int register_country { get; set; }
+        public int register_province { get; set; }
+        public int register_city { get; set; }
+        public int register_district { get; set; }
         public System.DateTime register_date { get; set; }
+        public Nullable<System.DateTime> update_date { get; set; }
     }
 }

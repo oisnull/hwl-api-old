@@ -4,49 +4,165 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HWLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HWLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="t_admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="login_pwd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="real_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="t_user">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="symbol" Type="nvarchar" MaxLength="20" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="head_image" Type="nvarchar" MaxLength="100" />
+          <Property Name="life_notes" Type="nvarchar" MaxLength="200" />
+          <Property Name="sex" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="circle_back_image" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="register_country" Type="int" Nullable="false" />
+          <Property Name="register_province" Type="int" Nullable="false" />
+          <Property Name="register_city" Type="int" Nullable="false" />
+          <Property Name="register_district" Type="int" Nullable="false" />
           <Property Name="register_date" Type="datetime" Nullable="false" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="t_user_code">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="user_account" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="code_type" Type="int" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="expire_time" Type="datetime" Nullable="false" />
+          <Property Name="remark" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityContainer Name="HWLModelStoreContainer">
+          <EntitySet Name="t_admin" EntityType="Self.t_admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_user" EntityType="Self.t_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_user_code" EntityType="Self.t_user_code" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="HWLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="HWL.Entity" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HWLEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="t_admin" EntityType="HWL.Entity.t_admin" />
+          <EntitySet Name="t_user" EntityType="HWL.Entity.t_user" />
+          <EntitySet Name="t_user_code" EntityType="HWL.Entity.t_user_code" />
+        </EntityContainer>
+        <EntityType Name="t_admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="login_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="login_pwd" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="real_name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <EntityType Name="t_user">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="symbol" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="mobile" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="head_image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="life_notes" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="sex" Type="HWL.Entity.UserSex" Nullable="false" />
+          <Property Name="status" Type="HWL.Entity.UserStatus" Nullable="false" />
+          <Property Name="circle_back_image" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="register_country" Type="Int32" Nullable="false" />
+          <Property Name="register_province" Type="Int32" Nullable="false" />
+          <Property Name="register_city" Type="Int32" Nullable="false" />
+          <Property Name="register_district" Type="Int32" Nullable="false" />
           <Property Name="register_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityContainer Name="HWLEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="t_user" EntityType="Self.t_user" />
-        </EntityContainer>
+        <EnumType Name="UserSex" a:ExternalTypeName="HWL.Entity.UserSex" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EnumType Name="UserStatus" a:ExternalTypeName="HWL.Entity.UserStatus" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EntityType Name="t_user_code">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="user_account" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="code_type" Type="HWL.Entity.CodeType" Nullable="false" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="expire_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EnumType Name="CodeType" a:ExternalTypeName="HWL.Entity.CodeType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HWLModelStoreContainer" CdmEntityContainer="HWLEntities">
-          <EntitySetMapping Name="t_user">
-            <EntityTypeMapping TypeName="HWLModel.t_user">
-              <MappingFragment StoreEntitySet="t_user">
+          <EntitySetMapping Name="t_admin">
+            <EntityTypeMapping TypeName="HWL.Entity.t_admin">
+              <MappingFragment StoreEntitySet="t_admin">
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="real_name" ColumnName="real_name" />
+                <ScalarProperty Name="login_pwd" ColumnName="login_pwd" />
+                <ScalarProperty Name="login_name" ColumnName="login_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_user">
+            <EntityTypeMapping TypeName="HWL.Entity.t_user">
+              <MappingFragment StoreEntitySet="t_user">
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
                 <ScalarProperty Name="register_date" ColumnName="register_date" />
+                <ScalarProperty Name="register_district" ColumnName="register_district" />
+                <ScalarProperty Name="register_city" ColumnName="register_city" />
+                <ScalarProperty Name="register_province" ColumnName="register_province" />
+                <ScalarProperty Name="register_country" ColumnName="register_country" />
+                <ScalarProperty Name="circle_back_image" ColumnName="circle_back_image" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="life_notes" ColumnName="life_notes" />
+                <ScalarProperty Name="head_image" ColumnName="head_image" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="symbol" ColumnName="symbol" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_user_code">
+            <EntityTypeMapping TypeName="HWL.Entity.t_user_code">
+              <MappingFragment StoreEntitySet="t_user_code">
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="expire_time" ColumnName="expire_time" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="code_type" ColumnName="code_type" />
+                <ScalarProperty Name="user_account" ColumnName="user_account" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,4 +1,8 @@
-﻿using System.ComponentModel;
+﻿using GMSF.Model;
+using HWL.Service;
+using HWL.Service.Generic.Body;
+using HWL.Service.User.Body;
+using System.ComponentModel;
 using System.Web.Http;
 
 namespace HWL.API.Controllers
@@ -6,12 +10,26 @@ namespace HWL.API.Controllers
     [Route("api/{action}")]
     public class DefaultController : ApiController
     {
-        //[HttpPost]
-        //[Description("login")]
-        //public Response<UserLoginResponseBody> UserLogin(Request<UserLoginRequestBody> request)
-        //{
-        //    return UserService.UserLogin(request);
-        //}
+        [HttpPost]
+        [Description("用户登陆")]
+        public Response<UserLoginResponseBody> UserLogin(Request<UserLoginRequestBody> request)
+        {
+            return UserService.UserLogin(request);
+        }
+
+        [HttpPost]
+        [Description("用户注册")]
+        public Response<UserRegisterResponseBody> UserRegister(Request<UserRegisterRequestBody> request)
+        {
+            return UserService.UserRegister(request);
+        }
+
+        [HttpPost]
+        [Description("发送邮件")]
+        public Response<SendEmailResponseBody> SendEmail(Request<SendEmailRequestBody> request)
+        {
+            return GenericService.SendEmail(request);
+        }
 
         //[HttpPost]
         //[Description("search")]

@@ -25,6 +25,8 @@ namespace HWL.Entity
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<t_admin> t_admin { get; set; }
         public virtual DbSet<t_user> t_user { get; set; }
+        public virtual DbSet<t_user_code> t_user_code { get; set; }
     }
 }

@@ -115,6 +115,16 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HWL.Entity\HWL.Entity.csproj">
+      <Project>{872ceee4-49c1-45ac-905f-8efbd66f1b5a}</Project>
+      <Name>HWL.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HWL.Service\HWL.Service.csproj">
+      <Project>{7e2e78be-a30f-463d-a00d-b6bd53441479}</Project>
+      <Name>HWL.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

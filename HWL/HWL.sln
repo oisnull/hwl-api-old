@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.Test", "HWL.Test\HWL.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.API", "HWL.API\HWL.API.csproj", "{DC81D476-FAD4-4056-99AE-06D65980F288}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.Service", "HWL.Service\HWL.Service.csproj", "{7E2E78BE-A30F-463D-A00D-B6BD53441479}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.Entity", "HWL.Entity\HWL.Entity.csproj", "{872CEEE4-49C1-45AC-905F-8EFBD66F1B5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{DC81D476-FAD4-4056-99AE-06D65980F288}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC81D476-FAD4-4056-99AE-06D65980F288}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC81D476-FAD4-4056-99AE-06D65980F288}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E2E78BE-A30F-463D-A00D-B6BD53441479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E2E78BE-A30F-463D-A00D-B6BD53441479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E2E78BE-A30F-463D-A00D-B6BD53441479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E2E78BE-A30F-463D-A00D-B6BD53441479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{872CEEE4-49C1-45AC-905F-8EFBD66F1B5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{872CEEE4-49C1-45AC-905F-8EFBD66F1B5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{872CEEE4-49C1-45AC-905F-8EFBD66F1B5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{872CEEE4-49C1-45AC-905F-8EFBD66F1B5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

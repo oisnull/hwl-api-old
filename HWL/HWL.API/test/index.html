@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>web api 测试</title>
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="js/jsonf.js"></script>
+    <script src="js/api_test.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var isAction = false;
+            $("form").submit(function () {
+                if (isAction) {
+                    return false;
+                }
+                isAction = true;
+                var jsonObj = null;
+                try {
+                    var jsonStr = clearEmpty(document.getElementById('txt_head').value);
+                    jsonObj = eval('(' + jsonStr + ')');
+                    var body = clearEmpty(document.getElementById('txt_body').value);
+                    if (body != null && body != "") {
+                        jsonObj.Body = eval('(' + body + ')');
+                    }
+                } catch (e) {
+                    //alert(e);
+                    //isAction = false;
+                }
+                console.log(JSON.stringify(jsonObj));
+                $("#div_result").html("<font color='blue'>数据发送中，请稍后...</font>");
+                $(this).ajaxSubmit({
+                    type: "post",
+                    dataType: "json",
+                    url: document.getElementById('txt_url').value,
+                    data: jsonObj,
+                    success: function (data) {
+                        isAction = false;
+                        $("#div_result").html("");
+                        document.getElementById('txt_result').value = formatJson(data);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                        $("#div_result").html("<font color='red'>" + xhr.responseText + "</font>");
+                        isAction = false;
+                    }
+                });
+                return false; //不刷新页面
+            });
+
+            InitTxt();
+        });
+
+        function clearEmpty(str) {
+            str = str.replace(/\\/g, "");
+            str = str.replace("\"{", "{");
+            str = str.replace("}\"", "}");
+            return str;
+        }
+
+        function InitTxt() {
+            var url = cookie.get(methodKey);
+            var body = cookie.get(requestKey);
+
+            //console.log(url);
+            //console.log(body);
+
+            if (url == undefined) return;
+            document.getElementById('txt_url').value = '/api/' + url;
+
+            if (body == undefined) return;
+            var jsonObj = eval('(' + body + ')');
+            document.getElementById('txt_body').value = formatJson(jsonObj);
+        }
+
+        function Fjson() {
+            var jsonStr = document.getElementById('txt_body').value;
+            if (jsonStr == "" || jsonStr == null || jsonStr.trim() == "") return;
+
+            var jsonObj = eval('(' + jsonStr + ')');
+            document.getElementById('txt_body').value = formatJson(jsonObj);
+        }
+    </script>
+</head>
+<body>
+    <form id="form1" action="#" method="post">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:120px;">请求地址：</td>
+                <td><input type="text" id="txt_url" value="/api/UserLogin" style="width:300px;" /></td>
+            </tr>
+            <tr>
+                <td>协议头：</td>
+                <td>
+                    <textarea id="txt_head" style="width:80%;height:180px;">
+{
+    "Head": {
+        "Version": null,
+        "Timestamp": 0,
+        "Token": '88888888',
+        "ClientIp": null,
+        "SessionId": null
+    },
+    "Body": {}
+}
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>请求参数：</td>
+                <td>
+                    <textarea id="txt_body" style="width:80%;height:200px;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="发送" />
+
+                    <input type="button" value="格式化" onclick="Fjson()" />
+
+                    <div id="div_result"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>返回结果：</td>
+                <td>
+                    <textarea id="txt_result" name="request" style="width:80%;height:300px;margin-top:5px;"></textarea>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

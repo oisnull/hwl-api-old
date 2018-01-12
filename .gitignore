@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/HWL/HWL.API
+/HWL/HWL.Entity/bin/Debug
+/HWL/HWL.Service/bin/Debug
+/HWL/HWL.Entity/obj/Debug
+/HWL/HWL.Service/obj/Debug
+/HWL/HWL.Test/bin
+/HWL/HWL.Test/obj/Debug
+/HWL/HWL.Tools/bin/Debug
+/HWL/HWL.Tools/obj/Debug

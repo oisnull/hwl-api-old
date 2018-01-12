@@ -113,6 +113,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\hwl20180112.sql" />
     <Content Include="Global.asax" />
     <Content Include="test\index.html" />
     <Content Include="test\js\api_test.js" />
@@ -145,7 +146,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Doc\" />
   </ItemGroup>

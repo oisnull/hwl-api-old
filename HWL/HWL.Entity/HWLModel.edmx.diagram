@@ -8,6 +8,10 @@
         <EntityTypeShape EntityType="HWL.Entity.t_admin" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="HWL.Entity.t_user" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="HWL.Entity.t_user_code" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HWL.Entity.t_city" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HWL.Entity.t_country" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HWL.Entity.t_district" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="HWL.Entity.t_province" Width="1.5" PointX="5.75" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

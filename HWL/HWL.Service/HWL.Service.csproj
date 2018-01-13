@@ -30,7 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GMSF">
       <HintPath>..\packages\GMSF\GMSF.dll</HintPath>
     </Reference>
@@ -39,6 +46,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -69,12 +77,17 @@
       <Project>{872ceee4-49c1-45ac-905f-8efbd66f1b5a}</Project>
       <Name>HWL.Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HWL.Redis\HWL.Redis.csproj">
+      <Project>{114f979c-c371-4b28-81ca-05c4d68bb466}</Project>
+      <Name>HWL.Redis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HWL.Tools\HWL.Tools.csproj">
       <Project>{2ed308f8-7376-4a12-b797-00db016d6781}</Project>
       <Name>HWL.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

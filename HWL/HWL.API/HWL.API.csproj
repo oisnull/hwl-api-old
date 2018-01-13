@@ -44,6 +44,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GMSF">
       <HintPath>..\packages\GMSF\GMSF.dll</HintPath>
     </Reference>
@@ -113,9 +121,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\hwl20180112.sql" />
     <Content Include="Global.asax" />
-    <Content Include="hwl20180112.txt" />
     <Content Include="test\index.html" />
     <Content Include="test\js\api_test.js" />
     <Content Include="test\js\jquery-1.10.2.min.js" />
@@ -147,6 +153,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Doc\" />
   </ItemGroup>

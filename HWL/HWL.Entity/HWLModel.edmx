@@ -15,6 +15,37 @@
           <Property Name="real_name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="create_date" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="t_city">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="province_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_country">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_district">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="city_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_province">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="country_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="t_user">
           <Key>
             <PropertyRef Name="id" />
@@ -52,6 +83,10 @@
         </EntityType>
         <EntityContainer Name="HWLModelStoreContainer">
           <EntitySet Name="t_admin" EntityType="Self.t_admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_city" EntityType="Self.t_city" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_country" EntityType="Self.t_country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_district" EntityType="Self.t_district" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_province" EntityType="Self.t_province" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_user" EntityType="Self.t_user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_user_code" EntityType="Self.t_user_code" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -63,6 +98,10 @@
           <EntitySet Name="t_admin" EntityType="HWL.Entity.t_admin" />
           <EntitySet Name="t_user" EntityType="HWL.Entity.t_user" />
           <EntitySet Name="t_user_code" EntityType="HWL.Entity.t_user_code" />
+          <EntitySet Name="t_city" EntityType="HWL.Entity.t_city" />
+          <EntitySet Name="t_country" EntityType="HWL.Entity.t_country" />
+          <EntitySet Name="t_district" EntityType="HWL.Entity.t_district" />
+          <EntitySet Name="t_province" EntityType="HWL.Entity.t_province" />
         </EntityContainer>
         <EntityType Name="t_admin">
           <Key>
@@ -112,6 +151,37 @@
           <Property Name="remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EnumType Name="CodeType" a:ExternalTypeName="HWL.Entity.CodeType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EntityType Name="t_city">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="province_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_country">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="t_district">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="city_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_province">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="country_id" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -162,6 +232,41 @@
                 <ScalarProperty Name="code_type" ColumnName="code_type" />
                 <ScalarProperty Name="user_account" ColumnName="user_account" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_city">
+            <EntityTypeMapping TypeName="HWL.Entity.t_city">
+              <MappingFragment StoreEntitySet="t_city">
+                <ScalarProperty Name="province_id" ColumnName="province_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_country">
+            <EntityTypeMapping TypeName="HWL.Entity.t_country">
+              <MappingFragment StoreEntitySet="t_country">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_district">
+            <EntityTypeMapping TypeName="HWL.Entity.t_district">
+              <MappingFragment StoreEntitySet="t_district">
+                <ScalarProperty Name="city_id" ColumnName="city_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_province">
+            <EntityTypeMapping TypeName="HWL.Entity.t_province">
+              <MappingFragment StoreEntitySet="t_province">
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

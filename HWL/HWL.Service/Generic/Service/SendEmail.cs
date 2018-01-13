@@ -41,7 +41,11 @@ namespace HWL.Service.Generic.Service
                 throw new Exception("验证码发送失败");
             }
 
-            return new SendEmailResponseBody() { CheckCode = randText };
+            return new SendEmailResponseBody()
+            {
+                Status = ResultStatus.Success,
+                CheckCode = randText
+            };
         }
     }
 }

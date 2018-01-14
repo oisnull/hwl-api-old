@@ -16,7 +16,5 @@ namespace HWL.Service.Generic.Body
     {
         public ResultStatus Status { get; set; }
         //public string CheckCode { get; set; }
-
-
     }
 }

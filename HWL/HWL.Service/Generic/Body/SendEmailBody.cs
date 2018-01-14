@@ -15,7 +15,7 @@ namespace HWL.Service.Generic.Body
     public class SendEmailResponseBody
     {
         public ResultStatus Status { get; set; }
-        public string CheckCode { get; set; }
+        //public string CheckCode { get; set; }
 
 
     }

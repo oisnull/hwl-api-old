@@ -44,7 +44,7 @@ namespace HWL.Service.Generic.Service
             return new SendEmailResponseBody()
             {
                 Status = ResultStatus.Success,
-                CheckCode = randText
+                //CheckCode = randText
             };
         }
     }

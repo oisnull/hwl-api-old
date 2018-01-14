@@ -10,7 +10,7 @@ namespace HWL.Service
     {
         public static Response<SendEmailResponseBody> SendEmail(Request<SendEmailRequestBody> request)
         {
-            var context = new ServiceContext<SendEmailRequestBody>(request, new RequestValidate(false, false));
+            var context = new ServiceContext<SendEmailRequestBody>(request, new RequestValidate(false, true));
             return ContextProcessor.Execute(context, r =>
             {
                 return new SendEmail(r.Body).Execute();

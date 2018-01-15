@@ -3,8 +3,6 @@ using HWL.Service.User.Body;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HWL.Service.User.Service
 {
@@ -98,6 +96,7 @@ namespace HWL.Service.User.Service
                     RegisterPosIdList = posIdList,
                     RegisterPosList = posList,
                 };
+
             }
 
             return res;

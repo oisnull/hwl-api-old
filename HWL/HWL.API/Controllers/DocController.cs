@@ -101,7 +101,7 @@ namespace HWL.API.Controllers
                             string proJson = this.getPropertyStr(proItem);
                             if (!string.IsNullOrEmpty(proJson))
                             {
-                                string sddd = "";
+                                requestStr = requestStr.Replace(string.Format("\"{0}\":null", proItem.Name), string.Format("\"{0}\":{1}", proItem.Name, proJson));
                             }
                         }
                     }

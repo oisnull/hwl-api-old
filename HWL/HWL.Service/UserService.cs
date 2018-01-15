@@ -26,6 +26,15 @@ namespace HWL.Service
             });
         }
 
+        public static Response<SetUserPosResponseBody> SetUserPos(Request<SetUserPosRequestBody> request)
+        {
+            var context = new ServiceContext<SetUserPosRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetUserPos(r.Body).Execute();
+            });
+        }
+
         //public static Response<SearchUserResponseBody> SearchUser(Request<SearchUserRequestBody> request)
         //{
         //    var context = new ServiceContext<SearchUserRequestBody>(request, new RequestValidate());

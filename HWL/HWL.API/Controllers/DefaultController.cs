@@ -35,11 +35,11 @@ namespace HWL.API.Controllers
             return GenericService.SendEmail(request);
         }
 
-        //[HttpPost]
-        //[Description("search")]
-        //public Response<SearchUserResponseBody> SearchUser(Request<SearchUserRequestBody> request)
-        //{
-        //    return UserService.SearchUser(request);
-        //}
+        [HttpPost]
+        [Description("设置用户位置信息")]
+        public Response<SetUserPosResponseBody> SetUserPos(Request<SetUserPosRequestBody> request)
+        {
+            return UserService.SetUserPos(request);
+        }
     }
 }

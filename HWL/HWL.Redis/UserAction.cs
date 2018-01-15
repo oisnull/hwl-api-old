@@ -19,7 +19,9 @@ namespace HWL.Redis
          * 
          * 2,存储用户的sessionid,格式：db=2 set userid sessionid
          * 3,存储组所属用户的标识,格式：db=3 set userid groupGuid
+         * 
          * 4,存储用户的位置pos,格式：db=4 geo user:pos lat lon userid
+         * 
          * 5,存储用户的基本信息,格式:db=7 set userid [name,headimage] 过期时间为 5分钟
          * 6,存储用户好友信息,格式：db=8 set userid:fuserid remark 过期时间为 5分钟
          */
@@ -28,7 +30,7 @@ namespace HWL.Redis
         const int USER_TOKEN_DB = 0;
         const int TOKEN_USER_DB = 1;
         const int USER_SESSION_DB = 2;
-        const int USER_CREAT_GROUP_DB = 3;
+        //const int USER_CREAT_GROUP_DB = 3;
         const int USER_GEO_DB = 4;
         const int USER_BASEINFO_DB = 7;
         const int USER_FRIEND_DB = 8;
@@ -111,30 +113,32 @@ namespace HWL.Redis
 
         #endregion
 
+        #region 用户位置操作 (redis地理位置的坐标是以WGS84为标准，WGS84，全称World Geodetic System 1984，是为GPS全球定位系统使用而建立的坐标系统)
+
         //存储用户当前在线的位置信息
-        public bool SavePos(int userId, double lng, double lat)
+        public bool SavePos(int userId, double lon, double lat)
         {
             if (userId <= 0) return false;
-            if (lng <= 0) return false;
+            if (lon <= 0) return false;
             if (lat <= 0) return false;
 
             base.DbNum = USER_GEO_DB;
             bool succ = false;
             base.Exec(db =>
             {
-                succ = db.GeoAdd(USER_GEO_KEY, lng, lat, userId.ToString());
+                succ = db.GeoAdd(USER_GEO_KEY, lon, lat, userId.ToString());
             });
             return succ;
         }
 
         //获取附近的用户列表
-        public int[] GetNearUserList(double lng, double lat)
+        public int[] GetNearUserList(double lon, double lat)
         {
             int[] userIdArray = null;
             base.DbNum = USER_GEO_DB;
             base.Exec(db =>
             {
-                GeoRadiusResult[] results = db.GeoRadius(USER_GEO_KEY, lng, lat, USER_SEARCH_RANGE, GeoUnit.Miles);
+                GeoRadiusResult[] results = db.GeoRadius(USER_GEO_KEY, lon, lat, USER_SEARCH_RANGE, GeoUnit.Miles);
                 if (results != null && results.Length > 0)
                 {
                     userIdArray = new int[results.Length];
@@ -146,6 +150,8 @@ namespace HWL.Redis
             });
             return userIdArray;
         }
+
+        #endregion
 
         #region 用户token操作
 
@@ -247,61 +253,61 @@ namespace HWL.Redis
         #endregion
 
         #region 用户group操作
-        /// <summary>
-        /// 根据用户id获取组标识
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public string GetGroupByUserId(int userId)
-        {
-            if (userId <= 0) return null;
-            base.DbNum = USER_CREAT_GROUP_DB;
-            string groupGuid = null;
-            Exec(db =>
-            {
-                groupGuid = db.StringGet(userId.ToString());
-            });
-            return groupGuid;
-        }
+        ///// <summary>
+        ///// 根据用户id获取组标识
+        ///// </summary>
+        ///// <param name="userId"></param>
+        ///// <returns></returns>
+        //public string GetGroupByUserId(int userId)
+        //{
+        //    if (userId <= 0) return null;
+        //    base.DbNum = USER_CREAT_GROUP_DB;
+        //    string groupGuid = null;
+        //    Exec(db =>
+        //    {
+        //        groupGuid = db.StringGet(userId.ToString());
+        //    });
+        //    return groupGuid;
+        //}
 
-        public Dictionary<int, string> GetGroupGuids(List<int> userIds)
-        {
-            if (userIds == null || userIds.Count <= 0) return null;
+        //public Dictionary<int, string> GetGroupGuids(List<int> userIds)
+        //{
+        //    if (userIds == null || userIds.Count <= 0) return null;
 
-            Dictionary<int, string> groupGuids = new Dictionary<int, string>();
-            base.DbNum = USER_CREAT_GROUP_DB;
-            base.Exec(db =>
-            {
-                RedisValue[] values = db.StringGet(userIds.ConvertAll(u => (RedisKey)u.ToString()).ToArray());
-                if (values != null && values.Length > 0)
-                {
-                    //groupGuids.AddRange(values.ToStringArray());
-                    for (int i = 0; i < userIds.Count; i++)
-                    {
-                        groupGuids.Add(userIds[i], values[i]);
-                    }
-                }
-            });
-            return groupGuids;
-        }
+        //    Dictionary<int, string> groupGuids = new Dictionary<int, string>();
+        //    base.DbNum = USER_CREAT_GROUP_DB;
+        //    base.Exec(db =>
+        //    {
+        //        RedisValue[] values = db.StringGet(userIds.ConvertAll(u => (RedisKey)u.ToString()).ToArray());
+        //        if (values != null && values.Length > 0)
+        //        {
+        //            //groupGuids.AddRange(values.ToStringArray());
+        //            for (int i = 0; i < userIds.Count; i++)
+        //            {
+        //                groupGuids.Add(userIds[i], values[i]);
+        //            }
+        //        }
+        //    });
+        //    return groupGuids;
+        //}
 
-        /// <summary>
-        /// 存储这个组是哪个用户创建的
-        /// </summary>
-        /// <returns></returns>
-        public bool CreateUserGroup(int userId, string groupGuid)
-        {
-            if (userId <= 0) return false;
-            if (string.IsNullOrEmpty(groupGuid)) return false;
-            base.DbNum = USER_CREAT_GROUP_DB;
-            bool succ = false;
-            Exec(db =>
-            {
-                succ = db.StringSet(userId.ToString(), groupGuid);
-            });
+        ///// <summary>
+        ///// 存储这个组是哪个用户创建的
+        ///// </summary>
+        ///// <returns></returns>
+        //public bool CreateUserGroup(int userId, string groupGuid)
+        //{
+        //    if (userId <= 0) return false;
+        //    if (string.IsNullOrEmpty(groupGuid)) return false;
+        //    base.DbNum = USER_CREAT_GROUP_DB;
+        //    bool succ = false;
+        //    Exec(db =>
+        //    {
+        //        succ = db.StringSet(userId.ToString(), groupGuid);
+        //    });
 
-            return succ;
-        }
+        //    return succ;
+        //}
 
         #endregion
 

@@ -15,6 +15,20 @@ namespace HWL.Redis
                 return ConfigurationManager.AppSettings["UserDynamicRedisHosts"].ToString();
             }
         }
+
+        /// <summary>
+        /// 群组好友总数量
+        /// </summary>
+        public static int GroupUserTotalCount
+        {
+            get
+            {
+                return Convert.ToInt32(ConfigurationManager.AppSettings["GroupUserTotalCount"]);
+            }
+        }
+
+
+
         ///// <summary>
         ///// 用户基本信息地址配置
         ///// </summary>

@@ -81,6 +81,23 @@
           <Property Name="expire_time" Type="datetime" Nullable="false" />
           <Property Name="remark" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="t_user_pos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="pos_details" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="lon" Type="float" Nullable="false" />
+          <Property Name="lat" Type="float" Nullable="false" />
+          <Property Name="geohash_key" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="country_id" Type="int" Nullable="false" />
+          <Property Name="province_id" Type="int" Nullable="false" />
+          <Property Name="city_id" Type="int" Nullable="false" />
+          <Property Name="district_id" Type="int" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="HWLModelStoreContainer">
           <EntitySet Name="t_admin" EntityType="Self.t_admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_city" EntityType="Self.t_city" Schema="dbo" store:Type="Tables" />
@@ -89,6 +106,7 @@
           <EntitySet Name="t_province" EntityType="Self.t_province" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_user" EntityType="Self.t_user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_user_code" EntityType="Self.t_user_code" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_user_pos" EntityType="Self.t_user_pos" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -102,6 +120,7 @@
           <EntitySet Name="t_country" EntityType="HWL.Entity.t_country" />
           <EntitySet Name="t_district" EntityType="HWL.Entity.t_district" />
           <EntitySet Name="t_province" EntityType="HWL.Entity.t_province" />
+          <EntitySet Name="t_user_pos" EntityType="HWL.Entity.t_user_pos" />
         </EntityContainer>
         <EntityType Name="t_admin">
           <Key>
@@ -181,6 +200,23 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="country_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_user_pos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="pos_details" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="lon" Type="Double" Nullable="false" />
+          <Property Name="lat" Type="Double" Nullable="false" />
+          <Property Name="geohash_key" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="country_id" Type="Int32" Nullable="false" />
+          <Property Name="province_id" Type="Int32" Nullable="false" />
+          <Property Name="city_id" Type="Int32" Nullable="false" />
+          <Property Name="district_id" Type="Int32" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -267,6 +303,24 @@
               <MappingFragment StoreEntitySet="t_province">
                 <ScalarProperty Name="country_id" ColumnName="country_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_user_pos">
+            <EntityTypeMapping TypeName="HWL.Entity.t_user_pos">
+              <MappingFragment StoreEntitySet="t_user_pos">
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="district_id" ColumnName="district_id" />
+                <ScalarProperty Name="city_id" ColumnName="city_id" />
+                <ScalarProperty Name="province_id" ColumnName="province_id" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="geohash_key" ColumnName="geohash_key" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="lon" ColumnName="lon" />
+                <ScalarProperty Name="pos_details" ColumnName="pos_details" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

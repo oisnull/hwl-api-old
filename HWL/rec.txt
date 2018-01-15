@@ -1,2 +1,5 @@
- redis3.2
+﻿ redis3.2
  https://github.com/MicrosoftArchive/redis/releases
+
+
+ 每个用户只能有一个附近的组

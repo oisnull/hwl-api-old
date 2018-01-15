@@ -16,6 +16,7 @@ namespace HWL.Redis
          * 功能描述：
          * 1,存储用户的token,格式：db=0 set userid token
          * 1.1,存储token对应的用户,格式：db=1 set token userid
+         * 
          * 2,存储用户的sessionid,格式：db=2 set userid sessionid
          * 3,存储组所属用户的标识,格式：db=3 set userid groupGuid
          * 4,存储用户的位置pos,格式：db=4 geo user:pos lat lon userid
@@ -147,8 +148,33 @@ namespace HWL.Redis
         }
 
         #region 用户token操作
+
+        public string createUserToken(int userId)
+        {
+            if (userId <= 0) return null;
+
+            string token = Guid.NewGuid().ToString();
+            bool succ = false;
+            base.DbNum = USER_TOKEN_DB;
+            base.Exec(db =>
+            {
+                //直接存token,不管里面有没有
+                if (db.StringSet(userId.ToString(), token))
+                {
+                    succ = this.SaveTokenUser(userId, token);
+                }
+            });
+
+            if (succ)
+            {
+                return token;
+            }
+            return null;
+        }
+
         /// <summary>
         /// 保存用户登录票据,保存成功后返回token(key为用户id)
+        /// userid:token
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
@@ -158,11 +184,11 @@ namespace HWL.Redis
             string token = Guid.NewGuid().ToString();
             bool succ = false;
             base.DbNum = USER_TOKEN_DB;
-            Exec(db =>
+            base.Exec(db =>
             {
-                string oldToken = db.StringGet(userId.ToString());
                 if (db.StringSet(userId.ToString(), token))
                 {
+                    string oldToken = db.StringGet(userId.ToString());
                     succ = this.SaveTokenUser(userId, token, oldToken);
                 }
             });
@@ -172,11 +198,12 @@ namespace HWL.Redis
                 return null;
         }
 
+        //token:userid
         private bool SaveTokenUser(int userId, string token, string oldToken = null)
         {
             base.DbNum = TOKEN_USER_DB;
             bool succ = false;
-            Exec(db =>
+            base.Exec(db =>
             {
                 if (!string.IsNullOrEmpty(oldToken))
                 {

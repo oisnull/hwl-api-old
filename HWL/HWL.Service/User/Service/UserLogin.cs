@@ -50,7 +50,7 @@ namespace HWL.Service.User.Service
                 if (user.password != this.request.Password) throw new Exception("密码错误");//CommonCs.GetMd5Str32(this.request.Password)
 
                 Redis.UserAction userAction = new Redis.UserAction();
-                string tokenStr = userAction.SaveUserToken(user.id);
+                string tokenStr = userAction.createUserToken(user.id);
                 if (string.IsNullOrEmpty(tokenStr)) throw new Exception("用户登录票据生成失败");
 
                 //获取地址信息

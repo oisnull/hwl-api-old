@@ -6,7 +6,7 @@ namespace HWL.Redis
     public class RedisConfigService
     {
         /// <summary>
-        /// 用户group,token,session,pos地址配置
+        /// 用户动态配置
         /// </summary>
         public static string UserDynamicRedisHosts
         {

@@ -61,7 +61,9 @@
     <Compile Include="GenericService.cs" />
     <Compile Include="Generic\AreaUtility.cs" />
     <Compile Include="Generic\Body\SendEmailBody.cs" />
+    <Compile Include="Generic\Body\SendSMSBody.cs" />
     <Compile Include="Generic\SendContentConfig.cs" />
+    <Compile Include="Generic\Service\SendSMS.cs" />
     <Compile Include="Generic\Service\SendEmail.cs" />
     <Compile Include="RequestValidate.cs" />
     <Compile Include="UserService.cs" />

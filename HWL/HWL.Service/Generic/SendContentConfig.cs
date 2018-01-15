@@ -20,5 +20,15 @@ namespace HWL.Service.Generic
             return new Tuple<string, string>(title, content);
         }
 
+        /// <summary>
+        /// title,content
+        /// </summary>
+        /// <returns></returns>
+        public static string SMSRegisterDesc(string code)
+        {
+            string content = "您当前的好无聊注册验证码是：" + code;
+            return content;
+        }
+
     }
 }

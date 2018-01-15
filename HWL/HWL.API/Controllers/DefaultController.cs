@@ -36,6 +36,13 @@ namespace HWL.API.Controllers
         }
 
         [HttpPost]
+        [Description("发送短信")]
+        public Response<SendSMSResponseBody> SendSMS(Request<SendSMSRequestBody> request)
+        {
+            return GenericService.SendSMS(request);
+        }
+
+        [HttpPost]
         [Description("设置用户位置信息")]
         public Response<SetUserPosResponseBody> SetUserPos(Request<SetUserPosRequestBody> request)
         {

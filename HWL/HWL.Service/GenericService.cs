@@ -16,6 +16,14 @@ namespace HWL.Service
                 return new SendEmail(r.Body).Execute();
             });
         }
+        public static Response<SendSMSResponseBody> SendSMS(Request<SendSMSRequestBody> request)
+        {
+            var context = new ServiceContext<SendSMSRequestBody>(request, new RequestValidate(false, true));
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SendSMS(r.Body).Execute();
+            });
+        }
 
         //public static Response CheckVersion(Request request)
         //{

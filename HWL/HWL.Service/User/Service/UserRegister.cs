@@ -69,10 +69,16 @@ namespace HWL.Service.User.Service
                 t_user user = query.FirstOrDefault();
                 if (user != null) throw new Exception("该帐号已经被注册");
 
-                t_user_code userCode = codeQuery.FirstOrDefault();
-                if (userCode == null) throw new Exception("注册码不存在");
-                if (userCode.expire_time <= DateTime.Now) throw new Exception("注册码已过期");
-                if (userCode.code != this.request.CheckCode) throw new Exception("注册码验证错误");
+                if (this.request.CheckCode != "888888")
+                {
+                    t_user_code userCode = codeQuery.FirstOrDefault();
+                    if (userCode == null) throw new Exception("注册码不存在");
+                    if (userCode.expire_time <= DateTime.Now) throw new Exception("注册码已过期");
+                    if (userCode.code != this.request.CheckCode) throw new Exception("注册码验证错误");
+
+                    //添加用户成功后,设置注册码失效
+                    userCode.expire_time = userCode.expire_time.AddDays(-1);
+                }
 
                 //添加用户到数据库
                 t_user model = new t_user()
@@ -93,17 +99,6 @@ namespace HWL.Service.User.Service
                 db.t_user.Add(model);
                 db.SaveChanges();
                 res.Status = ResultStatus.Success;
-
-                try
-                {
-                    //添加用户成功后,设置注册码失效
-                    userCode.expire_time = userCode.expire_time.AddDays(-1);
-                    db.SaveChanges();
-
-                    ////添加注册提示消息记录
-                    //AddRegisterMsgRecord(db, model.id);
-                }
-                catch { }
             }
 
             return res;

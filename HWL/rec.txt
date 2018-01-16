@@ -52,5 +52,7 @@ android
 1,launcher 添加引导页
 2,引导页逻辑处理
 3,定位,用户当前位子信息获取
+4,activity管理
+5,activity跳转动画
 
 

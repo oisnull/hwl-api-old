@@ -144,6 +144,9 @@ namespace HWL.Service.User.Service
                 //获取当前位置附近的组
                 Redis.GroupAction groupAction = new Redis.GroupAction();
                 res.UserGroupGuid = groupAction.GetNearGroupGuid(upos.lon, upos.lat);
+
+                //将用户加入到附近组中
+                groupAction.SaveGroupUser(res.UserGroupGuid, upos.user_id);
             }
 
             return res;

@@ -16,11 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NOTE", "NOTE", "{5BA174E1-C
 		rec.txt = rec.txt
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DBScript", "DBScript", "{4EBF2018-0FB2-47A3-86F2-61AB078BF7FF}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\work doc\hwl\db\hwl20180112.sql = ..\..\..\work doc\hwl\db\hwl20180112.sql
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.Tools", "HWL.Tools\HWL.Tools.csproj", "{2ED308F8-7376-4A12-B797-00DB016D6781}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.Redis", "HWL.Redis\HWL.Redis.csproj", "{114F979C-C371-4B28-81CA-05C4D68BB466}"

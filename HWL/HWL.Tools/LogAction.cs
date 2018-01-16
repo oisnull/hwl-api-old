@@ -9,6 +9,7 @@ namespace HWL.Tools
 {
     public class LogAction
     {
+        private static object obj = new object();
         private string logDir = "/log/";
         public LogAction()
         {
@@ -38,19 +39,22 @@ namespace HWL.Tools
 
         public void WriterLog(string content)
         {
-            if (!File.Exists(this.FileName))
+            lock (obj)
             {
-                File.Create(this.FileName).Close();
-            }
-            FileInfo finfo = new FileInfo(this.FileName);
-            using (FileStream fs = finfo.OpenWrite())
-            {
-                StreamWriter sw = new StreamWriter(fs);
-                sw.BaseStream.Seek(0, SeekOrigin.End);
-                sw.WriteLine(content);
-                sw.Flush();
-                sw.Close();
-                fs.Close();
+                if (!File.Exists(this.FileName))
+                {
+                    File.Create(this.FileName).Close();
+                }
+                FileInfo finfo = new FileInfo(this.FileName);
+                using (FileStream fs = finfo.OpenWrite())
+                {
+                    StreamWriter sw = new StreamWriter(fs);
+                    sw.BaseStream.Seek(0, SeekOrigin.End);
+                    sw.WriteLine(content);
+                    sw.Flush();
+                    sw.Close();
+                    fs.Close();
+                }
             }
         }
 

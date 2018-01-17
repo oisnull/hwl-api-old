@@ -92,6 +92,9 @@
     <Compile Include="t_user_code.cs">
       <DependentUpon>HWLModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="t_user_friend.cs">
+      <DependentUpon>HWLModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="t_user_pos.cs">
       <DependentUpon>HWLModel.tt</DependentUpon>
     </Compile>

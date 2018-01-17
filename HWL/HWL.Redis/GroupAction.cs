@@ -87,7 +87,7 @@ namespace HWL.Redis
         /// <summary>
         /// 保存组用户
         /// </summary>
-        public void SaveGroupUser(string groupGuid, int[] userIds)
+        public void SaveGroupUser(string groupGuid,params int[] userIds)
         {
             if (string.IsNullOrEmpty(groupGuid)) return;
             if (userIds == null || userIds.Length <= 0) return;

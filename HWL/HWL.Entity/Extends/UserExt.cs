@@ -28,4 +28,36 @@ namespace HWL.Entity.Extends
         public List<int> RegisterPosIdList { get; set; }
         public List<string> RegisterPosList { get; set; }
     }
+    public class UserFriendInfo
+    {
+        public int Id { get; set; }
+        public string NickName { get; set; }
+        public string FirstSpell { get; set; }
+        public string NameRemark { get; set; }
+        public string HeadImage { get; set; }
+        public string Country { get; set; }
+        public string Province { get; set; }
+
+    }
+    /// <summary>
+    /// 用户详情
+    /// </summary>
+    public class UserDetailsInfo
+    {
+        public int Id { get; set; }
+        public string NickName { get; set; }
+        public string HeadImage { get; set; }
+        public string Country { get; set; }
+        public string Province { get; set; }
+        /// <summary>
+        /// 是否是好友
+        /// </summary>
+        public bool IsFriend { get; set; }
+        /// <summary>
+        /// 好友备注
+        /// </summary>
+        public string NameRemark { get; set; }
+        public string FirstSpell { get; set; }
+    }
+
 }

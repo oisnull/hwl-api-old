@@ -35,13 +35,49 @@ namespace HWL.Service
             });
         }
 
-        //public static Response<SearchUserResponseBody> SearchUser(Request<SearchUserRequestBody> request)
-        //{
-        //    var context = new ServiceContext<SearchUserRequestBody>(request, new RequestValidate());
-        //    return ContextProcessor.Execute(context, r =>
-        //    {
-        //        return new SearchUser(r.Body).Execute();
-        //    });
-        //}
+        public static Response<GetFriendsResponseBody> GetFriends(Request<GetFriendsRequestBody> request)
+        {
+            var context = new ServiceContext<GetFriendsRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new GetFriends(r.Body).Execute();
+            });
+        }
+
+        public static Response<AddFriendResponseBody> AddFriend(Request<AddFriendRequestBody> request)
+        {
+            var context = new ServiceContext<AddFriendRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new AddFriend(r.Body).Execute();
+            });
+        }
+
+        public static Response<SetFriendRemarkResponseBody> SetFriendRemark(Request<SetFriendRemarkRequestBody> request)
+        {
+            var context = new ServiceContext<SetFriendRemarkRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetFriendRemark(r.Body).Execute();
+            });
+        }
+
+        public static Response<SetUserInfoResponseBody> SetUserInfo(Request<SetUserInfoRequestBody> request)
+        {
+            var context = new ServiceContext<SetUserInfoRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetUserInfo(r.Body).Execute();
+            });
+        }
+
+        public static Response<GetUserDetailsResponseBody> GetUserDetails(Request<GetUserDetailsRequestBody> request)
+        {
+            var context = new ServiceContext<GetUserDetailsRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new GetUserDetails(r.Body).Execute();
+            });
+        }
     }
 }

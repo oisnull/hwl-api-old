@@ -48,5 +48,40 @@ namespace HWL.API.Controllers
         {
             return UserService.SetUserPos(request);
         }
+
+        [HttpPost]
+        [Description("获取好友列表")]
+        public Response<GetFriendsResponseBody> GetFriends(Request<GetFriendsRequestBody> request)
+        {
+            return UserService.GetFriends(request);
+        }
+
+        [HttpPost]
+        [Description("添加好友")]
+        public Response<AddFriendResponseBody> AddFriend(Request<AddFriendRequestBody> request)
+        {
+            return UserService.AddFriend(request);
+        }
+
+        [HttpPost]
+        [Description("设置好友备注")]
+        public Response<SetFriendRemarkResponseBody> SetFriendRemark(Request<SetFriendRemarkRequestBody> request)
+        {
+            return UserService.SetFriendRemark(request);
+        }
+
+        [HttpPost]
+        [Description("设置用户基本信息")]
+        public Response<SetUserInfoResponseBody> SetUserInfo(Request<SetUserInfoRequestBody> request)
+        {
+            return UserService.SetUserInfo(request);
+        }
+
+        [HttpPost]
+        [Description("获取用户详细信息")]
+        public Response<GetUserDetailsResponseBody> GetUserDetails(Request<GetUserDetailsRequestBody> request)
+        {
+            return UserService.GetUserDetails(request);
+        }
     }
 }

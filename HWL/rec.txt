@@ -9,50 +9,14 @@
  每个用户在进入应用会自动分配到附近的组里面
  附近的组，用户不能对里面的其他用户进行任何操作管理，也不能对组进行操作管理，只能对组里面的消息进行操作
 
-public class UserSharePrefrencesAction
-{
-    private static final String USERPREFERENCE = "com.hwl.userinfo";
-    private static final String USER_ID = "Id";
-    private static final String USER_EMAIL = "Email";
-    private static final String USER_MOBILE = "Mobile";
-    private static final String USER_TOKEN = "Token";
-    private static final String USER_NAME = "Name";
-    private static final String USER_HEADIMAGE = "HeadImage";
-    private static final String USER_CIRCLEBACKIMAGE = "CircleBackImage";
-    private static final String USER_USERSEX = "UserSex";
-    private static final String USER_LIFENOTES = "LifeNotes";
-
-    public static void getUserId(Context context)
-    {
-        final SharedPreferences prefs = context.getSharedPreferences(USERPREFERENCE, Context.MODE_PRIVATE);
-        return prefs.getString(USER_ID, "");
-    }
-
-    public static void setUserInfo(Context context, UserInfo user)
-    {
-        final SharedPreferences prefs = context.getSharedPreferences(USERPREFERENCE, Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(USER_ID, user.Id);
-        editor.putInt(USER_USERSEX, user.UserSex);
-
-        editor.putString(USER_EMAIL, user.Email);
-        editor.putString(USER_MOBILE, user.Mobile);
-        editor.putString(USER_NAME, user.Name);
-        editor.putString(USER_TOKEN, user.Token);
-        editor.putString(USER_HEADIMAGE, user.HeadImage);
-        editor.putString(USER_CIRCLEBACKIMAGE, user.CircleBackImage);
-        editor.putString(USER_LIFENOTES, user.LifeNotes);
-        editor.commit();
-    }
-}
 
 2018-01-16:
 android
-1,添加 user shareprefrences action
-1,launcher 添加引导页
-2,引导页逻辑处理
+1,添加 user shareprefrences action v
+1,launcher 添加引导页 v
+2,引导页逻辑处理 v
 3,定位,用户当前位子信息获取
-4,activity管理
-5,activity跳转动画
+4,activity管理 v
+5,activity跳转动画 v
 
 

@@ -33,5 +33,6 @@ namespace HWL.Entity
         public virtual DbSet<t_district> t_district { get; set; }
         public virtual DbSet<t_province> t_province { get; set; }
         public virtual DbSet<t_user_pos> t_user_pos { get; set; }
+        public virtual DbSet<t_user_friend> t_user_friend { get; set; }
     }
 }

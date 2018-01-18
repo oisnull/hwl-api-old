@@ -10,6 +10,10 @@ namespace HWL.Entity.Extends
     public class UserBaseInfo
     {
         public int Id { get; set; }
+        /// <summary>
+        /// 用户标识号（用户自己去设置的）
+        /// </summary>
+        public string Symbol { get; set; }
         public string Email { get; set; }
         public string Mobile { get; set; }
         /// <summary>

@@ -85,6 +85,7 @@ namespace HWL.Service.User.Service
                 res.UserInfo = new Entity.Extends.UserBaseInfo()
                 {
                     Id = user.id,
+                    Symbol = user.symbol,
                     Email = user.email,
                     Mobile = user.mobile,
                     Name = user.name,

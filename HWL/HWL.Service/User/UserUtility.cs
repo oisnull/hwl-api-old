@@ -12,6 +12,16 @@ namespace HWL.Service.User
 {
     public class UserUtility
     {
+        public static string BuildToken(int userId)
+        {
+            byte[] guid = Guid.NewGuid().ToByteArray();
+            string key = Convert.ToString(userId, 2);
+
+            string token = key + "-" + String.Join("-", guid);
+
+            return CommonCs.GetMd5Str32(token);
+        }
+
         public static string UserDefaultHeadImage
         {
             get

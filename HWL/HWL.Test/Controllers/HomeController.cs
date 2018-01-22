@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HWL.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,11 @@ namespace HWL.Test.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult Index()
+        public ActionResult Index(int u = 1)
         {
-            return View();
+            return Content(Service.User.UserUtility.BuildToken(u));
         }
+
+
     }
 }

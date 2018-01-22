@@ -124,6 +124,10 @@
       <Project>{7e2e78be-a30f-463d-a00d-b6bd53441479}</Project>
       <Name>HWL.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HWL.Tools\HWL.Tools.csproj">
+      <Project>{2ED308F8-7376-4A12-B797-00DB016D6781}</Project>
+      <Name>HWL.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

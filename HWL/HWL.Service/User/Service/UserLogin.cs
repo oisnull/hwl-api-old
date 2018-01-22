@@ -47,9 +47,10 @@ namespace HWL.Service.User.Service
                 if (user.status != UserStatus.Normal) throw new Exception("用户被禁用");
                 if (user.password != this.request.Password) throw new Exception("密码错误");//CommonCs.GetMd5Str32(this.request.Password)
 
+                string userToken = UserUtility.BuildToken(user.id);
                 Redis.UserAction userAction = new Redis.UserAction();
-                string tokenStr = userAction.createUserToken(user.id);
-                if (string.IsNullOrEmpty(tokenStr)) throw new Exception("用户登录票据生成失败");
+                bool succ = userAction.SaveUserToken(user.id, userToken);
+                if (!succ) throw new Exception("用户登录token生成失败");
 
                 //获取地址信息
                 var pos = (from country in db.t_country
@@ -89,7 +90,7 @@ namespace HWL.Service.User.Service
                     Email = user.email,
                     Mobile = user.mobile,
                     Name = user.name,
-                    Token = tokenStr,
+                    Token = userToken,
                     HeadImage = user.head_image,
                     CircleBackImage = user.circle_back_image,
                     UserSex = user.sex,

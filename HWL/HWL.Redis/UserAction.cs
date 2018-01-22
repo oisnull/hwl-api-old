@@ -155,11 +155,39 @@ namespace HWL.Redis
 
         #region 用户token操作
 
-        public string createUserToken(int userId)
-        {
-            if (userId <= 0) return null;
+        //public string createUserToken(int userId)
+        //{
+        //    if (userId <= 0) return null;
 
-            string token = Guid.NewGuid().ToString();
+        //    string token = Guid.NewGuid().ToString();
+        //    bool succ = false;
+        //    base.DbNum = USER_TOKEN_DB;
+        //    base.Exec(db =>
+        //    {
+        //        //直接存token,不管里面有没有
+        //        if (db.StringSet(userId.ToString(), token))
+        //        {
+        //            succ = this.SaveTokenUser(userId, token);
+        //        }
+        //    });
+
+        //    if (succ)
+        //    {
+        //        return token;
+        //    }
+        //    return null;
+        //}
+
+        /// <summary>
+        /// 保存用户登录票据,保存成功后返回token(key为用户id)
+        /// userid:token
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool SaveUserToken(int userId, string token)
+        {
+            if (userId <= 0) return false;
+            if (string.IsNullOrEmpty(token) || string.IsNullOrWhiteSpace(token)) return false;
             bool succ = false;
             base.DbNum = USER_TOKEN_DB;
             base.Exec(db =>
@@ -170,38 +198,7 @@ namespace HWL.Redis
                     succ = this.SaveTokenUser(userId, token);
                 }
             });
-
-            if (succ)
-            {
-                return token;
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// 保存用户登录票据,保存成功后返回token(key为用户id)
-        /// userid:token
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public string SaveUserToken(int userId)
-        {
-            if (userId <= 0) return null;
-            string token = Guid.NewGuid().ToString();
-            bool succ = false;
-            base.DbNum = USER_TOKEN_DB;
-            base.Exec(db =>
-            {
-                if (db.StringSet(userId.ToString(), token))
-                {
-                    string oldToken = db.StringGet(userId.ToString());
-                    succ = this.SaveTokenUser(userId, token, oldToken);
-                }
-            });
-            if (succ)
-                return token;
-            else
-                return null;
+            return succ;
         }
 
         //token:userid

@@ -1,4 +1,5 @@
-﻿using HWL.Entity;
+﻿using GMSF.Model;
+using HWL.Entity;
 using HWL.Resx.Models;
 using HWL.Service;
 using System;
@@ -18,12 +19,24 @@ namespace HWL.Resx.Controllers
             return requestValidate.CheckToken(token);
         }
 
-        public ResponseResult Image(HttpFileCollectionBase files, string token = null, int resxType = 7)
+        private Response<UpImageResponseBody> getResult(String resultCode, String message, UpImageResponseBody body = null)
+        {
+            Response<UpImageResponseBody> response = new Response<UpImageResponseBody>();
+            response.Head = new GMSF.HeadDefine.ResponseHead()
+            {
+                ResultCode = resultCode,
+                ResultMessage = message
+            };
+
+            return response;
+        }
+
+        public Response<UpImageResponseBody> Image(HttpFileCollectionBase files, string token = null, int resxType = 7)
         {
             bool succ = this.checkRequestParam(token);
             if (!succ)
             {
-                return new ResponseResult() { Status = ResultStatus.Failed, Message = "凭证验证失败" };
+                return getResult(GMSF.ResponseResult.FAILED, "凭证验证失败");
             }
 
             //保存上传数据
@@ -32,24 +45,24 @@ namespace HWL.Resx.Controllers
             var fileModel = UpfileHandler.ProcessSig(files, saveDir, out error);
             if (fileModel == null)
             {
-                return new ResponseResult() { Status = ResultStatus.Failed, Message = error };
+                return getResult(GMSF.ResponseResult.FAILED, error);
             }
-            return new ResponseResult() { Status = ResultStatus.Success, AccessUrl = fileModel.AccessPath, FileSize = fileModel.FileSize };
+            return getResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrl = fileModel.AccessPath, FileSize = fileModel.FileSize });
         }
 
         [HttpPost]
-        public async Task<ResponseResult> Image(string token = null, int resxType = 7)
+        public async Task<Response<UpImageResponseBody>> Image(string token = null, int resxType = 7)
         {
             bool succ = this.checkRequestParam(token);
             if (!succ)
             {
-                return new ResponseResult() { Status = ResultStatus.Failed, Message = "凭证验证失败" };
+                return getResult(GMSF.ResponseResult.FAILED, "凭证验证失败");
             }
 
             ResxHandler resx = new ResxHandler(Request, (ResxType)resxType);
             if (!resx.IsMultipartContent())
             {
-                return new ResponseResult() { Status = ResultStatus.Failed, Message = "资源格式错误" };
+                return getResult(GMSF.ResponseResult.FAILED, "资源格式错误");
             }
             try
             {
@@ -57,10 +70,10 @@ namespace HWL.Resx.Controllers
             }
             catch (Exception ex)
             {
-                return new ResponseResult() { Status = ResultStatus.Failed, Message = ex.Message };
+                return getResult(GMSF.ResponseResult.FAILED, ex.Message);
             }
 
-            return new ResponseResult() { Status = ResultStatus.Success, AccessUrls = resx.GetAccessUrls() };
+            return getResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrls = resx.GetAccessUrls() });
         }
 
         //[HttpPost]

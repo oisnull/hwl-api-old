@@ -31,7 +31,7 @@ namespace HWL.Resx.Models
         /// <param name="folder"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public static List<UpfileModel> Process(HttpFileCollectionBase files, string folder, out string error)
+        public static List<UpfileModel> Process(HttpFileCollection files, string folder, out string error)
         {
             error = "";
             var dic = ProcessDic(files, folder, out error);
@@ -47,7 +47,7 @@ namespace HWL.Resx.Models
             return null;
         }
 
-        public static UpfileModel ProcessSig(HttpFileCollectionBase files, string folder, out string error)
+        public static UpfileModel ProcessSig(HttpFileCollection files, string folder, out string error)
         {
             error = "";
             var dic = ProcessDic(files, folder, out error);
@@ -70,7 +70,7 @@ namespace HWL.Resx.Models
         /// <param name="folder"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public static Dictionary<string, UpfileModel> ProcessDic(HttpFileCollectionBase files, string folder, out string error)
+        public static Dictionary<string, UpfileModel> ProcessDic(HttpFileCollection files, string folder, out string error)
         {
             error = "";
             if (files == null || files.Count <= 0)

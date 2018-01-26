@@ -2,6 +2,7 @@
 using HWL.Entity;
 using HWL.Resx.Models;
 using HWL.Service;
+using HWL.Tools;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -27,12 +28,17 @@ namespace HWL.Resx.Controllers
                 ResultCode = resultCode,
                 ResultMessage = message
             };
+            response.Body = body;
 
             return response;
         }
 
-        public Response<UpImageResponseBody> Image(HttpFileCollectionBase files, string token = null, int resxType = 7)
+        LogAction log = new LogAction("api-" + System.DateTime.Now.ToString("yyyyMMdd") + ".txt");
+        [HttpPost]
+        public Response<UpImageResponseBody> Image(string token = null, int resxType = 7)
         {
+            //log.WriterLog(token + resxType + "__" + (HttpContext.Current.Request.Files != null ? HttpContext.Current.Request.Files.Count : 0));
+            //return getResult("11", "test", null);
             bool succ = this.checkRequestParam(token);
             if (!succ)
             {
@@ -42,16 +48,19 @@ namespace HWL.Resx.Controllers
             //保存上传数据
             string error = "";
             string saveDir = CustomerEnumDesc.GetResxTypePath((ResxType)resxType);
-            var fileModel = UpfileHandler.ProcessSig(files, saveDir, out error);
+            var fileModel = UpfileHandler.ProcessSig(HttpContext.Current.Request.Files, saveDir, out error);
             if (fileModel == null)
             {
                 return getResult(GMSF.ResponseResult.FAILED, error);
             }
-            return getResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrl = fileModel.AccessPath, FileSize = fileModel.FileSize });
+            var response = getResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrl = fileModel.AccessPath, FileSize = fileModel.FileSize });
+
+            log.WriterLog(Newtonsoft.Json.JsonConvert.SerializeObject(response));
+            return response;
         }
 
         [HttpPost]
-        public async Task<Response<UpImageResponseBody>> Image(string token = null, int resxType = 7)
+        public async Task<Response<UpImageResponseBody>> Images(string token = null, int resxType = 7)
         {
             bool succ = this.checkRequestParam(token);
             if (!succ)

@@ -42,6 +42,7 @@ namespace HWL.Service.User.Service
                                  FirstSpell = f.friend_first_spell,
                                  Id = f.friend_user_id,
                                  HeadImage = u.head_image,
+                                 Symbol = u.symbol,
                              }).ToList();
                 if (users == null || users.Count <= 0) return res;
 
@@ -62,10 +63,10 @@ namespace HWL.Service.User.Service
                         Id = u.Id,
                         Country = countryName,
                         Province = provinceName,
-                        FirstSpell = u.FirstSpell,
                         HeadImage = u.HeadImage,
                         NameRemark = u.NameRemark,
-                        NickName = u.NickName,
+                        ShowName = u.NickName,
+                        Symbol = u.Symbol,
                     });
                 });
             }

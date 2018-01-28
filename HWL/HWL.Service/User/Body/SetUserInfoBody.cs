@@ -7,17 +7,48 @@ using System.Threading.Tasks;
 
 namespace HWL.Service.User.Body
 {
-    public class SetUserInfoRequestBody
-    {
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string HeadImage { get; set; }
-        public UserSex UserSex { get; set; }
-        public string LifeNotes { get; set; }
-        public List<int> PosIdList { get; set; }
-    }
+    //public class SetUserInfoRequestBody
+    //{
+    //    public int UserId { get; set; }
+    //    public string UserName { get; set; }
+    //    public string HeadImage { get; set; }
+    //    public UserSex UserSex { get; set; }
+    //    public string LifeNotes { get; set; }
+    //    public List<int> PosIdList { get; set; }
+    //}
     public class SetUserInfoResponseBody
     {
         public ResultStatus Status { get; set; }
     }
+
+    public class SetUserSymbolRequestBody
+    {
+        public int UserId { get; set; }
+        public string Symbol { get; set; }
+    }
+
+    public class SetUserNameRequestBody
+    {
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+    }
+
+    public class SetUserHeadImageRequestBody
+    {
+        public int UserId { get; set; }
+        public string HeadImageUrl { get; set; }
+    }
+
+    public class SetUserSexRequestBody
+    {
+        public int UserId { get; set; }
+        public UserSex UserSex { get; set; }
+    }
+
+    public class SetUserLifeNotesRequestBody
+    {
+        public int UserId { get; set; }
+        public string LifeNotes { get; set; }
+    }
+
 }

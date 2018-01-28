@@ -35,8 +35,8 @@ namespace HWL.Entity.Extends
     public class UserFriendInfo
     {
         public int Id { get; set; }
-        public string NickName { get; set; }
-        public string FirstSpell { get; set; }
+        public string Symbol { get; set; }
+        public string ShowName { get; set; }
         public string NameRemark { get; set; }
         public string HeadImage { get; set; }
         public string Country { get; set; }
@@ -64,4 +64,14 @@ namespace HWL.Entity.Extends
         public string FirstSpell { get; set; }
     }
 
+    /// <summary>
+    /// 搜索用户信息模型
+    /// </summary>
+    public class UserSearchInfo
+    {
+        public int Id { get; set; }
+        public string ShowName { get; set; }
+        public string Symbol { get; set; }
+        public string HeadImage { get; set; }
+    }
 }

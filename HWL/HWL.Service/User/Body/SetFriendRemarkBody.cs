@@ -19,9 +19,9 @@ namespace HWL.Service.User.Body
     public class SetFriendRemarkResponseBody
     {
         public ResultStatus Status { get; set; }
-        /// <summary>
-        /// show name的首字母
-        /// </summary>
-        public string FirstSpell { get; set; }
+        ///// <summary>
+        ///// show name的首字母
+        ///// </summary>
+        //public string FirstSpell { get; set; }
     }
 }

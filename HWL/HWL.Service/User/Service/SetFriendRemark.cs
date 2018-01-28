@@ -42,11 +42,11 @@ namespace HWL.Service.User.Service
                 if (friendModel == null) throw new Exception("您没有权限备注当前用户");
 
                 friendModel.friend_user_remark = this.request.FriendUserRemark;
-                friendModel.friend_first_spell = UserUtility.GetRemarkFirstSpell(this.request.FriendUserRemark.FirstOrDefault().ToString());
+                //friendModel.friend_first_spell = UserUtility.GetRemarkFirstSpell(this.request.FriendUserRemark.FirstOrDefault().ToString());
 
                 db.SaveChanges();
                 res.Status = ResultStatus.Success;
-                res.FirstSpell = friendModel.friend_first_spell;
+                //res.FirstSpell = friendModel.friend_first_spell;
 
                 ////重置redis缓存中的remark
                 //var t = new Task(() =>

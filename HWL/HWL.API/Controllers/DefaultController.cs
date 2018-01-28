@@ -71,17 +71,53 @@ namespace HWL.API.Controllers
         }
 
         [HttpPost]
-        [Description("设置用户基本信息")]
-        public Response<SetUserInfoResponseBody> SetUserInfo(Request<SetUserInfoRequestBody> request)
-        {
-            return UserService.SetUserInfo(request);
-        }
-
-        [HttpPost]
         [Description("获取用户详细信息")]
         public Response<GetUserDetailsResponseBody> GetUserDetails(Request<GetUserDetailsRequestBody> request)
         {
             return UserService.GetUserDetails(request);
+        }
+
+        [HttpPost]
+        [Description("设置用户头像")]
+        public Response<SetUserInfoResponseBody> SetUserHeadImage(Request<SetUserHeadImageRequestBody> request)
+        {
+            return UserService.SetUserHeadImage(request);
+        }
+
+        [HttpPost]
+        [Description("设置用户名称")]
+        public Response<SetUserInfoResponseBody> SetUserName(Request<SetUserNameRequestBody> request)
+        {
+            return UserService.SetUserName(request);
+        }
+
+        [HttpPost]
+        [Description("设置用户描述")]
+        public Response<SetUserInfoResponseBody> SetUserLifeNotes(Request<SetUserLifeNotesRequestBody> request)
+        {
+            return UserService.SetUserLifeNotes(request);
+        }
+
+        [HttpPost]
+        [Description("设置用户性别")]
+        public Response<SetUserInfoResponseBody> SetUserSex(Request<SetUserSexRequestBody> request)
+        {
+            return UserService.SetUserSex(request);
+        }
+        
+
+       [HttpPost]
+        [Description("设置用户标识")]
+        public Response<SetUserInfoResponseBody> SetUserSymbol(Request<SetUserSymbolRequestBody> request)
+        {
+            return UserService.SetUserSymbol(request);
+        }
+
+        [HttpPost]
+        [Description("查找用户信息")]
+        public Response<SearchUserResponseBody> SearchUser(Request<SearchUserRequestBody> request)
+        {
+            return UserService.SearchUser(request);
         }
     }
 }

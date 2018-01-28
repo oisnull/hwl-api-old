@@ -62,12 +62,12 @@ namespace HWL.Service
             });
         }
 
-        public static Response<SetUserInfoResponseBody> SetUserInfo(Request<SetUserInfoRequestBody> request)
+        public static Response<SetUserInfoResponseBody> SetUserSymbol(Request<SetUserSymbolRequestBody> request)
         {
-            var context = new ServiceContext<SetUserInfoRequestBody>(request, new RequestValidate());
+            var context = new ServiceContext<SetUserSymbolRequestBody>(request, new RequestValidate());
             return ContextProcessor.Execute(context, r =>
             {
-                return new SetUserInfo(r.Body).Execute();
+                return new SetUserSymbol(r.Body).Execute();
             });
         }
 
@@ -77,6 +77,47 @@ namespace HWL.Service
             return ContextProcessor.Execute(context, r =>
             {
                 return new GetUserDetails(r.Body).Execute();
+            });
+        }
+        public static Response<SetUserInfoResponseBody> SetUserLifeNotes(Request<SetUserLifeNotesRequestBody> request)
+        {
+            var context = new ServiceContext<SetUserLifeNotesRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetUserLifeNotes(r.Body).Execute();
+            });
+        }
+        public static Response<SetUserInfoResponseBody> SetUserName(Request<SetUserNameRequestBody> request)
+        {
+            var context = new ServiceContext<SetUserNameRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetUserName(r.Body).Execute();
+            });
+        }
+        public static Response<SetUserInfoResponseBody> SetUserHeadImage(Request<SetUserHeadImageRequestBody> request)
+        {
+            var context = new ServiceContext<SetUserHeadImageRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetUserHeadImage(r.Body).Execute();
+            });
+        }
+        
+        public static Response<SetUserInfoResponseBody> SetUserSex(Request<SetUserSexRequestBody> request)
+        {
+            var context = new ServiceContext<SetUserSexRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetUserSex(r.Body).Execute();
+            });
+        }
+        public static Response<SearchUserResponseBody> SearchUser(Request<SearchUserRequestBody> request)
+        {
+            var context = new ServiceContext<SearchUserRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SearchUser(r.Body).Execute();
             });
         }
     }

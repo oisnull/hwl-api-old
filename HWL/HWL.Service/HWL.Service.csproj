@@ -71,6 +71,7 @@
     <Compile Include="User\Body\AddFriendBody.cs" />
     <Compile Include="User\Body\GetFriendsBody.cs" />
     <Compile Include="User\Body\GetUserDetailsBody.cs" />
+    <Compile Include="User\Body\SearchUserBody.cs" />
     <Compile Include="User\Body\SetFriendRemarkBody.cs" />
     <Compile Include="User\Body\SetUserInfoBody.cs" />
     <Compile Include="User\Body\SetUserPosBody.cs" />
@@ -79,9 +80,15 @@
     <Compile Include="User\Service\AddFriend.cs" />
     <Compile Include="User\Service\GetFriends.cs" />
     <Compile Include="User\Service\GetUserDetails.cs" />
+    <Compile Include="User\Service\SearchUser.cs" />
     <Compile Include="User\Service\SetFriendRemark.cs" />
     <Compile Include="User\Service\SetUserInfo.cs" />
+    <Compile Include="User\Service\SetUserHeadImage.cs" />
+    <Compile Include="User\Service\SetUserLifeNotes.cs" />
+    <Compile Include="User\Service\SetUserSex.cs" />
     <Compile Include="User\Service\SetUserPos.cs" />
+    <Compile Include="User\Service\SetUserName.cs" />
+    <Compile Include="User\Service\SetUserSymbol.cs" />
     <Compile Include="User\Service\UserLogin.cs" />
     <Compile Include="User\Service\UserRegister.cs" />
     <Compile Include="User\UserUtility.cs" />

@@ -279,3 +279,308 @@ public class ImgUtils {
 1,推送
 mqtt:http://www.cnblogs.com/yinyi521/p/6084029.html
 http://blog.csdn.net/clh604/article/details/20167263
+
+
+
+2018-01-31:
+using System;
+
+namespace ConsoleTest
+{
+    public class MessageHandler
+    {
+        private MessageBase message;
+        private UserMessageContent userMessageContent;
+        private GroupMessageContent groupMessageContent;
+        public Action<string> ReceiveSuccCallBack { get; private set; }
+
+        public MessageHandler(MessageBase message)
+        {
+            this.message = message;
+
+            init();
+        }
+
+        private void init()
+        {
+            if (this.message == null) throw new Exception("消息不能为空");
+
+            if (this.message.MessageType == 1)
+            {
+                userMessageContent = message as UserMessageContent;
+            }
+            else if (this.message.MessageType == 2)
+            {
+                groupMessageContent = message as GroupMessageContent;
+            }
+        }
+
+        public void SendMessage()
+        {
+            string sendContent = string.Empty;
+            if (this.message.MessageType == 1)
+            {
+                sendContent = userMessageContent.Content;
+            }
+            else if (this.message.MessageType == 2)
+            {
+                sendContent = groupMessageContent.Content;
+            }
+            MQManager.SendContent(this.GetIdentity(), sendContent);
+        }
+
+        private string GetIdentity()
+        {
+            if (message.MessageType == 1)
+            {
+                return string.Format("user_{0}_{1}_queue", userMessageContent.FromUserId, userMessageContent.ToUserId);
+            }
+            else if (message.MessageType == 2)
+            {
+                return string.Format("group_{0}_{1}_queue", groupMessageContent.GroupId, groupMessageContent.FromUserId);
+            }
+
+            return "none_identity_queue";
+        }
+    }
+
+    public class MessageBase
+    {
+        public int MessageType { get; set; }//1个人消息,2组消息
+        public int ContentType { get; set; }//文字,图片地址
+    }
+
+    public class UserMessageContent : MessageBase
+    {
+        public int ToUserId { get; set; }
+        public int FromUserId { get; set; }
+        public string Content { get; set; }
+    }
+
+    public class GroupMessageContent : MessageBase
+    {
+        public int FromUserId { get; set; }
+        public string GroupId { get; set; }
+        public string Content { get; set; }
+    }
+
+}
+
+
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System;
+using System.Text;
+
+namespace ConsoleTest
+{
+    public class MQManager
+    {
+        private static IConnection conn;
+        private static IModel channel;
+        private static object obj = new object();
+        private static IConnectionStatus connStatus;
+
+        private MQManager()
+        {
+            BuildConnection();//测试添加到这里和移除后的效果
+        }
+
+        public static ConnectionFactory GetDefaultConnectionFactory()
+        {
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.HostName = "localhost";
+            return factory;
+        }
+
+        public static bool SendContent(string queueName, string message)
+        {
+            if (string.IsNullOrEmpty(queueName) || string.IsNullOrEmpty(message))
+            {
+                return false;
+            }
+            QueueDeclareOk result = channel.QueueDeclare(queueName, true, false, false, null);
+
+            var body = Encoding.UTF8.GetBytes(message);
+            try
+            {
+                channel.BasicPublish(exchange: "",
+                                    routingKey: queueName,
+                                    basicProperties: null,
+                                    body: body);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public static void ReceiveContent(string queueName, Action<string> succCallBack)
+        {
+            var consumer = new EventingBasicConsumer(channel);
+            channel.BasicConsume(queueName, false, consumer);
+            consumer.Received += (model, e) =>
+            {
+                if (e != null && e.Body != null && e.Body.Length > 0)
+                {
+                    string msg = Encoding.UTF8.GetString(e.Body);
+                    channel.BasicAck(e.DeliveryTag, false);
+                    succCallBack(msg);
+                }
+            };
+        }
+
+        public static void RegisterConnectionStatusEvent(IConnectionStatus connectionStatus)
+        {
+            if (connStatus == null && connectionStatus != null)
+            {
+                connStatus = connectionStatus;
+            }
+        }
+
+        /// <summary>
+        /// 一个客户端只能维护一个长连接
+        /// </summary>
+        /// <returns></returns>
+        public static IConnection BuildConnection()
+        {
+            if (conn == null)
+            {
+                lock (obj)
+                {
+                    if (conn == null)
+                    {
+                        conn = GetDefaultConnectionFactory().CreateConnection();
+                        BindConnectionEvent();
+                    }
+                }
+            }
+
+            return conn;
+        }
+
+        /// <summary>
+        /// 一个客户端只能有一个数据通道（包含收，发通道）
+        /// </summary>
+        /// <returns></returns>
+        public static IModel BuildChannel()
+        {
+            if (channel == null)
+            {
+                lock (obj)
+                {
+                    if (channel == null)
+                    {
+                        channel = BuildConnection().CreateModel();
+                    }
+                }
+            }
+
+            return channel;
+        }
+
+        public static void CloseConnection()
+        {
+            //先关闭通道
+            if (channel != null)
+            {
+                if (!channel.IsOpen)
+                {
+                    channel.Close();
+                }
+                else
+                {
+                    channel = null;
+                }
+            }
+
+            //再关闭连接
+            if (conn != null)
+            {
+                if (conn.IsOpen)
+                {
+                    conn.Close();
+                }
+                else
+                {
+                    conn = null;
+                }
+            }
+        }
+
+        private static void BindConnectionEvent()
+        {
+            if (conn != null)
+            {
+                conn.CallbackException += (sender, e) =>
+                {
+                    if (connStatus != null)
+                    {
+                        connStatus.OnError();
+                    }
+                };
+                conn.ConnectionBlocked += (sender, e) =>
+                {
+                    if (connStatus != null)
+                    {
+                        connStatus.OnDisconnected();
+                    }
+                };
+                conn.ConnectionRecoveryError += (sender, e) =>
+                {
+                    if (connStatus != null)
+                    {
+                        connStatus.OnError();
+                    }
+                };
+                conn.ConnectionShutdown += (sender, e) =>
+                {
+                    if (connStatus != null)
+                    {
+                        connStatus.OnClosed();
+                    }
+                };
+                conn.RecoverySucceeded += (sender, e) =>
+                {
+                    if (connStatus != null)
+                    {
+                        connStatus.OnReconnected();
+                    }
+                };
+                conn.ConnectionUnblocked += (sender, e) =>
+                {
+                    if (connStatus != null)
+                    {
+                        connStatus.OnSuccess();
+                    }
+                };
+            }
+        }
+    }
+
+    public interface IConnectionStatus
+    {
+        void OnError();//连接错误或者连接恢复错误
+        void OnDisconnected();//连接断开后
+        void OnClosed();//连接关闭后
+        void OnSuccess();//连接成功后
+        void OnReconnected();//重新连接后
+    }
+}
+
+
+  MQManager.RegisterConnectionStatusEvent(new ConnectionStatusListener());
+
+            UserMessageContent msg = new UserMessageContent()
+            {
+                ContentType = 1,
+                MessageType = 1,
+                FromUserId = 1,
+                ToUserId = 2,
+                Content = "你好啊！",
+            };
+            MessageHandler messageHandler = new MessageHandler(msg);
+
+            Console.WriteLine(" Press [enter] to exit.");
+            Console.ReadLine();

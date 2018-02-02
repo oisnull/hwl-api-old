@@ -38,7 +38,7 @@ namespace HWL.MQGroupDistribute.message
         public static void AddGroupUser()
         {
             int groupCount = 5;
-            int groupUserCount = 100;//每个组里面的人数
+            int groupUserCount = 500;//每个组里面的人数
 
             GroupAction act = new GroupAction();
             for (int i = 1; i <= groupCount; i++)

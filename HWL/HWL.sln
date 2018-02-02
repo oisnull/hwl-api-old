@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NOTE", "NOTE", "{5BA174E1-C
 	ProjectSection(SolutionItems) = preProject
 		chat.txt = chat.txt
 		rec.txt = rec.txt
+		..\..\..\work\IScopeTest\IScopeTest\test-mq.zip = ..\..\..\work\IScopeTest\IScopeTest\test-mq.zip
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.Tools", "HWL.Tools\HWL.Tools.csproj", "{2ED308F8-7376-4A12-B797-00DB016D6781}"

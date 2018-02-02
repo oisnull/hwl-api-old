@@ -1,16 +1,16 @@
-android·¢ËÍÏûÏ¢µ½mqÖÐµÄgroup queue
-c#¿ØÖÆÌ¨¼àÌýmqÖÐµÄgroup queue
-ÓÐÏûÏ¢½øÀ´£¬¿ªÆôÏß³Ì´¦ÀíÏûÏ¢
-Ê×ÏÈ´ÓredisÀïÃæÈ¡³ö×éÓÃ»§Êý¾ÝºÍ×éÊýÁ¿Êý¾Ý£¬Æ´½Ó³Équeue name
-È»ºóÔÙµ÷ÓÃmq,½«ÏûÏ¢·¢ËÍµ½Æ´½ÓµÄqueue name
+ï»¿androidå‘é€æ¶ˆæ¯åˆ°mqä¸­çš„group queue
+c#æŽ§åˆ¶å°ç›‘å¬mqä¸­çš„group queue
+æœ‰æ¶ˆæ¯è¿›æ¥ï¼Œå¼€å¯çº¿ç¨‹å¤„ç†æ¶ˆæ¯
+é¦–å…ˆä»Žredisé‡Œé¢å–å‡ºç»„ç”¨æˆ·æ•°æ®å’Œç»„æ•°é‡æ•°æ®ï¼Œæ‹¼æŽ¥æˆqueue name
+ç„¶åŽå†è°ƒç”¨mq,å°†æ¶ˆæ¯å‘é€åˆ°æ‹¼æŽ¥çš„queue name
 
-redisÖÐ´æ´¢×éÓÃ»§µÄ¸ñÊ½:
+redisä¸­å­˜å‚¨ç»„ç”¨æˆ·çš„æ ¼å¼:
 db0:groupid usercount
 db1:groupid hset<userid>
 
 rabbitmq:hwl_group_queue
 
-1,ÏÈ¶¨Òåredis¸ñÊ½£¬²¢ÊäÈë²âÊÔÊý¾Ý
-2£¬±àÐ´´ÓredisÀï»ñÈ¡Êý¾Ý£¬ºÍ¸üÐÂÊý¾ÝµÄ´¦Àí³ÌÐò
-3£¬¶¨ÒåmqÖÐgroup_queueÖÐÏûÏ¢µÄ¸ñÊ½£¬²¢Â¼ÈëÏûÏ¢
-4£¬¼àÌýmqÖÐÖ¸¶¨µÄgroup_queue£¬²¢»ñÈ¡ÏûÏ¢½øÐÐ·ÖÎöºó·Ö·¢µ½Ö¸¶¨¶ÓÁÐ
+1,å…ˆå®šä¹‰redisæ ¼å¼ï¼Œå¹¶è¾“å…¥æµ‹è¯•æ•°æ®
+2ï¼Œç¼–å†™ä»Žredisé‡ŒèŽ·å–æ•°æ®ï¼Œå’Œæ›´æ–°æ•°æ®çš„å¤„ç†ç¨‹åº
+3ï¼Œå®šä¹‰mqä¸­group_queueä¸­æ¶ˆæ¯çš„æ ¼å¼ï¼Œå¹¶å½•å…¥æ¶ˆæ¯
+4ï¼Œç›‘å¬mqä¸­æŒ‡å®šçš„group_queueï¼Œå¹¶èŽ·å–æ¶ˆæ¯è¿›è¡Œåˆ†æžåŽåˆ†å‘åˆ°æŒ‡å®šé˜Ÿåˆ—

@@ -84,10 +84,7 @@ namespace HWL.Redis
             return null;
         }
 
-        /// <summary>
-        /// 保存组用户
-        /// </summary>
-        public void SaveGroupUser(string groupGuid,params int[] userIds)
+        public void SaveGroupUser(string groupGuid, params int[] userIds)
         {
             if (string.IsNullOrEmpty(groupGuid)) return;
             if (userIds == null || userIds.Length <= 0) return;
@@ -116,23 +113,78 @@ namespace HWL.Redis
             return count;
         }
 
-        public List<string> GetGroupUserIds(string groupGuid)
+        public List<int> GetGroupUserIds(string groupGuid)
         {
             if (string.IsNullOrEmpty(groupGuid)) return null;
 
-            List<string> userIds = new List<string>();
+            List<int> userIds = new List<int>();
             base.DbNum = GROUP_USER_SET_DB;
             base.Exec(db =>
             {
                 RedisValue[] users = db.SetMembers(groupGuid);
                 if (users != null && users.Length > 0)
                 {
-                    userIds.AddRange(users.ToStringArray());
+                    userIds.AddRange(users.Select(u =>
+                    {
+                        int uid;
+                        u.TryParse(out uid);
+                        return uid;
+                    }).ToArray());
                 }
             });
 
             return userIds;
         }
+
+        ///// <summary>
+        ///// 保存组用户
+        ///// </summary>
+        //public void SaveGroupUser(string groupGuid,params int[] userIds)
+        //{
+        //    if (string.IsNullOrEmpty(groupGuid)) return;
+        //    if (userIds == null || userIds.Length <= 0) return;
+
+        //    base.DbNum = GROUP_USER_SET_DB;
+        //    base.Exec(db =>
+        //    {
+        //        RedisValue[] array = new RedisValue[userIds.Length];
+        //        for (int i = 0; i < userIds.Length; i++)
+        //        {
+        //            array[i] = userIds[i];
+        //        }
+        //        db.SetAdd(groupGuid, array);
+        //    });
+        //}
+
+        //public int GetGroupUserCount(string groupGuid)
+        //{
+        //    if (string.IsNullOrEmpty(groupGuid)) return 0;
+        //    base.DbNum = GROUP_USER_SET_DB;
+        //    int count = 0;
+        //    base.Exec(db =>
+        //    {
+        //        count = Convert.ToInt32(db.SetLength(groupGuid));
+        //    });
+        //    return count;
+        //}
+
+        //public List<string> GetGroupUserIds(string groupGuid)
+        //{
+        //    if (string.IsNullOrEmpty(groupGuid)) return null;
+
+        //    List<string> userIds = new List<string>();
+        //    base.DbNum = GROUP_USER_SET_DB;
+        //    base.Exec(db =>
+        //    {
+        //        RedisValue[] users = db.SetMembers(groupGuid);
+        //        if (users != null && users.Length > 0)
+        //        {
+        //            userIds.AddRange(users.ToStringArray());
+        //        }
+        //    });
+
+        //    return userIds;
+        //}
 
         /// <summary>
         /// 创建组位置数据,返回创建成功后的组标识

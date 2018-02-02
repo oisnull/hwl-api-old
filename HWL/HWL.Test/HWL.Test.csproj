@@ -87,7 +87,9 @@
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -119,6 +121,14 @@
     <ProjectReference Include="..\HWL.Entity\HWL.Entity.csproj">
       <Project>{872ceee4-49c1-45ac-905f-8efbd66f1b5a}</Project>
       <Name>HWL.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HWL.MQGroupDistribute\HWL.MQGroupDistribute.csproj">
+      <Project>{8b54ad42-d22a-4c8e-a02c-6c2c0567abd9}</Project>
+      <Name>HWL.MQGroupDistribute</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HWL.Redis\HWL.Redis.csproj">
+      <Project>{114f979c-c371-4b28-81ca-05c4d68bb466}</Project>
+      <Name>HWL.Redis</Name>
     </ProjectReference>
     <ProjectReference Include="..\HWL.Service\HWL.Service.csproj">
       <Project>{7e2e78be-a30f-463d-a00d-b6bd53441479}</Project>

@@ -15,7 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NOTE", "NOTE", "{5BA174E1-C
 	ProjectSection(SolutionItems) = preProject
 		chat.txt = chat.txt
 		rec.txt = rec.txt
-		..\..\..\work\IScopeTest\IScopeTest\test-mq.zip = ..\..\..\work\IScopeTest\IScopeTest\test-mq.zip
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.Tools", "HWL.Tools\HWL.Tools.csproj", "{2ED308F8-7376-4A12-B797-00DB016D6781}"
@@ -23,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.Redis", "HWL.Redis\HWL.Redis.csproj", "{114F979C-C371-4B28-81CA-05C4D68BB466}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.Resx", "HWL.Resx\HWL.Resx.csproj", "{01C6AFB8-01A2-4592-884D-9D58E4BB8420}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.MQGroupDistribute", "HWL.MQGroupDistribute\HWL.MQGroupDistribute.csproj", "{8B54AD42-D22A-4C8E-A02C-6C2C0567ABD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +59,10 @@ Global
 		{01C6AFB8-01A2-4592-884D-9D58E4BB8420}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01C6AFB8-01A2-4592-884D-9D58E4BB8420}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01C6AFB8-01A2-4592-884D-9D58E4BB8420}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B54AD42-D22A-4C8E-A02C-6C2C0567ABD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B54AD42-D22A-4C8E-A02C-6C2C0567ABD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B54AD42-D22A-4C8E-A02C-6C2C0567ABD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B54AD42-D22A-4C8E-A02C-6C2C0567ABD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

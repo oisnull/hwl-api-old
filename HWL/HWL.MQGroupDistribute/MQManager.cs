@@ -28,6 +28,9 @@ namespace HWL.MQGroupDistribute
         {
             ConnectionFactory factory = new ConnectionFactory();
             factory.HostName = MQConfigService.GroupRabbitMQHosts;
+            factory.Port = MQConfigService.GroupRabbitMQHostsPort;
+            factory.UserName = MQConfigService.GroupRabbitMQHostsUser;
+            factory.Password = MQConfigService.GroupRabbitMQHostsPassword;
             return factory;
         }
 

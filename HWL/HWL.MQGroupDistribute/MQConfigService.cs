@@ -16,5 +16,26 @@ namespace HWL.MQGroupDistribute
                 return ConfigurationManager.AppSettings["GroupRabbitMQHosts"].ToString();
             }
         }
+        public static int GroupRabbitMQHostsPort
+        {
+            get
+            {
+                return Convert.ToInt32(ConfigurationManager.AppSettings["GroupRabbitMQHostsPort"]);
+            }
+        }
+        public static string GroupRabbitMQHostsUser
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["GroupRabbitMQHostsUser"].ToString();
+            }
+        }
+        public static string GroupRabbitMQHostsPassword
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["GroupRabbitMQHostsPassword"].ToString();
+            }
+        }
     }
 }

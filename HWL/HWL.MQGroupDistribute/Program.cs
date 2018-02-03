@@ -14,26 +14,53 @@ namespace HWL.MQGroupDistribute
     {
         static void Main(string[] args)
         {
-            double currTmr = 0;
+            //MQGroupMessageUnit.AddGroupMessage();
+            //byte[] first = { 22, 33 };
+            //byte[] second = { 44, 55, 66 };
+            ////resArr为合并后数组
+            //byte[] resArr = new byte[first.Length + second.Length + 1];
+            //resArr[0] = 11;
+            //first.CopyTo(resArr, 1);
+            //second.CopyTo(resArr, first.Length + 1);
+            //foreach (var item in resArr)
+            //{
+            //    Console.WriteLine(item);
+            //}
 
+            //byte[] b = { 11, 22, 33, 44, 55, 66, 77, 88 };
+            //int gidlen = 3;
+            //byte[] gid = new byte[gidlen];
+            //byte[] ret = new byte[b.Length - gid.Length - 1];
+            //Array.Copy(b, 1, gid, 0, gidlen);
+            //Array.Copy(b, gid.Length + 1, ret, 0, ret.Length);
+
+            //foreach (var item in ret)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            double currTmr = 0;
             MQManager.registerConnectionStatusEvent(new ConnectionStatus());
             UserSource us = new UserSource();
-            MessageSource ms = new MessageSource();
             int i = 1;
-            ms.Listener((msgModel) =>
+            MQManager.ReceiveGroupMessage((groupId, messageBytes) =>
             {
-                if (msgModel != null)
+                if (!string.IsNullOrEmpty(groupId) && messageBytes != null && messageBytes.Length > 0)
                 {
-                    var userQueueSymbols = us.GetUserQueueSymbolList(msgModel.GroupId);
-
                     DateTime beforDT = System.DateTime.Now;
-                    ms.Distribute(userQueueSymbols);
+
+                    var userQueueSymbols = us.GetUserQueueSymbolList(groupId);
+                    MQManager.SendMessage(userQueueSymbols, messageBytes);
+
                     DateTime afterDT = System.DateTime.Now;
                     TimeSpan ts = afterDT.Subtract(beforDT);
                     currTmr += ts.TotalMilliseconds;
                     Console.WriteLine(i + " current " + ts.TotalMilliseconds + " ms,total " + currTmr + " ms");
                 }
                 i++;
+            }, (error) =>
+            {
+                Console.WriteLine(error);
             });
 
             Console.ReadLine();
@@ -64,7 +91,7 @@ namespace HWL.MQGroupDistribute
 
         public void OnConnectionSuccess(IConnection connection)
         {
-            Console.WriteLine("OnConnectionSuccess : "+ connection.Endpoint.HostName+ "连接成功");
+            Console.WriteLine("OnConnectionSuccess : " + connection.Endpoint.HostName + "连接成功");
         }
 
         public void OnDisconnected(string exceptionInfo)

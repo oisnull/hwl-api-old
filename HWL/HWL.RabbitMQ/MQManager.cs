@@ -1,12 +1,17 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace HWL.RabbitMQ
 {
     public class MQManager
     {
+        /// <summary>
+        /// 要与mq中的组队列相对应
+        /// </summary>
+        public readonly static string GROUPQUEUENAME = "group-queue";
 
         private static MQConnection mqconn;
         private static IModel sendChannel;
@@ -55,28 +60,61 @@ namespace HWL.RabbitMQ
             return mqconn.GetConnection();
         }
 
+        public static void SendMessage(List<string> queueNames, byte[] messageBytes)
+        {
+            if (messageBytes == null || messageBytes.Length <= 0) return;
+            if (queueNames == null || queueNames.Count <= 0) return;
 
-        public static void SendMessage(String queueName, String messageContent)
+            foreach (var item in queueNames)
+            {
+                SendMessage(item, messageBytes);
+            }
+        }
+
+        public static void SendMessage(String queueName, byte[] messageBytes)
         {
             //GetSendChannel().QueueDeclare(queueName, true, false, false, null);
 
-            byte[] messageBodyBytes = Encoding.UTF8.GetBytes(messageContent);
-            GetSendChannel().BasicPublish("", queueName, null, messageBodyBytes);
+            GetSendChannel().BasicPublish("", queueName, null, messageBytes);
         }
 
-        public static void ReceiveMessage(String queueName, Action<string> succCallBack)
+        public static void ReceiveGroupMessage(Action<string, byte[]> succCallBack, Action<string> errorCallBackk = null)
+        {
+            ReceiveMessage(GROUPQUEUENAME, succCallBack, errorCallBackk);
+        }
+
+        public static void ReceiveMessage(String queueName, Action<string, byte[]> succCallBack, Action<string> errorCallBackk = null)
         {
             GetReceiveChannel().QueueDeclare(queueName, true, false, false, null);
             var consumer = new EventingBasicConsumer(receiveChannel);
             receiveChannel.BasicConsume(queueName, false, consumer);
             //receiveChannel.BasicQos(0, 1, false);//这里指示一条条处理
+
+            string groupId = string.Empty;
+            byte[] groupIdBytes = null;
+            byte[] msgBytes = null;
+
             consumer.Received += (model, e) =>
             {
                 receiveChannel.BasicAck(e.DeliveryTag, false);
                 if (e != null && e.Body != null && e.Body.Length > 0)
                 {
-                    string msg = Encoding.UTF8.GetString(e.Body);
-                    succCallBack(msg);
+                    try
+                    {
+                        //byte[]的第一位是groupid的长度
+                        int groupIdLength = e.Body[0];
+                        groupIdBytes = new byte[groupIdLength];
+                        msgBytes = new byte[e.Body.Length - groupIdLength - 1];
+                        Array.Copy(e.Body, 1, groupIdBytes, 0, groupIdLength);
+                        Array.Copy(e.Body, groupIdBytes.Length + 1, msgBytes, 0, msgBytes.Length);
+
+                        succCallBack(Encoding.UTF8.GetString(groupIdBytes), msgBytes);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (errorCallBackk != null)
+                            errorCallBackk(ex.Message);
+                    }
                 }
             };
         }

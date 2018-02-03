@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="message\MessageSource.cs" />
+    <Compile Include="message\MQGroupMessageUnit.cs" />
     <Compile Include="message\UserSource.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

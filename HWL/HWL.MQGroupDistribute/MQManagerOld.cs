@@ -8,7 +8,7 @@ using RabbitMQ.Client.Framing.Impl;
 
 namespace HWL.MQGroupDistribute
 {
-    public class MQManager
+    public class MQManagerOld
     {
         private static IConnection conn;
         private static IModel sendChannel;
@@ -16,13 +16,13 @@ namespace HWL.MQGroupDistribute
         private static object obj = new object();
         private static IConnectionStatus connStatus;
 
-        static MQManager()
+        static MQManagerOld()
         {
             BuildConnection();
             InitChannel();
         }
 
-        private MQManager() { }
+        private MQManagerOld() { }
 
         private static ConnectionFactory GetDefaultConnectionFactory()
         {

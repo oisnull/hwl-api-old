@@ -16,3 +16,17 @@
 /HWL/HWL.Resx
 /HWL/HWL.MQGroupDistribute/bin
 /HWL/HWL.MQGroupDistribute/obj/Debug
+/HWL/HWL.RabbitMQ/bin/Debug
+/HWL/HWL.RabbitMQ/obj/Debug
+/HWL/packages/Microsoft.AspNet.WebPages.zh-Hans.3.2.3
+/HWL/packages/Microsoft.ApplicationInsights.DependencyCollector.2.2.0
+/HWL/packages/Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0
+/HWL/packages/Newtonsoft.Json.5.0.1
+/HWL/packages/Microsoft.AspNet.WebPages.3.2.3/lib/net45/zh-Hans
+/HWL/packages/Microsoft.AspNet.Razor.zh-Hans.3.2.3
+/HWL/packages/Microsoft.AspNet.Razor.3.2.3/lib/net45/zh-Hans
+/HWL/packages/Microsoft.AspNet.Mvc.zh-Hans.5.2.3
+/HWL/packages/Microsoft.AspNet.Mvc.5.2.3/lib/net45/zh-Hans
+/HWL/packages/Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0
+/HWL/packages/Microsoft.ApplicationInsights.WindowsServer.2.2.0
+/HWL/packages/Microsoft.ApplicationInsights.Web.2.2.0

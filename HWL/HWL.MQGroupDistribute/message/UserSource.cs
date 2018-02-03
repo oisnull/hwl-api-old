@@ -28,9 +28,9 @@ namespace HWL.MQGroupDistribute.message
         {
             if (userId <= 0)
             {
-                return "user_none_queue";
+                return "user-none-queue";
             }
-            return string.Format("user_{0}_queue", userId);
+            return string.Format("user-{0}-queue", userId);
         }
     }
     public class GroupActionUnit

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HWL.RabbitMQ;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,13 +26,13 @@ namespace HWL.MQGroupDistribute.message
         /// <summary>
         /// 要与mq中的组队列相对应
         /// </summary>
-        public readonly static string messageQueueName = "group_queue";
+        public readonly static string messageQueueName = "group-queue";
 
         private MessageModel currMessageModel = null;
 
         public void Listener(Action<MessageModel> callBack)
         {
-            MQManager.ReceiveContent(messageQueueName, (msg) =>
+            MQManager.ReceiveMessage(messageQueueName, (msg) =>
             {
                 if (!string.IsNullOrEmpty(msg))
                 {
@@ -45,7 +46,7 @@ namespace HWL.MQGroupDistribute.message
         {
             if (currMessageModel == null) return;
             string msg = JsonConvert.SerializeObject(currMessageModel);
-            MQManager.SendContent(messageQueueName, msg);
+            MQManager.SendMessage(messageQueueName, msg);
         }
 
         public void Distribute(List<string> queueNames)
@@ -55,7 +56,7 @@ namespace HWL.MQGroupDistribute.message
 
             foreach (var item in queueNames)
             {
-                MQManager.SendContent(item, JsonConvert.SerializeObject(currMessageModel));
+                MQManager.SendMessage(item, JsonConvert.SerializeObject(currMessageModel));
             }
         }
     }
@@ -79,7 +80,7 @@ namespace HWL.MQGroupDistribute.message
                         FromUserId = 1,
                         MessageType = 1,
                     };
-                    MQManager.SendContent(MessageSource.messageQueueName, JsonConvert.SerializeObject(model));
+                    MQManager.SendMessage(MessageSource.messageQueueName, JsonConvert.SerializeObject(model));
                 }
 
             }

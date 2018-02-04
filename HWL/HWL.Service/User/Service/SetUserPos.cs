@@ -11,6 +11,9 @@ namespace HWL.Service.User.Service
 {
     public class SetUserPos : GMSF.ServiceHandler<SetUserPosRequestBody, SetUserPosResponseBody>
     {
+        double lat = 0;
+        double lon = 0;
+
         public SetUserPos(SetUserPosRequestBody request) : base(request)
         {
         }
@@ -23,9 +26,17 @@ namespace HWL.Service.User.Service
             {
                 throw new ArgumentNullException("UserId");
             }
-            if (this.request.UserPos == null)
+            if (string.IsNullOrEmpty(this.request.Latitude) || string.IsNullOrEmpty(this.request.Longitude))
             {
-                throw new ArgumentNullException("UserPos");
+                throw new Exception("经度和纬度不能为空");
+            }
+
+            double.TryParse(this.request.Latitude, out lat);
+            double.TryParse(this.request.Longitude, out lon);
+
+            if (lat <= 0 || lon <= 0)
+            {
+                throw new Exception("经度和纬度的值错误");
             }
         }
 
@@ -49,52 +60,52 @@ namespace HWL.Service.User.Service
             using (HWLEntities db = new HWLEntities())
             {
                 //检测是否存在country province city district 没有就添加
-                t_country country = db.t_country.Where(c => c.name == this.request.UserPos.Country).FirstOrDefault();
+                t_country country = db.t_country.Where(c => c.name == this.request.Country).FirstOrDefault();
                 if (country == null)
                 {
                     country = new t_country()
                     {
                         id = 0,
-                        name = this.request.UserPos.Country,
+                        name = this.request.Country,
                     };
                     db.t_country.Add(country);
                     db.SaveChanges();
                 }
 
-                t_province province = db.t_province.Where(p => p.name == this.request.UserPos.Province).FirstOrDefault();
+                t_province province = db.t_province.Where(p => p.name == this.request.Province).FirstOrDefault();
                 if (province == null)
                 {
                     province = new t_province()
                     {
                         id = 0,
                         country_id = country.id,
-                        name = this.request.UserPos.Province,
+                        name = this.request.Province,
                     };
                     db.t_province.Add(province);
                     db.SaveChanges();
                 }
 
-                t_city city = db.t_city.Where(c => c.name == this.request.UserPos.City).FirstOrDefault();
+                t_city city = db.t_city.Where(c => c.name == this.request.City).FirstOrDefault();
                 if (city == null)
                 {
                     city = new t_city()
                     {
                         id = 0,
                         province_id = province.id,
-                        name = this.request.UserPos.City,
+                        name = this.request.City,
                     };
                     db.t_city.Add(city);
                     db.SaveChanges();
                 }
 
-                t_district district = db.t_district.Where(p => p.name == this.request.UserPos.District).FirstOrDefault();
+                t_district district = db.t_district.Where(p => p.name == this.request.District).FirstOrDefault();
                 if (district == null)
                 {
                     district = new t_district()
                     {
                         id = 0,
                         city_id = city.id,
-                        name = this.request.UserPos.District,
+                        name = this.request.District,
                     };
                     db.t_district.Add(district);
                     db.SaveChanges();
@@ -106,7 +117,7 @@ namespace HWL.Service.User.Service
                                                             u.province_id == province.id &&
                                                             u.city_id == city.id &&
                                                             u.district_id == district.id &&
-                                                            u.pos_details == this.request.UserPos.Details
+                                                            u.pos_details == this.request.Details
                                                         ).FirstOrDefault();
                 if (upos == null)
                 {
@@ -116,10 +127,10 @@ namespace HWL.Service.User.Service
                         id = 0,
                         create_date = DateTime.Now,
                         update_date = DateTime.Now,
-                        geohash_key = Geohash.Encode(this.request.UserPos.Latitude, this.request.UserPos.Longitude),
-                        lat = this.request.UserPos.Latitude,
-                        lon = this.request.UserPos.Longitude,
-                        pos_details = this.request.UserPos.Details,
+                        geohash_key = Geohash.Encode(lat, lon),
+                        lat = lat,
+                        lon = lon,
+                        pos_details = this.request.Details,
                         user_id = this.request.UserId,
                         city_id = city.id,
                         country_id = country.id,
@@ -144,8 +155,13 @@ namespace HWL.Service.User.Service
                 //获取当前位置附近的组
                 Redis.GroupAction groupAction = new Redis.GroupAction();
                 res.UserGroupGuid = groupAction.GetNearGroupGuid(upos.lon, upos.lat);
+                if(string.IsNullOrEmpty(res.UserGroupGuid))
+                {
+                    //如果没有组数据，创建一个组
+                    res.UserGroupGuid = groupAction.CreateGroupPos(upos.lon, upos.lat);
+                }
 
-                //将用户加入到附近组中
+                //将用户加入到组中
                 groupAction.SaveGroupUser(res.UserGroupGuid, upos.user_id);
             }
 

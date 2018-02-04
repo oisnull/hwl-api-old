@@ -11,7 +11,7 @@ namespace HWL.RabbitMQ
         /// <summary>
         /// 要与mq中的组队列相对应
         /// </summary>
-        public readonly static string GROUPQUEUENAME = "group-queue";
+        public readonly static string GROUP_QUEUE_NAME = "group-queue";
 
         private static MQConnection mqconn;
         private static IModel sendChannel;
@@ -74,13 +74,12 @@ namespace HWL.RabbitMQ
         public static void SendMessage(String queueName, byte[] messageBytes)
         {
             //GetSendChannel().QueueDeclare(queueName, true, false, false, null);
-
             GetSendChannel().BasicPublish("", queueName, null, messageBytes);
         }
 
         public static void ReceiveGroupMessage(Action<string, byte[]> succCallBack, Action<string> errorCallBackk = null)
         {
-            ReceiveMessage(GROUPQUEUENAME, succCallBack, errorCallBackk);
+            ReceiveMessage(GROUP_QUEUE_NAME, succCallBack, errorCallBackk);
         }
 
         public static void ReceiveMessage(String queueName, Action<string, byte[]> succCallBack, Action<string> errorCallBackk = null)

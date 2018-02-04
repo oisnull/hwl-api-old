@@ -189,7 +189,7 @@ namespace HWL.Redis
         /// <summary>
         /// 创建组位置数据,返回创建成功后的组标识
         /// </summary>
-        public string CreateGroupPos(int userId, double lon, double lat)
+        public string CreateGroupPos(double lon, double lat)
         {
             bool succ = false;
             base.DbNum = GROUP_GEO_DB;

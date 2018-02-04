@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.MQGroupDistribute", "HW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HWL.RabbitMQ", "HWL.RabbitMQ\HWL.RabbitMQ.csproj", "{2C189826-F491-4840-8072-C187BB24262C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MQ", "MQ", "{B4850128-1C01-40FD-A7FF-3409E3566199}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,5 +68,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8B54AD42-D22A-4C8E-A02C-6C2C0567ABD9} = {B4850128-1C01-40FD-A7FF-3409E3566199}
+		{2C189826-F491-4840-8072-C187BB24262C} = {B4850128-1C01-40FD-A7FF-3409E3566199}
 	EndGlobalSection
 EndGlobal

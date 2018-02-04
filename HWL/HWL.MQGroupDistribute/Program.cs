@@ -91,7 +91,7 @@ namespace HWL.MQGroupDistribute
 
         public void OnConnectionSuccess(IConnection connection)
         {
-            Console.WriteLine("OnConnectionSuccess : " + connection.Endpoint.HostName + "连接成功");
+            Console.WriteLine("OnConnectionSuccess : " + connection.Endpoint.HostName + " 连接成功");
         }
 
         public void OnDisconnected(string exceptionInfo)

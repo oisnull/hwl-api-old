@@ -30,3 +30,5 @@
 /HWL/packages/Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0
 /HWL/packages/Microsoft.ApplicationInsights.WindowsServer.2.2.0
 /HWL/packages/Microsoft.ApplicationInsights.Web.2.2.0
+/HWL/HWL.Unit/bin
+/HWL/HWL.Unit/obj/Debug

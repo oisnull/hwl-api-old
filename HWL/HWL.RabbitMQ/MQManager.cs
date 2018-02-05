@@ -73,8 +73,16 @@ namespace HWL.RabbitMQ
 
         public static void SendMessage(String queueName, byte[] messageBytes)
         {
-            //GetSendChannel().QueueDeclare(queueName, true, false, false, null);
-            GetSendChannel().BasicPublish("", queueName, null, messageBytes);
+            try
+            {
+                GetSendChannel().BasicPublish("", queueName, null, messageBytes);
+            }
+            catch (NullReferenceException)
+            {
+                GetSendChannel().QueueDeclare(queueName, true, false, false, null);
+                SendMessage(queueName, messageBytes);
+            }
+
         }
 
         public static void ReceiveGroupMessage(Action<string, byte[]> succCallBack, Action<string> errorCallBackk = null)

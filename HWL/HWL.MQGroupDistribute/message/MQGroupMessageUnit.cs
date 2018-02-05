@@ -1,4 +1,5 @@
 ﻿using HWL.RabbitMQ;
+using HWL.Redis;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,15 @@ namespace HWL.MQGroupDistribute.message
 {
     public class MQGroupMessageUnit
     {
+        const int GROUP_COUNT = 5;
+        const int GROUP_USER_COUNT = 500;//每个组里面的人数
+        const int GROUP_MESSAGE_COUNT = 1000;//每个组里面的消息数量
+
         public static void AddGroupMessage()
         {
-            int groupCount = 5;
-            int groupMessageCount = 10;
-
-            for (int i = 1; i < groupCount; i++)
+            for (int i = 1; i < GROUP_COUNT; i++)
             {
-                for (int j = 1; j <= groupMessageCount; j++)
+                for (int j = 1; j <= GROUP_MESSAGE_COUNT; j++)
                 {
                     var model = new MessageModel()
                     {
@@ -36,6 +38,19 @@ namespace HWL.MQGroupDistribute.message
                     MQManager.SendMessage(MQManager.GROUP_QUEUE_NAME, msgBytes);
                 }
 
+            }
+        }
+        public static void AddGroupUser()
+        {
+            GroupAction act = new GroupAction();
+            for (int i = 1; i <= GROUP_COUNT; i++)
+            {
+                List<int> users = new List<int>();
+                for (int j = 1; j <= GROUP_USER_COUNT; j++)
+                {
+                    users.Add(j);
+                }
+                act.SaveGroupUser("group-guid-" + i, users.ToArray());
             }
         }
     }

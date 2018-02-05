@@ -1,10 +1,6 @@
 ﻿using HWL.MQGroupDistribute.message;
 using HWL.RabbitMQ;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Framing.Impl;
 
@@ -12,33 +8,35 @@ namespace HWL.MQGroupDistribute
 {
     class Program
     {
+
+
         static void Main(string[] args)
         {
-            //MQGroupMessageUnit.AddGroupMessage();
-            //byte[] first = { 22, 33 };
-            //byte[] second = { 44, 55, 66 };
-            ////resArr为合并后数组
-            //byte[] resArr = new byte[first.Length + second.Length + 1];
-            //resArr[0] = 11;
-            //first.CopyTo(resArr, 1);
-            //second.CopyTo(resArr, first.Length + 1);
-            //foreach (var item in resArr)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            //ByteTest();
 
-            //byte[] b = { 11, 22, 33, 44, 55, 66, 77, 88 };
-            //int gidlen = 3;
-            //byte[] gid = new byte[gidlen];
-            //byte[] ret = new byte[b.Length - gid.Length - 1];
-            //Array.Copy(b, 1, gid, 0, gidlen);
-            //Array.Copy(b, gid.Length + 1, ret, 0, ret.Length);
+            //Listener();
 
-            //foreach (var item in ret)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            AddTestData();
 
+            Console.ReadLine();
+        }
+
+        private static void AddTestData()
+        {
+            try
+            {
+                MQGroupMessageUnit.AddGroupUser();
+                MQGroupMessageUnit.AddGroupMessage();
+                Console.WriteLine("测试数据添加完成...");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private static void Listener()
+        {
             double currTmr = 0;
             MQManager.registerConnectionStatusEvent(new ConnectionStatus());
             UserSource us = new UserSource();
@@ -62,8 +60,33 @@ namespace HWL.MQGroupDistribute
             {
                 Console.WriteLine(error);
             });
+        }
 
-            Console.ReadLine();
+        private static void ByteTest()
+        {
+            byte[] first = { 22, 33 };
+            byte[] second = { 44, 55, 66 };
+            //resArr为合并后数组
+            byte[] resArr = new byte[first.Length + second.Length + 1];
+            resArr[0] = 11;
+            first.CopyTo(resArr, 1);
+            second.CopyTo(resArr, first.Length + 1);
+            foreach (var item in resArr)
+            {
+                Console.WriteLine(item);
+            }
+
+            byte[] b = { 11, 22, 33, 44, 55, 66, 77, 88 };
+            int gidlen = 3;
+            byte[] gid = new byte[gidlen];
+            byte[] ret = new byte[b.Length - gid.Length - 1];
+            Array.Copy(b, 1, gid, 0, gidlen);
+            Array.Copy(b, gid.Length + 1, ret, 0, ret.Length);
+
+            foreach (var item in ret)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 

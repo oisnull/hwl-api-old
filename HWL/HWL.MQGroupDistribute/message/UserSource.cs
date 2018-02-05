@@ -33,23 +33,4 @@ namespace HWL.MQGroupDistribute.message
             return string.Format("user-{0}-queue", userId);
         }
     }
-    public class GroupActionUnit
-    {
-        public static void AddGroupUser()
-        {
-            int groupCount = 5;
-            int groupUserCount = 500;//每个组里面的人数
-
-            GroupAction act = new GroupAction();
-            for (int i = 1; i <= groupCount; i++)
-            {
-                List<int> users = new List<int>();
-                for (int j = 1; j <= groupUserCount; j++)
-                {
-                    users.Add(j);
-                }
-                act.SaveGroupUser("group-guid-" + i, users.ToArray());
-            }
-        }
-    }
 }

@@ -33,7 +33,7 @@ namespace HWL.MQGroupDistribute.message
                     msgBytes[0] = (byte)groupIdBytes.Length;
                     groupIdBytes.CopyTo(msgBytes, 1);
                     msgBytes1.CopyTo(msgBytes, groupIdBytes.Length + 1);
-                    MQManager.SendMessage(MQManager.GROUPQUEUENAME, msgBytes);
+                    MQManager.SendMessage(MQManager.GROUP_QUEUE_NAME, msgBytes);
                 }
 
             }

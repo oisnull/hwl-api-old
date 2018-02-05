@@ -685,3 +685,7 @@ namespace RabbitMQClient
         }
     }
 }
+
+
+2018-02-05：
+后面再项目中应用rxjava https://github.com/rengwuxian/RxJavaSamples

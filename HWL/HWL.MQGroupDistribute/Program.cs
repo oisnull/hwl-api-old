@@ -14,9 +14,9 @@ namespace HWL.MQGroupDistribute
         {
             //ByteTest();
 
-            //Listener();
+            Listener();
 
-            AddTestData();
+            //AddTestData();
 
             Console.ReadLine();
         }

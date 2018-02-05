@@ -31,7 +31,18 @@ namespace HWL.Unit.Controllers
             };
 
             String json = JsonConvert.SerializeObject(model);
-            return Encoding.UTF8.GetBytes(json);
+            return mergeToStart(1, Encoding.UTF8.GetBytes(json));
+        }
+
+        public static byte[] mergeToStart(byte headByte, byte[] bodyBytes)
+        {
+            byte[] resultBytes = new byte[bodyBytes.Length + 1];
+            resultBytes[0] = headByte;
+            for (int i = 1; i < resultBytes.Length; i++)
+            {
+                resultBytes[i] = bodyBytes[i - 1];
+            }
+            return resultBytes;
         }
     }
 }

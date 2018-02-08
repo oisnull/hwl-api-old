@@ -12,7 +12,7 @@ namespace HWL.Service.User.Body
     {
         public int MyUserId { get; set; }
         /// <summary>
-        /// 我的备注
+        /// 我给好友的备注
         /// </summary>
         public string MyRemark { get; set; }
         public int FriendUserId { get; set; }

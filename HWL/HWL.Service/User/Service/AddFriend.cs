@@ -65,7 +65,6 @@ namespace HWL.Service.User.Service
                 }
 
                 //后面添加，检测用户是否已经设置添加好友时是否需要验证，如果不需要验证则直接添加，如果需要则向用户推送验证请求
-
                 var myFriendModel = db.t_user_friend.Where(u => u.user_id == this.request.MyUserId && u.friend_user_id == this.request.FriendUserId).FirstOrDefault();
                 if (myFriendModel != null)
                 {
@@ -79,7 +78,7 @@ namespace HWL.Service.User.Service
                         add_time = DateTime.Now,
                         user_id = this.request.MyUserId,
                         friend_user_id = this.request.FriendUserId,
-                        //friend_user_remark = this.request.FriendUserRemark,
+                        friend_user_remark = this.request.MyRemark,
                         //friend_first_spell = UserUtility.GetRemarkFirstSpell(this.request.FriendUserRemark.FirstOrDefault().ToString())
                     };
                     db.t_user_friend.Add(myFriendModel);
@@ -110,7 +109,7 @@ namespace HWL.Service.User.Service
                 {
                     Id = friendUser.id,
                     HeadImage = friendUser.head_image,
-                    //NameRemark = tofriendUser.remark,
+                    NameRemark = myFriendModel.friend_user_remark,
                     Country = db.t_province.Where(p => p.id == friendUser.register_country).Select(p => p.name).FirstOrDefault(),
                     Province = db.t_province.Where(p => p.id == friendUser.register_province).Select(p => p.name).FirstOrDefault(),
                     Symbol = friendUser.symbol,

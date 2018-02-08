@@ -23,12 +23,20 @@ namespace HWL.Unit.Controllers
         {
             var model = new AddFriendBean()
             {
-                friendId = 2,
-                remark = "我是 2536",
+                friendId = 3,
+                remark = "我是 liyyy",
                 userHeadImage = "http://192.168.1.4:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
                 userId = 1,
-                userName = "2536"
+                userName = "liyyy"
             };
+            //var model = new AddFriendBean()
+            //{
+            //    friendId = 1,
+            //    remark = "我是 2536",
+            //    userHeadImage = "http://192.168.1.4:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
+            //    userId = 1,
+            //    userName = "2536"
+            //};
 
             String json = JsonConvert.SerializeObject(model);
             return mergeToStart(1, Encoding.UTF8.GetBytes(json));

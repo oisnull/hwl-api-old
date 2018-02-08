@@ -101,6 +101,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddFriendBean.cs" />
+    <Compile Include="Models\ChatFriendRequestBean.cs" />
+    <Compile Include="Models\MessageType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

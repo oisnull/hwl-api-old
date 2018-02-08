@@ -14,9 +14,28 @@ namespace HWL.Unit.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            RabbitMQ.MQManager.SendMessage("user-2-queue", GetAddFriendBean());
+            RabbitMQ.MQManager.SendMessage("user-2-queue", GetChatFriendRequestBean());
+            //RabbitMQ.MQManager.SendMessage("user-2-queue", GetAddFriendBean());
 
             return View();
+        }
+
+        public byte[] GetChatFriendRequestBean()
+        {
+            var model = new ChatFriendRequestBean()
+            {
+                toUserId = 2,
+                toUserName = "liy",
+                toUserHeadImage = "http://192.168.1.4:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
+                fromUserId = 1,
+                fromUserName = "2536",
+                fromUserHeadImage = "http://192.168.1.4:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
+                content = "我们已经成功好友了",
+                sendTime = DateTime.Now,
+                contentType = 1,
+            };
+            String json = JsonConvert.SerializeObject(model);
+            return mergeToStart(MessageType.CHAT_FRIEND_REQUEST, Encoding.UTF8.GetBytes(json));
         }
 
         public byte[] GetAddFriendBean()
@@ -39,7 +58,7 @@ namespace HWL.Unit.Controllers
             //};
 
             String json = JsonConvert.SerializeObject(model);
-            return mergeToStart(1, Encoding.UTF8.GetBytes(json));
+            return mergeToStart(MessageType.FRIEND_REQUEST, Encoding.UTF8.GetBytes(json));
         }
 
         public static byte[] mergeToStart(byte headByte, byte[] bodyBytes)

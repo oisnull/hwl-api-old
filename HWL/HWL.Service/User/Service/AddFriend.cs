@@ -25,6 +25,10 @@ namespace HWL.Service.User.Service
             {
                 throw new Exception("用户好友参数错误");
             }
+            if (this.request.MyUserId == this.request.FriendUserId)
+            {
+                throw new Exception("不能添加自己为好友");
+            }
         }
 
         public override AddFriendResponseBody ExecuteCore()

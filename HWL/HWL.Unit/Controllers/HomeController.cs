@@ -14,10 +14,58 @@ namespace HWL.Unit.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            RabbitMQ.MQManager.SendMessage("user-2-queue", GetChatFriendRequestBean());
+            //RabbitMQ.MQManager.SendMessage("user-2-queue", GetChatGroupMessageBean());
+            RabbitMQ.MQManager.SendMessage("user-2-queue", GetChatUserMessageBean());
+            //RabbitMQ.MQManager.SendMessage("user-2-queue", GetChatFriendRequestBean());
             //RabbitMQ.MQManager.SendMessage("user-2-queue", GetAddFriendBean());
-
+            
             return View();
+        }
+
+        public byte[] GetChatGroupMessageBean()
+        {
+            //var model = new ChatGroupMessageBean()
+            //{
+            //    groupGuid = "group-guid-1",
+            //    groupImage = "",
+            //    groupName = "group-guid-1",
+            //    fromUserId = 1,
+            //    fromUserName = "2536",
+            //    fromUserHeadImage = "http://192.168.1.4:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
+            //    content = "你现在在哪里？",
+            //    sendTime = DateTime.Now,
+            //    contentType = 1,
+            //};
+            var model = new ChatGroupMessageBean()
+            {
+                groupGuid = "group-guid-1",
+                groupImage = "",
+                groupName = "group-guid-1",
+                fromUserId = 3,
+                fromUserName = "",
+                fromUserHeadImage = "http://192.168.1.4:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
+                content = "hello every one ...",
+                sendTime = DateTime.Now,
+                contentType = 1,
+            };
+            String json = JsonConvert.SerializeObject(model);
+            return mergeToStart(MessageType.CHAT_GROUP_MESSAGE, Encoding.UTF8.GetBytes(json));
+        }
+
+        public byte[] GetChatUserMessageBean()
+        {
+            var model = new ChatUserMessageBean()
+            {
+                toUserId = 2,
+                fromUserId = 1,
+                fromUserName = "2536",
+                fromUserHeadImage = "http://192.168.1.4:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
+                content = "你现在在哪里？",
+                sendTime = DateTime.Now,
+                contentType = 1,
+            };
+            String json = JsonConvert.SerializeObject(model);
+            return mergeToStart(MessageType.CHAT_USER_MESSAGE, Encoding.UTF8.GetBytes(json));
         }
 
         public byte[] GetChatFriendRequestBean()

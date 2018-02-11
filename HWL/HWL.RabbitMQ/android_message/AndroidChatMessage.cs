@@ -19,19 +19,19 @@ namespace HWL.RabbitMQ.android_message
             ChatGroupMessageBean model = new ChatGroupMessageBean()
             {
                 groupGuid = gruopGruid,
+                groupImage = string.Empty,
+                groupName = "我的附近",
                 content = content,
                 contentType = MQ_Constant.CHAT_MESSAGE_CONTENT_TYPE_WORD,
                 fromUserHeadImage = gruopGruid,
                 fromUserId = 0,
                 fromUserName = string.Empty,
-                groupImage = string.Empty,
-                groupName = string.Empty,
                 sendTime = DateTime.Now
             };
 
             //[message_type,message_content]
             byte[] bodyBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(model));
-            byte[] messageBytes = new byte[1 + bodyBytes.Length + 1];
+            byte[] messageBytes = new byte[bodyBytes.Length + 1];
             messageBytes[0] = MQ_Constant.CHAT_GROUP_MESSAGE;
             bodyBytes.CopyTo(messageBytes, 1);
             MQManager.SendMessage(GetQueueName(toUserId), messageBytes);

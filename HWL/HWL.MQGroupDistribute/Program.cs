@@ -41,13 +41,13 @@ namespace HWL.MQGroupDistribute
             MQManager.registerConnectionStatusEvent(new ConnectionStatus());
             UserSource us = new UserSource();
             int i = 1;
-            MQManager.ReceiveGroupMessage((groupId, messageBytes) =>
+            MQManager.ReceiveGroupMessage((fromUserId, groupId, messageBytes) =>
             {
                 if (!string.IsNullOrEmpty(groupId) && messageBytes != null && messageBytes.Length > 0)
                 {
                     DateTime beforDT = System.DateTime.Now;
 
-                    var userQueueSymbols = us.GetUserQueueSymbolList(groupId);
+                    var userQueueSymbols = us.GetUserQueueSymbolList(fromUserId,groupId);
                     MQManager.SendMessage(userQueueSymbols, messageBytes);
 
                     DateTime afterDT = System.DateTime.Now;

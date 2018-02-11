@@ -16,10 +16,15 @@ namespace HWL.MQGroupDistribute.message
         }
 
 
-        public List<string> GetUserQueueSymbolList(string groupGuid)
+        public List<string> GetUserQueueSymbolList(int fromUserId, string groupGuid)
         {
             List<int> users = groupAction.GetGroupUserIds(groupGuid);
             if (users == null || users.Count <= 0) return null;
+
+            if (fromUserId > 0)
+            {
+                users.Remove(fromUserId);
+            }
 
             return users.ConvertAll(u => this.GetUserQueueName(u));
         }

@@ -85,12 +85,12 @@ namespace HWL.RabbitMQ
 
         }
 
-        public static void ReceiveGroupMessage(Action<string, byte[]> succCallBack, Action<string> errorCallBackk = null)
+        public static void ReceiveGroupMessage(Action<int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
         {
             ReceiveMessage(GROUP_QUEUE_NAME, succCallBack, errorCallBackk);
         }
 
-        public static void ReceiveMessage(String queueName, Action<string, byte[]> succCallBack, Action<string> errorCallBackk = null)
+        public static void ReceiveMessage(String queueName, Action<int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
         {
             QueueDeclareOk queueInfo = GetReceiveChannel().QueueDeclare(queueName, true, false, false, null);
             var consumer = new EventingBasicConsumer(receiveChannel);
@@ -99,6 +99,7 @@ namespace HWL.RabbitMQ
 
             string groupId = string.Empty;
             byte[] groupIdBytes = null;
+            byte[] userIdBytes = null;
             byte[] msgBytes = null;
 
             consumer.Received += (model, e) =>
@@ -108,14 +109,20 @@ namespace HWL.RabbitMQ
                 {
                     try
                     {
-                        //byte[]的第一位是groupid的长度
-                        int groupIdLength = e.Body[0];
-                        groupIdBytes = new byte[groupIdLength];
-                        msgBytes = new byte[e.Body.Length - groupIdLength - 1];
-                        Array.Copy(e.Body, 1, groupIdBytes, 0, groupIdLength);
-                        Array.Copy(e.Body, groupIdBytes.Length + 1, msgBytes, 0, msgBytes.Length);
+                        //组消息格式：byte[]={chat-send-user-id-length(byte),chat-group-guid-lenght(byte),chat-send-user-id(byte[]),chat-group-guid(byte[]),chat-message-content(byte[])}
 
-                        succCallBack(Encoding.UTF8.GetString(groupIdBytes), msgBytes);
+                        int fromUserIdLength = e.Body[0];
+                        int groupIdLength = e.Body[1];
+
+                        userIdBytes = new byte[fromUserIdLength];
+                        groupIdBytes = new byte[groupIdLength];
+                        msgBytes = new byte[e.Body.Length - fromUserIdLength - groupIdLength - 2];
+
+                        Array.Copy(e.Body, 2, userIdBytes, 0, fromUserIdLength);
+                        Array.Copy(e.Body, 2 + fromUserIdLength, groupIdBytes, 0, groupIdLength);
+                        Array.Copy(e.Body, 2 + fromUserIdLength + groupIdLength, msgBytes, 0, msgBytes.Length);
+
+                        succCallBack(BitConverter.ToInt32(userIdBytes, 0), Encoding.UTF8.GetString(groupIdBytes), msgBytes);
                     }
                     catch (Exception ex)
                     {

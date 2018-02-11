@@ -1,4 +1,5 @@
 ﻿using HWL.Entity;
+using HWL.Entity.Extends;
 using HWL.Service.User.Body;
 using HWL.Tools;
 using System;
@@ -155,14 +156,36 @@ namespace HWL.Service.User.Service
                 //获取当前位置附近的组
                 Redis.GroupAction groupAction = new Redis.GroupAction();
                 res.UserGroupGuid = groupAction.GetNearGroupGuid(upos.lon, upos.lat);
-                if(string.IsNullOrEmpty(res.UserGroupGuid))
+                if (string.IsNullOrEmpty(res.UserGroupGuid))
                 {
                     //如果没有组数据，创建一个组
                     res.UserGroupGuid = groupAction.CreateGroupPos(upos.lon, upos.lat);
                 }
+                else
+                {
+                    if (this.request.LastGroupGuid == res.UserGroupGuid)
+                    {
+                        return res;
+                    }
+                }
 
                 //将用户加入到组中
                 groupAction.SaveGroupUser(res.UserGroupGuid, upos.user_id);
+
+                //发送mq welcome组消息给用户
+                RabbitMQ.android_message.AndroidChatMessage.SendGroup(this.request.UserId, res.UserGroupGuid, "欢迎加入HWL附近聊天组");
+
+                //返回组用户列表
+                List<int> userIds = groupAction.GetGroupUserIds(res.UserGroupGuid);
+                if (userIds == null || userIds.Count <= 0) return res;
+
+                res.GroupUserInfos = db.t_user.Where(u => userIds.Contains(u.id))
+                    .Select(u => new GroupUserInfo()
+                    {
+                        UserId = u.id,
+                        UserName = u.name,
+                        UserHeadImage = u.head_image,
+                    }).ToList();
             }
 
             return res;

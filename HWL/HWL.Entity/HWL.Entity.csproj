@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="CustomEnum.cs" />
     <Compile Include="CustomerEnumDesc.cs" />
+    <Compile Include="Extends\GroupExt.cs" />
     <Compile Include="Extends\PosExt.cs" />
     <Compile Include="Extends\UserExt.cs" />
     <Compile Include="HWLModel.Context.cs">

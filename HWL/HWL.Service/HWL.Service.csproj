@@ -98,6 +98,10 @@
       <Project>{872ceee4-49c1-45ac-905f-8efbd66f1b5a}</Project>
       <Name>HWL.Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HWL.RabbitMQ\HWL.RabbitMQ.csproj">
+      <Project>{2C189826-F491-4840-8072-C187BB24262C}</Project>
+      <Name>HWL.RabbitMQ</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HWL.Redis\HWL.Redis.csproj">
       <Project>{114f979c-c371-4b28-81ca-05c4d68bb466}</Project>
       <Name>HWL.Redis</Name>
@@ -111,7 +115,10 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Group\Body\" />
+    <Folder Include="Group\Service\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,6 +1,7 @@
 ﻿using GMSF.Model;
 using HWL.Service;
 using HWL.Service.Generic.Body;
+using HWL.Service.Group.Body;
 using HWL.Service.User.Body;
 using HWL.Tools;
 using System.ComponentModel;
@@ -104,9 +105,9 @@ namespace HWL.API.Controllers
         {
             return UserService.SetUserSex(request);
         }
-        
 
-       [HttpPost]
+
+        [HttpPost]
         [Description("设置用户标识")]
         public Response<SetUserInfoResponseBody> SetUserSymbol(Request<SetUserSymbolRequestBody> request)
         {
@@ -118,6 +119,13 @@ namespace HWL.API.Controllers
         public Response<SearchUserResponseBody> SearchUser(Request<SearchUserRequestBody> request)
         {
             return UserService.SearchUser(request);
+        }
+
+        [HttpPost]
+        [Description("获取组用户列表")]
+        public Response<GroupUsersResponseBody> GroupUsers(Request<GroupUsersRequestBody> request)
+        {
+            return GroupService.GroupUsers(request);
         }
     }
 }

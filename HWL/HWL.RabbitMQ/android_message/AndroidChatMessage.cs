@@ -22,8 +22,8 @@ namespace HWL.RabbitMQ.android_message
                 groupImage = string.Empty,
                 groupName = "我的附近",
                 content = content,
-                contentType = MQ_Constant.CHAT_MESSAGE_CONTENT_TYPE_WORD,
-                fromUserHeadImage = gruopGruid,
+                contentType = MQ_Constant.CHAT_MESSAGE_CONTENT_TYPE_WELCOME_TIP,
+                fromUserHeadImage = string.Empty,
                 fromUserId = 0,
                 fromUserName = string.Empty,
                 sendTime = DateTime.Now

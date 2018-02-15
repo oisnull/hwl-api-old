@@ -12,6 +12,28 @@ namespace HWL.Service.User
 {
     public class UserUtility
     {
+        public static string GetShowName(string name, string symbol)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                return name;
+            }
+            if (!string.IsNullOrEmpty(symbol))
+            {
+                return symbol;
+            }
+            return "匿名";
+        }
+
+        public static string GetShowName(string nameRemark, string name, string symbol)
+        {
+            if (!string.IsNullOrEmpty(nameRemark))
+            {
+                return nameRemark;
+            }
+            return GetShowName(name, symbol);
+        }
+
         public static string BuildToken(int userId)
         {
             byte[] guid = Guid.NewGuid().ToByteArray();

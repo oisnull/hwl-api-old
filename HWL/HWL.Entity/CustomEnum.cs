@@ -8,6 +8,7 @@ namespace HWL.Entity
     {
         Success = 1,
         Failed = 2,
+        None = 3,
     }
 
     /// <summary>
@@ -55,7 +56,7 @@ namespace HWL.Entity
     {
         Word = 1,
         Image = 2,
-        Sound=3,
+        Sound = 3,
 
         Video = 4,
         Link = 5,
@@ -157,7 +158,7 @@ namespace HWL.Entity
         ChatImage = 1,
         CircleBack = 2,
         CirclePost = 3,
-        ChatSound=4,
+        ChatSound = 4,
         UserHeadImage = 5,
         ChatVideo = 6,
         Other = 7,

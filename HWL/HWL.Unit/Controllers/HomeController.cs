@@ -16,10 +16,10 @@ namespace HWL.Unit.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            RabbitMQ.MQManager.SendMessage("user-1-queue", GetChatGroupMessageBean());
+            //RabbitMQ.MQManager.SendMessage("user-1-queue", GetChatGroupMessageBean());
             //RabbitMQ.MQManager.SendMessage("user-1-queue", GetChatUserMessageBean());
             //RabbitMQ.MQManager.SendMessage("user-2-queue", GetChatFriendRequestBean());
-            //RabbitMQ.MQManager.SendMessage("user-2-queue", GetAddFriendBean());
+            RabbitMQ.MQManager.SendMessage("user-1-queue", GetAddFriendBean());
 
             return View();
         }
@@ -106,11 +106,11 @@ namespace HWL.Unit.Controllers
         {
             var model = new AddFriendBean()
             {
-                friendId = 3,
-                remark = "我是 liyyy",
-                userHeadImage = "http://192.168.1.4:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
-                userId = 1,
-                userName = "liyyy"
+                friendId = 1,
+                remark = "我是 liy",
+                userHeadImage = "http://172.16.21.38:8033//upload/user-head/2018//2018021510415620180215184156.jpg",
+                userId = 2,
+                userName = "liyang"
             };
             //var model = new AddFriendBean()
             //{

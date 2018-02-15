@@ -38,7 +38,7 @@ namespace HWL.MQGroupDistribute
         private static void Listener()
         {
             double currTmr = 0;
-            MQManager.registerConnectionStatusEvent(new ConnectionStatus());
+            MQManager.RegisterConnectionStatusEvent(new ConnectionStatus());
             UserSource us = new UserSource();
             int i = 1;
             MQManager.ReceiveGroupMessage((fromUserId, groupId, messageBytes) =>

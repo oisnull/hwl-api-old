@@ -53,6 +53,15 @@ namespace HWL.Service
             });
         }
 
+        public static Response<DeleteFriendResponseBody> DeleteFriend(Request<DeleteFriendRequestBody> request)
+        {
+            var context = new ServiceContext<DeleteFriendRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new DeleteFriend(r.Body).Execute();
+            });
+        }
+
         public static Response<SetFriendRemarkResponseBody> SetFriendRemark(Request<SetFriendRemarkRequestBody> request)
         {
             var context = new ServiceContext<SetFriendRemarkRequestBody>(request, new RequestValidate());

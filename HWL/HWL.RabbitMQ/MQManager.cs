@@ -190,13 +190,14 @@ namespace HWL.RabbitMQ
             return channel;
         }
 
-        public static void registerConnectionStatusEvent(IConnectionStatus connectionStatus)
+        public static void RegisterConnectionStatusEvent(IConnectionStatus connectionStatus)
         {
-            if (connStatus == null && connectionStatus != null)
+            if (connectionStatus == null)
             {
-                connStatus = connectionStatus;
-                GetChannel().ExchangeDeclare(HWL_DEFAULT_EXCHANGE, HWL_EXCHANGE_MODEL);
+                connectionStatus = new DefaultConnectionStatus();
             }
+            connStatus = connectionStatus;
+            GetChannel().ExchangeDeclare(HWL_DEFAULT_EXCHANGE, HWL_EXCHANGE_MODEL);
         }
     }
 }

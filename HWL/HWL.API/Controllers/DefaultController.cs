@@ -65,6 +65,13 @@ namespace HWL.API.Controllers
         }
 
         [HttpPost]
+        [Description("删除好友")]
+        public Response<DeleteFriendResponseBody> DeleteFriend(Request<DeleteFriendRequestBody> request)
+        {
+            return UserService.DeleteFriend(request);
+        }
+
+        [HttpPost]
         [Description("设置好友备注")]
         public Response<SetFriendRemarkResponseBody> SetFriendRemark(Request<SetFriendRemarkRequestBody> request)
         {

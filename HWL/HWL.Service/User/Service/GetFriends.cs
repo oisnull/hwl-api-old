@@ -38,11 +38,14 @@ namespace HWL.Service.User.Service
                                  CountryId = u.register_country,
                                  ProvinceId = u.register_province,
                                  NameRemark = f.friend_user_remark,
-                                 NickName = u.name,
+                                 Name = u.name,
                                  FirstSpell = f.friend_first_spell,
                                  Id = f.friend_user_id,
                                  HeadImage = u.head_image,
                                  Symbol = u.symbol,
+                                 Sex = u.sex,
+                                 CircleBackImage = u.circle_back_image,
+                                 LifeNotes = u.life_notes
                              }).ToList();
                 if (users == null || users.Count <= 0) return res;
 
@@ -64,9 +67,12 @@ namespace HWL.Service.User.Service
                         Country = countryName,
                         Province = provinceName,
                         HeadImage = u.HeadImage,
-                        NameRemark = u.NameRemark,
-                        ShowName = u.NickName,
+                        NameRemark = UserUtility.GetShowName(u.NameRemark, u.Name, u.Symbol),
+                        Name = u.Name,
                         Symbol = u.Symbol,
+                        Sex = u.Sex,
+                        CircleBackImage = u.CircleBackImage,
+                        LifeNotes = u.LifeNotes,
                     });
                 });
             }

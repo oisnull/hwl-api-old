@@ -47,10 +47,10 @@ namespace HWL.Entity
         }
 
         /// <summary>
-        /// 获取资源管理配置的地址信息
+        /// 获取资源存储的目录配置信息
         /// </summary>
         /// <returns></returns>
-        public static string GetResxTypePath(ResxType resxType)
+        public static string GetResxTypePath(ResxType resxType, int userId = 0)
         {
             string path = "";
             switch (resxType)
@@ -59,23 +59,23 @@ namespace HWL.Entity
                     path = string.Format("user-head/{0}/", DateTime.Now.ToString("yyyy"));
                     break;
                 case ResxType.ChatImage:
-                    path = string.Format("chat-image/{0}/", DateTime.Now.ToString("yyyyMMdd"));
+                    path = string.Format("chat-image/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);
                     break;
                 case ResxType.ChatSound:
-                    path = string.Format("chat-sound/{0}/", DateTime.Now.ToString("yyyyMMdd"));
+                    path = string.Format("chat-sound/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);
                     break;
                 case ResxType.ChatVideo:
-                    path = string.Format("chat-video/{0}/", DateTime.Now.ToString("yyyyMMdd"));
+                    path = string.Format("chat-video/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);
                     break;
                 case ResxType.CircleBack:
                     path = string.Format("circle-back/{0}/", DateTime.Now.ToString("yyyy"));
                     break;
                 case ResxType.CirclePost:
-                    path = string.Format("circle-post/{0}/", DateTime.Now.ToString("yyyyMMdd"));
+                    path = string.Format("circle-post/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);
                     break;
                 case ResxType.Other:
                 default:
-                    path = string.Format("other/{0}/", DateTime.Now.ToString("yyyyMMdd"));
+                    path = string.Format("other/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);
                     break;
             }
             return path;

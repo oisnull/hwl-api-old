@@ -23,9 +23,9 @@ namespace HWL.Resx.Models
         public ResxHandler(HttpRequestMessage request, ResxType resxType = ResxType.Other)
         {
             this.request = request;
-            string dir = Models.ConfigManager.UploadDirectory + CustomerEnumDesc.GetResxTypePath(resxType);
+            string dir = ResxConfigManager.UploadDirectory + CustomerEnumDesc.GetResxTypePath(resxType);
             rootDir = AppDomain.CurrentDomain.BaseDirectory + dir;
-            accessDir = Models.ConfigManager.FileAccessUrl + dir;
+            accessDir = ResxConfigManager.FileAccessUrl + dir;
 
             if (!Directory.Exists(rootDir))
             {

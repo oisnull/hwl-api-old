@@ -97,8 +97,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaseApiController.cs" />
     <Compile Include="Models\UpImageResponseBody.cs" />
-    <Compile Include="Models\ConfigManager.cs" />
+    <Compile Include="Models\ResxConfigManager.cs" />
     <Compile Include="Models\MultipartFormDataMemoryStreamProvider.cs" />
     <Compile Include="Models\ResxHandler.cs" />
     <Compile Include="Models\VideoHandler.cs" />

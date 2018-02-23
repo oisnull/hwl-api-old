@@ -12,7 +12,7 @@ namespace HWL.Resx.Models
         /// <summary>
         /// 文件保存目录路径
         /// </summary>
-        static string savePath = ConfigManager.UploadDirectory; //"/upload/";
+        static string savePath = ResxConfigManager.UploadDirectory; //"/upload/";
 
         /// <summary>
         /// 定义允许上传的文件扩展名
@@ -94,9 +94,9 @@ namespace HWL.Resx.Models
             //}
 
             string saveUrl = savePath;
-            if (!ConfigManager.FileAccessUrl.Contains("localhost"))
+            if (!ResxConfigManager.FileAccessUrl.Contains("localhost"))
             {
-                saveUrl = ConfigManager.FileAccessUrl + saveUrl;
+                saveUrl = ResxConfigManager.FileAccessUrl + saveUrl;
             }
 
             saveUrl = saveUrl + folder;//+ "/" + DateTime.Now.ToString("yyyyMM");//根目录/目录名/时间（年/月）

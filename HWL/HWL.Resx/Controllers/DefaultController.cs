@@ -12,66 +12,47 @@ using System.Web.Http;
 namespace HWL.Resx.Controllers
 {
     [Route("resx/{action}")]
-    public class DefaultController : ApiController
+    public class DefaultController : BaseApiController
     {
-        private bool checkRequestParam(string token)
-        {
-            RequestValidate requestValidate = new RequestValidate();
-            return requestValidate.CheckToken(token);
-        }
-
-        private Response<UpImageResponseBody> getResult(String resultCode, String message, UpImageResponseBody body = null)
-        {
-            Response<UpImageResponseBody> response = new Response<UpImageResponseBody>();
-            response.Head = new GMSF.HeadDefine.ResponseHead()
-            {
-                ResultCode = resultCode,
-                ResultMessage = message
-            };
-            response.Body = body;
-
-            return response;
-        }
-
         LogAction log = new LogAction("api-" + System.DateTime.Now.ToString("yyyyMMdd") + ".txt");
+
         [HttpPost]
         public Response<UpImageResponseBody> Image(string token = null, int resxType = 7)
         {
-            //log.WriterLog(token + resxType + "__" + (HttpContext.Current.Request.Files != null ? HttpContext.Current.Request.Files.Count : 0));
-            //return getResult("11", "test", null);
-            bool succ = this.checkRequestParam(token);
-            if (!succ)
+            var ret = this.CheckToken(token);
+            if (!ret.Item1)
             {
-                return getResult(GMSF.ResponseResult.FAILED, "凭证验证失败");
+                return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
             }
 
             //保存上传数据
             string error = "";
-            string saveDir = CustomerEnumDesc.GetResxTypePath((ResxType)resxType);
+            string saveDir = CustomerEnumDesc.GetResxTypePath((ResxType)resxType, ret.Item2);
             var fileModel = UpfileHandler.ProcessSig(HttpContext.Current.Request.Files, saveDir, out error);
             if (fileModel == null)
             {
-                return getResult(GMSF.ResponseResult.FAILED, error);
+                return GetResult(GMSF.ResponseResult.FAILED, error);
             }
-            var response = getResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrl = fileModel.AccessPath, FileSize = fileModel.FileSize });
+            //var response = GetResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrl = fileModel.AccessPath, FileSize = fileModel.FileSize });
 
-            log.WriterLog(Newtonsoft.Json.JsonConvert.SerializeObject(response));
-            return response;
+            //log.WriterLog(Newtonsoft.Json.JsonConvert.SerializeObject(response));
+            //return response;
+            return null;
         }
 
         [HttpPost]
         public async Task<Response<UpImageResponseBody>> Images(string token = null, int resxType = 7)
         {
-            bool succ = this.checkRequestParam(token);
-            if (!succ)
+            var ret = this.CheckToken(token);
+            if (!ret.Item1)
             {
-                return getResult(GMSF.ResponseResult.FAILED, "凭证验证失败");
+                return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
             }
 
             ResxHandler resx = new ResxHandler(Request, (ResxType)resxType);
             if (!resx.IsMultipartContent())
             {
-                return getResult(GMSF.ResponseResult.FAILED, "资源格式错误");
+                return GetResult(GMSF.ResponseResult.FAILED, "资源格式错误");
             }
             try
             {
@@ -79,10 +60,11 @@ namespace HWL.Resx.Controllers
             }
             catch (Exception ex)
             {
-                return getResult(GMSF.ResponseResult.FAILED, ex.Message);
+                return GetResult(GMSF.ResponseResult.FAILED, ex.Message);
             }
 
-            return getResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrls = resx.GetAccessUrls() });
+            //return GetResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrls = resx.GetAccessUrls() });
+            return null;
         }
 
         //[HttpPost]

@@ -67,10 +67,10 @@ namespace HWL.Entity
                 case ResxType.ChatVideo:
                     path = string.Format("chat-video/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);
                     break;
-                case ResxType.CircleBack:
+                case ResxType.CircleBackImage:
                     path = string.Format("circle-back/{0}/", DateTime.Now.ToString("yyyy"));
                     break;
-                case ResxType.CirclePost:
+                case ResxType.CirclePostImage:
                     path = string.Format("circle-post/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);
                     break;
                 case ResxType.Other:

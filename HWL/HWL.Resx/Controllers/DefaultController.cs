@@ -17,7 +17,7 @@ namespace HWL.Resx.Controllers
         LogAction log = new LogAction("api-" + System.DateTime.Now.ToString("yyyyMMdd") + ".txt");
 
         [HttpPost]
-        public Response<UpImageResponseBody> Image(string token = null, int resxType = 7)
+        public async Task<Response<ResxResult>> Image(string token = null, ResxType resxType = ResxType.Other)
         {
             var ret = this.CheckToken(token);
             if (!ret.Item1)
@@ -25,47 +25,81 @@ namespace HWL.Resx.Controllers
                 return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
             }
 
-            //保存上传数据
-            string error = "";
-            string saveDir = CustomerEnumDesc.GetResxTypePath((ResxType)resxType, ret.Item2);
-            var fileModel = UpfileHandler.ProcessSig(HttpContext.Current.Request.Files, saveDir, out error);
-            if (fileModel == null)
+            ResxHandler resx = new ResxHandler(Request, new ResxModel()
             {
-                return GetResult(GMSF.ResponseResult.FAILED, error);
-            }
-            //var response = GetResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrl = fileModel.AccessPath, FileSize = fileModel.FileSize });
+                UserId = ret.Item2,
+                ResxType = resxType,
+                ResxSize = ResxConfigManager.IMAGE_MAX_SIZE,
+                ResxTypes = ResxConfigManager.IMAGE_FILE_TYPES
+            });
 
-            //log.WriterLog(Newtonsoft.Json.JsonConvert.SerializeObject(response));
-            //return response;
-            return null;
-        }
-
-        [HttpPost]
-        public async Task<Response<UpImageResponseBody>> Images(string token = null, int resxType = 7)
-        {
-            var ret = this.CheckToken(token);
-            if (!ret.Item1)
-            {
-                return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
-            }
-
-            ResxHandler resx = new ResxHandler(Request, (ResxType)resxType);
             if (!resx.IsMultipartContent())
             {
                 return GetResult(GMSF.ResponseResult.FAILED, "资源格式错误");
             }
             try
             {
-                await resx.SaveStream();
+                var responseResult = await resx.SaveStream();
+                return GetResult(GMSF.ResponseResult.SUCCESS, null, responseResult);
             }
             catch (Exception ex)
             {
                 return GetResult(GMSF.ResponseResult.FAILED, ex.Message);
             }
 
-            //return GetResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrls = resx.GetAccessUrls() });
-            return null;
         }
+
+
+        //[HttpPost]
+        //public Response<UpImageResponseBody> Image(string token = null, int resxType = 7)
+        //{
+        //    var ret = this.CheckToken(token);
+        //    if (!ret.Item1)
+        //    {
+        //        return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
+        //    }
+
+        //    //保存上传数据
+        //    string error = "";
+        //    string saveDir = CustomerEnumDesc.GetResxTypePath((ResxType)resxType, ret.Item2);
+        //    var fileModel = UpfileHandler.ProcessSig(HttpContext.Current.Request.Files, saveDir, out error);
+        //    if (fileModel == null)
+        //    {
+        //        return GetResult(GMSF.ResponseResult.FAILED, error);
+        //    }
+        //    //var response = GetResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrl = fileModel.AccessPath, FileSize = fileModel.FileSize });
+
+        //    //log.WriterLog(Newtonsoft.Json.JsonConvert.SerializeObject(response));
+        //    //return response;
+        //    return null;
+        //}
+
+        //[HttpPost]
+        //public async Task<Response<UpImageResponseBody>> Image(string token = null, int resxType = 7)
+        //{
+        //    var ret = this.CheckToken(token);
+        //    if (!ret.Item1)
+        //    {
+        //        return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
+        //    }
+
+        //    ResxHandler resx = new ResxHandler(Request, (ResxType)resxType);
+        //    if (!resx.IsMultipartContent())
+        //    {
+        //        return GetResult(GMSF.ResponseResult.FAILED, "资源格式错误");
+        //    }
+        //    try
+        //    {
+        //        await resx.SaveStream();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return GetResult(GMSF.ResponseResult.FAILED, ex.Message);
+        //    }
+
+        //    //return GetResult(GMSF.ResponseResult.SUCCESS, null, new UpImageResponseBody() { AccessUrls = resx.GetAccessUrls() });
+        //    return null;
+        //}
 
         //[HttpPost]
         //public async Task<Dictionary<string, string>> Index()

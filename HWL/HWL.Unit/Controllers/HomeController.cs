@@ -19,7 +19,7 @@ namespace HWL.Unit.Controllers
             //RabbitMQ.MQManager.SendMessage("user-1-queue", GetChatGroupMessageBean());
             //RabbitMQ.MQManager.SendMessage("user-1-queue", GetChatUserMessageBean());
             //RabbitMQ.MQManager.SendMessage("user-2-queue", GetChatFriendRequestBean());
-            RabbitMQ.MQManager.SendMessage("user-1-queue", GetAddFriendBean());
+            //RabbitMQ.MQManager.SendMessage("user-1-queue", GetAddFriendBean());
 
             return View();
         }
@@ -135,7 +135,6 @@ namespace HWL.Unit.Controllers
             }
             return resultBytes;
         }
-
 
         //从start位置开始，不包含start,1表示第一个位置
         public static void setPositionBytes(int start, byte[] addBytes, byte[] newBytes)

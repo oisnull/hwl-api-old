@@ -156,8 +156,8 @@ namespace HWL.Entity
     public enum ResxType
     {
         ChatImage = 1,
-        CircleBack = 2,
-        CirclePost = 3,
+        CircleBackImage = 2,
+        CirclePostImage = 3,
         ChatSound = 4,
         UserHeadImage = 5,
         ChatVideo = 6,

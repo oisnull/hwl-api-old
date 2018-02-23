@@ -29,19 +29,19 @@ namespace HWL.Resx.Models
         /// <summary>
         /// 定义图片允许上传的文件扩展名
         /// </summary>
-        public readonly static string[] IMAGE_FILE_TYPES = { "gif", "jpg", "jpeg", "png", "bmp" };
+        public readonly static string[] IMAGE_FILE_TYPES = { ".gif", ".jpg", ".jpeg", ".png", ".bmp" };
         public readonly static int IMAGE_MAX_SIZE = 5 * 1024 * 1024;//默认5M
 
         /// <summary>
         /// 定义语音允许上传的文件扩展名
         /// </summary>
-        public readonly static string[] SOUND_FILE_TYPES = { "amr", "wav" };
+        public readonly static string[] SOUND_FILE_TYPES = { ".amr", ".wav" };
         public readonly static int SOUND_MAX_TIME = 60;//默认60s
 
         /// <summary>
         /// 定义视频允许上传的文件扩展名
         /// </summary>
-        public readonly static string[] VIDEO_FILE_TYPES = { "mp4" };
+        public readonly static string[] VIDEO_FILE_TYPES = { ".mp4" };
         public readonly static int VIDEO_MAX_SIZE = 20 * 1024 * 1024;//默认20M
     }
 }

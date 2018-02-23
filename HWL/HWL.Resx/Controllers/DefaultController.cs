@@ -40,7 +40,9 @@ namespace HWL.Resx.Controllers
             try
             {
                 var responseResult = await resx.SaveStream();
-                return GetResult(GMSF.ResponseResult.SUCCESS, null, responseResult);
+                var res = GetResult(GMSF.ResponseResult.SUCCESS, null, responseResult);
+                log.WriterLog(Newtonsoft.Json.JsonConvert.SerializeObject(res));
+                return res;
             }
             catch (Exception ex)
             {

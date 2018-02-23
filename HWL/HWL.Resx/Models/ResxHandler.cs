@@ -171,7 +171,7 @@ namespace HWL.Resx.Models
                 throw new Exception("上传资源数量超过大小");
             }
 
-            var count = provider.FileData.Where(f => !this.ResxModel.ResxTypes.Contains(Path.GetExtension(f.Headers.ContentDisposition.FileName))).Count();
+            var count = provider.FileData.Where(f => !this.ResxModel.ResxTypes.Contains(Path.GetExtension(f.Headers.ContentDisposition.FileName.Replace("\"","")))).Count();
             if (count > 0)
             {
                 throw new Exception("上传包含未知资源类型");
@@ -189,7 +189,7 @@ namespace HWL.Resx.Models
                 else
                 {
                     streamList.Add(stream);
-                    streamNames.Add(file.Headers.ContentDisposition.FileName);
+                    streamNames.Add(file.Headers.ContentDisposition.FileName.Replace("\"", ""));
                 }
             }
 

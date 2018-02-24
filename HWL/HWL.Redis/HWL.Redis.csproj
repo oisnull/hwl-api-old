@@ -52,6 +52,7 @@
     <Compile Include="Client\RedisBase.cs" />
     <Compile Include="Client\StackExchangeRedisManager.cs" />
     <Compile Include="GroupAction.cs" />
+    <Compile Include="NearCircleAction.cs" />
     <Compile Include="RedisConfigService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserAction.cs" />

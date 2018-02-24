@@ -1,4 +1,5 @@
-﻿using HWL.Service.Near.Body;
+﻿using HWL.Entity;
+using HWL.Service.Near.Body;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,29 @@ namespace HWL.Service.Near.Service
         {
         }
 
+        protected override void ValidateRequestParams()
+        {
+            base.ValidateRequestParams();
+            if (this.request.UserId <= 0)
+            {
+                throw new Exception("用户id不能为空");
+            }
+            if (this.request.Lat < 0 && this.request.Lon < 0)
+            {
+                throw new Exception("位置参数错误");
+            }
+        }
+
         public override GetNearCircleInfosResponseBody ExecuteCore()
         {
-            throw new NotImplementedException();
+            GetNearCircleInfosResponseBody res = new GetNearCircleInfosResponseBody();
+
+            using (HWLEntities db = new HWLEntities())
+            {
+                
+            }
+
+            return res;
         }
     }
 }

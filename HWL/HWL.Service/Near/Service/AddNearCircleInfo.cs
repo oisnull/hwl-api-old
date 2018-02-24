@@ -1,4 +1,5 @@
 ﻿using HWL.Entity;
+using HWL.Redis;
 using HWL.Service.Near.Body;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace HWL.Service.Near.Service
 
             if (this.request.UserId <= 0)
             {
-                throw new Exception("发布的用户不能为空");
+                throw new Exception("发布的用户id不能为空");
             }
         }
 
@@ -37,13 +38,6 @@ namespace HWL.Service.Near.Service
             AddNearCircleInfoResponseBody res = new AddNearCircleInfoResponseBody();
             using (HWLEntities db = new HWLEntities())
             {
-                //检测发布用户是否存在
-                var user = db.t_user.Where(u => u.id == this.request.UserId).FirstOrDefault();
-                if (user == null)
-                {
-                    throw new Exception("发布的用户不存在");
-                }
-
                 t_near_circle model = new t_near_circle()
                 {
                     user_id = this.request.UserId,
@@ -65,6 +59,18 @@ namespace HWL.Service.Near.Service
                 db.SaveChanges();
 
                 res.NearCircleId = model.id;
+
+                //向redis中添加信息的位置数据
+                if (res.NearCircleId > 0)
+                {
+                    bool succ = new NearCircleAction().CreateNearCirclePos(res.NearCircleId, this.request.Lon, this.request.Lat);
+                    if (!succ)//如果添加失败,则将数据库中已经添加的数据删除
+                    {
+                        db.t_near_circle.Remove(model);
+                        db.SaveChanges();
+                        throw new Exception("发布附近信息失败");
+                    }
+                }
             }
             return res;
         }

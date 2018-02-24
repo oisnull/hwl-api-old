@@ -42,7 +42,7 @@ namespace HWL.Redis
         /// <summary>
         /// 检测附近1000M内的组数据,并返回对应的组标识
         /// </summary>
-        public List<int> GetGroupGuids(double lon, double lat)
+        public List<int> GetNearCircleIds(double lon, double lat)
         {
             if (lon < 0 && lat < 0) return null;
 

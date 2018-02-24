@@ -70,6 +70,30 @@ namespace HWL.Service.Near.Service
                         db.SaveChanges();
                         throw new Exception("发布附近信息失败");
                     }
+                    else
+                    {
+                        if (this.request.Images != null && this.request.Images.Count > 0)
+                        {
+                            //添加图片
+                            List<t_near_circle_image> imgModels = this.request.Images
+                                .ConvertAll(i => new t_near_circle_image
+                                {
+                                    near_circle_id = model.id,
+                                    near_circle_user_id = model.user_id,
+                                    image_url = i
+                                });
+
+                            try
+                            {
+                                db.t_near_circle_image.AddRange(imgModels);
+                                db.SaveChanges();
+                            }
+                            catch (Exception)
+                            {
+                                //可以忽略这个错误
+                            }
+                        }
+                    }
                 }
             }
             return res;

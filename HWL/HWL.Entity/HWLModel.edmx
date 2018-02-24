@@ -38,6 +38,54 @@
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="city_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="t_near_circle">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="content_type" Type="int" Nullable="false" />
+          <Property Name="content_info" Type="nvarchar" MaxLength="500" />
+          <Property Name="link_title" Type="nvarchar" MaxLength="100" />
+          <Property Name="link_url" Type="nvarchar" MaxLength="200" />
+          <Property Name="link_image" Type="nvarchar" MaxLength="200" />
+          <Property Name="publish_time" Type="datetime" Nullable="false" />
+          <Property Name="pos_id" Type="int" Nullable="false" />
+          <Property Name="lon" Type="float" Nullable="false" />
+          <Property Name="lat" Type="float" Nullable="false" />
+          <Property Name="image_count" Type="int" Nullable="false" />
+          <Property Name="comment_count" Type="int" Nullable="false" />
+          <Property Name="like_count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_near_circle_comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="near_circle_id" Type="int" Nullable="false" />
+          <Property Name="comment_user_id" Type="int" Nullable="false" />
+          <Property Name="content_info" Type="nvarchar" MaxLength="500" />
+          <Property Name="reply_user_id" Type="int" Nullable="false" />
+          <Property Name="comment_time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_near_circle_image">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="near_circle_id" Type="int" Nullable="false" />
+          <Property Name="near_circle_user_id" Type="int" Nullable="false" />
+          <Property Name="image_url" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_near_circle_like">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="near_circle_id" Type="int" Nullable="false" />
+          <Property Name="like_user_id" Type="int" Nullable="false" />
+          <Property Name="like_time" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="t_province">
           <Key>
             <PropertyRef Name="id" />
@@ -114,6 +162,10 @@
           <EntitySet Name="t_city" EntityType="Self.t_city" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_country" EntityType="Self.t_country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_district" EntityType="Self.t_district" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_near_circle" EntityType="Self.t_near_circle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_near_circle_comment" EntityType="Self.t_near_circle_comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_near_circle_image" EntityType="Self.t_near_circle_image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_near_circle_like" EntityType="Self.t_near_circle_like" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_province" EntityType="Self.t_province" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_user" EntityType="Self.t_user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_user_code" EntityType="Self.t_user_code" Schema="dbo" store:Type="Tables" />
@@ -134,6 +186,10 @@
           <EntitySet Name="t_province" EntityType="HWL.Entity.t_province" />
           <EntitySet Name="t_user_pos" EntityType="HWL.Entity.t_user_pos" />
           <EntitySet Name="t_user_friend" EntityType="HWL.Entity.t_user_friend" />
+          <EntitySet Name="t_near_circle" EntityType="HWL.Entity.t_near_circle" />
+          <EntitySet Name="t_near_circle_comment" EntityType="HWL.Entity.t_near_circle_comment" />
+          <EntitySet Name="t_near_circle_image" EntityType="HWL.Entity.t_near_circle_image" />
+          <EntitySet Name="t_near_circle_like" EntityType="HWL.Entity.t_near_circle_like" />
         </EntityContainer>
         <EntityType Name="t_admin">
           <Key>
@@ -241,6 +297,54 @@
           <Property Name="friend_user_remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="friend_first_spell" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="add_time" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="t_near_circle">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="content_type" Type="Int32" Nullable="false" />
+          <Property Name="content_info" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="link_title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="link_url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="link_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="publish_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pos_id" Type="Int32" Nullable="false" />
+          <Property Name="lon" Type="Double" Nullable="false" />
+          <Property Name="lat" Type="Double" Nullable="false" />
+          <Property Name="image_count" Type="Int32" Nullable="false" />
+          <Property Name="comment_count" Type="Int32" Nullable="false" />
+          <Property Name="like_count" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_near_circle_comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="near_circle_id" Type="Int32" Nullable="false" />
+          <Property Name="comment_user_id" Type="Int32" Nullable="false" />
+          <Property Name="content_info" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="reply_user_id" Type="Int32" Nullable="false" />
+          <Property Name="comment_time" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="t_near_circle_image">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="near_circle_id" Type="Int32" Nullable="false" />
+          <Property Name="near_circle_user_id" Type="Int32" Nullable="false" />
+          <Property Name="image_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="t_near_circle_like">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="near_circle_id" Type="Int32" Nullable="false" />
+          <Property Name="like_user_id" Type="Int32" Nullable="false" />
+          <Property Name="like_time" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -357,6 +461,58 @@
                 <ScalarProperty Name="friend_user_remark" ColumnName="friend_user_remark" />
                 <ScalarProperty Name="friend_user_id" ColumnName="friend_user_id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_near_circle">
+            <EntityTypeMapping TypeName="HWL.Entity.t_near_circle">
+              <MappingFragment StoreEntitySet="t_near_circle">
+                <ScalarProperty Name="like_count" ColumnName="like_count" />
+                <ScalarProperty Name="comment_count" ColumnName="comment_count" />
+                <ScalarProperty Name="image_count" ColumnName="image_count" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="lon" ColumnName="lon" />
+                <ScalarProperty Name="pos_id" ColumnName="pos_id" />
+                <ScalarProperty Name="publish_time" ColumnName="publish_time" />
+                <ScalarProperty Name="link_image" ColumnName="link_image" />
+                <ScalarProperty Name="link_url" ColumnName="link_url" />
+                <ScalarProperty Name="link_title" ColumnName="link_title" />
+                <ScalarProperty Name="content_info" ColumnName="content_info" />
+                <ScalarProperty Name="content_type" ColumnName="content_type" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_near_circle_comment">
+            <EntityTypeMapping TypeName="HWL.Entity.t_near_circle_comment">
+              <MappingFragment StoreEntitySet="t_near_circle_comment">
+                <ScalarProperty Name="comment_time" ColumnName="comment_time" />
+                <ScalarProperty Name="reply_user_id" ColumnName="reply_user_id" />
+                <ScalarProperty Name="content_info" ColumnName="content_info" />
+                <ScalarProperty Name="comment_user_id" ColumnName="comment_user_id" />
+                <ScalarProperty Name="near_circle_id" ColumnName="near_circle_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_near_circle_image">
+            <EntityTypeMapping TypeName="HWL.Entity.t_near_circle_image">
+              <MappingFragment StoreEntitySet="t_near_circle_image">
+                <ScalarProperty Name="image_url" ColumnName="image_url" />
+                <ScalarProperty Name="near_circle_user_id" ColumnName="near_circle_user_id" />
+                <ScalarProperty Name="near_circle_id" ColumnName="near_circle_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_near_circle_like">
+            <EntityTypeMapping TypeName="HWL.Entity.t_near_circle_like">
+              <MappingFragment StoreEntitySet="t_near_circle_like">
+                <ScalarProperty Name="like_time" ColumnName="like_time" />
+                <ScalarProperty Name="like_user_id" ColumnName="like_user_id" />
+                <ScalarProperty Name="near_circle_id" ColumnName="near_circle_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

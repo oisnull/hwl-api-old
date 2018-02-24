@@ -149,14 +149,7 @@ namespace HWL.Resx.Models
         public async Task<ResxResult> SaveStream()
         {
             provider = new MultipartFormDataMemoryStreamProvider();
-            try
-            {
-                await request.Content.ReadAsMultipartAsync(provider);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            await request.Content.ReadAsMultipartAsync(provider);
 
             if (provider == null ||
                 provider.FileData == null ||
@@ -171,7 +164,7 @@ namespace HWL.Resx.Models
                 throw new Exception("上传资源数量超过大小");
             }
 
-            var count = provider.FileData.Where(f => !this.ResxModel.ResxTypes.Contains(Path.GetExtension(f.Headers.ContentDisposition.FileName.Replace("\"","")))).Count();
+            var count = provider.FileData.Where(f => !this.ResxModel.ResxTypes.Contains(Path.GetExtension(f.Headers.ContentDisposition.FileName.Replace("\"", "")))).Count();
             if (count > 0)
             {
                 throw new Exception("上传包含未知资源类型");

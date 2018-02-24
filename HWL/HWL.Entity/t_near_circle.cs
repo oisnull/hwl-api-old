@@ -12,19 +12,21 @@ namespace HWL.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class t_user_pos
+    public partial class t_near_circle
     {
         public int id { get; set; }
         public int user_id { get; set; }
-        public string pos_details { get; set; }
+        public int content_type { get; set; }
+        public string content_info { get; set; }
+        public string link_title { get; set; }
+        public string link_url { get; set; }
+        public string link_image { get; set; }
+        public System.DateTime publish_time { get; set; }
+        public int pos_id { get; set; }
         public double lon { get; set; }
         public double lat { get; set; }
-        public string geohash_key { get; set; }
-        public int country_id { get; set; }
-        public int province_id { get; set; }
-        public int city_id { get; set; }
-        public int district_id { get; set; }
-        public System.DateTime create_date { get; set; }
-        public System.DateTime update_date { get; set; }
+        public int image_count { get; set; }
+        public int comment_count { get; set; }
+        public int like_count { get; set; }
     }
 }

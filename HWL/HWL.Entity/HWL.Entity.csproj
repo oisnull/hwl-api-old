@@ -54,6 +54,7 @@
     <Compile Include="CustomEnum.cs" />
     <Compile Include="CustomerEnumDesc.cs" />
     <Compile Include="Extends\GroupExt.cs" />
+    <Compile Include="Extends\NearExt.cs" />
     <Compile Include="Extends\PosExt.cs" />
     <Compile Include="Extends\UserExt.cs" />
     <Compile Include="HWLModel.Context.cs">
@@ -82,6 +83,18 @@
       <DependentUpon>HWLModel.tt</DependentUpon>
     </Compile>
     <Compile Include="t_district.cs">
+      <DependentUpon>HWLModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="t_near_circle.cs">
+      <DependentUpon>HWLModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="t_near_circle_comment.cs">
+      <DependentUpon>HWLModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="t_near_circle_image.cs">
+      <DependentUpon>HWLModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="t_near_circle_like.cs">
       <DependentUpon>HWLModel.tt</DependentUpon>
     </Compile>
     <Compile Include="t_province.cs">

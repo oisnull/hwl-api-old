@@ -2,6 +2,7 @@
 using HWL.Service;
 using HWL.Service.Generic.Body;
 using HWL.Service.Group.Body;
+using HWL.Service.Near.Body;
 using HWL.Service.User.Body;
 using HWL.Tools;
 using System.ComponentModel;
@@ -133,6 +134,13 @@ namespace HWL.API.Controllers
         public Response<GroupUsersResponseBody> GroupUsers(Request<GroupUsersRequestBody> request)
         {
             return GroupService.GroupUsers(request);
+        }
+
+        [HttpPost]
+        [Description("发布附近圈子信息")]
+        public Response<AddNearCircleInfoResponseBody> AddNearCircleInfo(Request<AddNearCircleInfoRequestBody> request)
+        {
+            return NearService.AddNearCircleInfo(request);
         }
     }
 }

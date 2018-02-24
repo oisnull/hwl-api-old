@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigManager.cs" />
+    <Compile Include="NearService.cs" />
     <Compile Include="GenericService.cs" />
     <Compile Include="Generic\AreaUtility.cs" />
     <Compile Include="Generic\Body\SendEmailBody.cs" />

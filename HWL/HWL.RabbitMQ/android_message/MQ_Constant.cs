@@ -19,7 +19,9 @@ namespace HWL.RabbitMQ.android_message
 
         public readonly static int CHAT_MESSAGE_CONTENT_TYPE_WORD = 1;
         public readonly static int CHAT_MESSAGE_CONTENT_TYPE_IMAGE = 2;
-        public readonly static int CHAT_MESSAGE_CONTENT_TYPE_WELCOME_TIP = 3;
+        public readonly static int CHAT_MESSAGE_CONTENT_TYPE_SOUND = 3;
+        public readonly static int CHAT_MESSAGE_CONTENT_TYPE_VIDEO = 4;
+        public readonly static int CHAT_MESSAGE_CONTENT_TYPE_WELCOME_TIP = 5;
 
         public readonly static int CHAT_SEND_SENDING = 1;
         public readonly static int CHAT_SEND_SUCCESS = 2;

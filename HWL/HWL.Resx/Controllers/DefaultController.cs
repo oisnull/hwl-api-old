@@ -46,6 +46,7 @@ namespace HWL.Resx.Controllers
             }
             catch (Exception ex)
             {
+                log.WriterLog(ex.Message);
                 return GetResult(GMSF.ResponseResult.FAILED, ex.Message);
             }
 

@@ -13,6 +13,8 @@ namespace HWL.Tools
             public int ImageWidth { get; set; }
             public int ImageHeight { get; set; }
         }
+        public readonly static int FIX_WIDTH = 960;
+        public readonly static int FIX_HEIGHT = 1280;
 
         /// 压缩图片    
         /// <param name="orgImagePath">原图片</param>    
@@ -22,8 +24,8 @@ namespace HWL.Tools
         public static ThumbnailResult ThumbnailImage(string orgImagePath, string newImagePath, int flag = 50)
         {
             Image iSource = Image.FromFile(orgImagePath);
-            int dHeight = iSource.Height;
-            int dWidth = iSource.Width;
+            int dHeight = FIX_HEIGHT;
+            int dWidth = FIX_WIDTH;
             ImageFormat tFormat = iSource.RawFormat;
             int sW = 0, sH = 0;
 
@@ -60,6 +62,13 @@ namespace HWL.Tools
             g.DrawImage(iSource, new Rectangle((dWidth - sW) / 2, (dHeight - sH) / 2, sW, sH), 0, 0, iSource.Width, iSource.Height, GraphicsUnit.Pixel);
 
             g.Dispose();
+            //try
+            //{
+            //}
+            //catch (System.Exception ex)
+            //{
+            //    throw new System.Exception("是不是这里的问题？" + ex.Message);
+            //}
             //以下代码为保存图片时，设置压缩质量    
             EncoderParameters ep = new EncoderParameters();
             long[] qy = new long[1];

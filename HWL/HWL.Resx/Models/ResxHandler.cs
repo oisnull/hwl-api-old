@@ -126,6 +126,7 @@ namespace HWL.Resx.Models
         private MultipartFormDataMemoryStreamProvider provider;
         private string rootDir;
         private string accessDir;
+        LogAction log = new LogAction("api-" + System.DateTime.Now.ToString("yyyyMMdd") + ".txt");
 
         public ResxHandler(HttpRequestMessage request, ResxModel resxModel)
         {
@@ -205,6 +206,7 @@ namespace HWL.Resx.Models
                     //检测是否要生成预览图片
                     if (this.ResxModel.IsPreview() && sw.BaseStream.Length > PREVIEW_IMAGE_SIZE)
                     {
+                        log.WriterLog("检测是否要生成预览图片sw.BaseStream.Length=" + sw.BaseStream.Length + "   PREVIEW_IMAGE_SIZE=" + PREVIEW_IMAGE_SIZE);
                         string ext = Path.GetExtension(streamNames[i]);
                         string newLocalPath = localPath.Replace(ext, "_p" + ext);
 
@@ -216,11 +218,13 @@ namespace HWL.Resx.Models
                             result.PreviewSize = ret.NewImageSize;
                             result.Width = ret.ImageWidth;
                             result.Height = ret.ImageHeight;
+                            log.WriterLog("压缩成功："+result.PreviewUrl);
                         }
                         else
                         {
                             result.PreviewUrl = orgUrl;
                             result.PreviewSize = sw.BaseStream.Length;
+                            log.WriterLog("压缩失败：" + result.PreviewUrl);
                         }
                     }
 

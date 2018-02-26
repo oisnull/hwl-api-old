@@ -112,7 +112,8 @@ Glide.with(this).
         skipMemoryCache(true).//跳过内存缓存
         into(targetView);
 
-//磁盘缓存,磁盘缓存通过diskCacheStrategy(DiskCacheStrategy)来设置,DiskCacheStrategy一共有4种模式:
+//磁盘缓存,磁盘缓存通过diskCacheStrategy(DiskCacheStrategy)来设置,
+DiskCacheStrategy一共有4种模式:
 DiskCacheStrategy.NONE:什么都不缓存 
 DiskCacheStrategy.SOURCE:仅缓存原图(全分辨率的图片)
 DiskCacheStrategy.RESULT:仅缓存最终的图片,即修改了尺寸或者转换后的图片
@@ -161,6 +162,28 @@ private class getImageCacheAsyncTask extends AsyncTask<String, Void, File> {
             FileUtil.copy(result,target);  
         }  
     }  
+
+//指定Glide缓存目录
+public class GlideCache implements GlideModule {
+
+	@Override
+	public void applyOptions(Context context, GlideBuilder builder) {
+        
+		//设置磁盘缓存目录（和创建的缓存目录相同）
+		File storageDirectory = Environment.getExternalStorageDirectory();
+		String downloadDirectoryPath=storageDirectory+"/GlideCache";
+		//设置缓存的大小为100M
+		int cacheSize = 100*1000*1000;        
+		builder.setDiskCache(new DiskLruCacheFactory(downloadDirectoryPath, cacheSize));    
+	}    
+		
+	@Override    
+	public void registerComponents(Context context, Glide glide) {}
+}
+
+2：在AndroidManifest中配置GlideCache，
+<meta-data android:name="包名.GlideCache" android:value="GlideCache"/>
+
 
 /** 
  * 复制文件 
@@ -237,454 +260,29 @@ getExternalCacheDir() = /mnt/sdcard/Android/data/com.my.app/cache
 getExternalFilesDir(“test”) = /mnt/sdcard/Android/data/com.my.app/files/test
 getExternalFilesDir(null) = /mnt/sdcard/Android/data/com.my.app/files
 getFilesDir() = /data/data/com.my.app/files
+public class GlideCache implements GlideModule {
 
-
-public class ImgUtils {
-    //保存文件到指定路径
-    public static File saveImageToGallery(Context context, Bitmap bmp) {
-        // 首先保存图片
-        String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "dearxy";
-        File appDir = new File(storePath);
-        if (!appDir.exists()) {
-            appDir.mkdir();
-        }
-        String fileName = System.currentTimeMillis() + ".jpg";
-        File file = new File(appDir, fileName);
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-            //通过io流的方式来压缩保存图片
-            boolean isSuccess = bmp.compress(Bitmap.CompressFormat.JPEG, 60, fos);
-            fos.flush();
-            fos.close();
-
-            //把文件插入到系统图库
-            //MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
-
-            //保存图片后发送广播通知更新数据库
-            Uri uri = Uri.fromFile(file);
-            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-            if (isSuccess) {
-                return file;
-            } else {
-                return null;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    @Override
+    public void applyOptions(Context context, GlideBuilder builder) {
+        
+        //设置磁盘缓存目录（和创建的缓存目录相同）
+        File storageDirectory = Environment.getExternalStorageDirectory();
+        String downloadDirectoryPath=storageDirectory+"/GlideCache";
+		//设置缓存的大小为100M
+        int cacheSize = 100*1000*1000;        
+		builder.setDiskCache(new DiskLruCacheFactory(downloadDirectoryPath, cacheSize));    
+	}    
+		
+		@Override    
+		public void registerComponents(Context context, Glide glide) {}
 }
+2：在AndroidManifest中配置GlideCache，
+<meta-data android:name="包名.GlideCache" android:value="GlideCache"/>
 
 2018-01-26:
 1,推送
 mqtt:http://www.cnblogs.com/yinyi521/p/6084029.html
 http://blog.csdn.net/clh604/article/details/20167263
-
-
-
-2018-01-31:using System;
-namespace RabbitMQServer
-{
-    public class MessageHandler
-    {
-        private MessageBase message;
-        private UserMessageContent userMessageContent;
-        private GroupMessageContent groupMessageContent;
-        public Action<string> ReceiveSuccCallBack { get; private set; }
-
-        public MessageHandler(MessageBase message)
-        {
-            this.message = message;
-
-            init();
-        }
-
-        private void init()
-        {
-            if (this.message == null) throw new Exception("消息不能为空");
-
-            if (this.message.MessageType == 1)
-            {
-                userMessageContent = message as UserMessageContent;
-            }
-            else if (this.message.MessageType == 2)
-            {
-                groupMessageContent = message as GroupMessageContent;
-            }
-        }
-
-        public void SendMessage()
-        {
-            string sendContent = string.Empty;
-            if (this.message.MessageType == 1)
-            {
-                sendContent = userMessageContent.Content;
-            }
-            else if (this.message.MessageType == 2)
-            {
-                sendContent = groupMessageContent.Content;
-            }
-            MQManager.SendContent(this.GetSendIdentity(), sendContent);
-        }
-
-        private string GetSendIdentity()
-        {
-            if (message.MessageType == 1)
-            {
-                return string.Format("user_{0}_queue", userMessageContent.ToUserId);
-            }
-            else if (message.MessageType == 2)
-            {
-                return string.Format("group_{0}_queue", groupMessageContent.GroupId);
-            }
-
-            return "none_identity_queue";
-        }
-
-        private string GetReceviceIdentity()
-        {
-            if (message.MessageType == 1)
-            {
-                return string.Format("user_{0}_queue", userMessageContent.FromUserId);
-            }
-            else if (message.MessageType == 2)
-            {
-                return string.Format("group_{0}_queue", groupMessageContent.GroupId);
-            }
-
-            return "none_identity_queue";
-        }
-    }
-
-    public class MessageBase
-    {
-        public int MessageType { get; set; }//1个人消息,2组消息
-        public int ContentType { get; set; }//文字,图片地址
-    }
-
-    public class UserMessageContent : MessageBase
-    {
-        public int ToUserId { get; set; }
-        public int FromUserId { get; set; }
-        public string Content { get; set; }
-    }
-
-    public class GroupMessageContent : MessageBase
-    {
-        public int FromUserId { get; set; }
-        public string GroupId { get; set; }
-        public string Content { get; set; }
-    }
-}
-
-
-
-
-
-
-
-
-
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using RabbitMQ.Client.Framing.Impl;
-using System;
-using System.Text;
-
-namespace RabbitMQServer
-{
-
-    public class MQManager
-    {
-        private static IConnection conn;
-        private static IModel channel;
-        private static object obj = new object();
-        private static IConnectionStatus connStatus;
-
-        static MQManager()
-        {
-            BuildConnection();//测试添加到这里和移除后的效果
-            BuildChannel();//测试添加到这里和移除后的效果
-        }
-
-        private MQManager() { }
-
-        public static ConnectionFactory GetDefaultConnectionFactory()
-        {
-            ConnectionFactory factory = new ConnectionFactory();
-            factory.HostName = "localhost";
-            return factory;
-        }
-
-        public static bool SendContent(string queueName, string message)
-        {
-            if (string.IsNullOrEmpty(queueName) || string.IsNullOrEmpty(message))
-            {
-                return false;
-            }
-            channel.QueueDeclare(queueName, true, false, false, null);
-
-            var body = Encoding.UTF8.GetBytes(message);
-            try
-            {
-                channel.BasicPublish(exchange: "",
-                                    routingKey: queueName,
-                                    basicProperties: null,
-                                    body: body);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public static void ReceiveContent(string queueName, Action<string> succCallBack)
-        {
-            channel.QueueDeclare(queueName, true, false, false, null);
-            var consumer = new EventingBasicConsumer(channel);
-            channel.BasicConsume(queueName, false, consumer);
-            consumer.Received += (model, e) =>
-            {
-                if (e != null && e.Body != null && e.Body.Length > 0)
-                {
-                    string msg = Encoding.UTF8.GetString(e.Body);
-                    channel.BasicAck(e.DeliveryTag, false);
-                    succCallBack(msg);
-                }
-            };
-        }
-
-        public static void RegisterConnectionStatusEvent(IConnectionStatus connectionStatus)
-        {
-            if (connStatus == null && connectionStatus != null)
-            {
-                connStatus = connectionStatus;
-            }
-        }
-
-        /// <summary>
-        /// 一个客户端只能维护一个长连接
-        /// </summary>
-        /// <returns></returns>
-        public static IConnection BuildConnection()
-        {
-            if (conn == null)
-            {
-                lock (obj)
-                {
-                    if (conn == null)
-                    {
-                        conn = GetDefaultConnectionFactory().CreateConnection();
-                        BindConnectionEvent();
-                    }
-                }
-            }
-
-            return conn;
-        }
-
-        /// <summary>
-        /// 一个客户端只能有一个数据通道（包含收，发通道）
-        /// </summary>
-        /// <returns></returns>
-        public static IModel BuildChannel()
-        {
-            if (channel == null)
-            {
-                lock (obj)
-                {
-                    if (channel == null)
-                    {
-                        channel = BuildConnection().CreateModel();
-                    }
-                }
-            }
-
-            return channel;
-        }
-
-        public static void CloseConnection()
-        {
-            //先关闭通道
-            if (channel != null)
-            {
-                if (!channel.IsOpen)
-                {
-                    channel.Close();
-                }
-                else
-                {
-                    channel = null;
-                }
-            }
-
-            //再关闭连接
-            if (conn != null)
-            {
-                if (conn.IsOpen)
-                {
-                    conn.Close();
-                }
-                else
-                {
-                    conn = null;
-                }
-            }
-        }
-
-        private static void BindConnectionEvent()
-        {
-            if (conn != null)
-            {
-                conn.CallbackException += (sender, e) =>
-                {
-                    if (connStatus != null)
-                    {
-                        //connStatus.OnError();
-                    }
-                };
-                conn.ConnectionBlocked += (sender, e) =>
-                {
-                    if (connStatus != null)
-                    {
-                        //connStatus.OnDisconnected();
-                    }
-                };
-                conn.ConnectionRecoveryError += (sender, e) =>
-                {
-                    if (connStatus != null)
-                    {
-                        connStatus.OnError((AutorecoveringConnection)sender, e.Exception);
-                    }
-                };
-                conn.ConnectionShutdown += (sender, e) =>
-                {
-                    if (connStatus != null)
-                    {
-                        connStatus.OnClosed((Connection)sender, e.ReplyCode, e.ReplyText);
-                    }
-                };
-                conn.RecoverySucceeded += (sender, e) =>
-                {
-                    if (connStatus != null)
-                    {
-                        connStatus.OnReconnected((AutorecoveringConnection)sender);
-                    }
-                };
-                conn.ConnectionUnblocked += (sender, e) =>
-                {
-                    if (connStatus != null)
-                    {
-                        //connStatus.OnSuccess();
-                    }
-                };
-            }
-        }
-    }
-
-    public interface IConnectionStatus
-    {
-        void OnError(AutorecoveringConnection conn, Exception e);//连接错误或者连接恢复错误
-        void OnDisconnected();//连接断开后
-        void OnClosed(Connection conn, int replyCode, string replyMessage);//连接关闭后
-        void OnSuccess();//连接成功后
-        void OnReconnected(AutorecoveringConnection conn);//重新连接后
-    }
-}
-
-
-
-
-
-
-
-
-
-
-using RabbitMQ.Client;
-using RabbitMQ.Client.Framing.Impl;
-using RabbitMQServer;
-using System;
-
-namespace RabbitMQClient
-{
-    class Program
-    {
-        static int currentUserId = 2;
-
-        private static string GetQueueName()
-        {
-            return "user_" + currentUserId + "_queue";
-        }
-
-        static void Main(string[] args)
-        {
-            Console.WriteLine("命令格式为：to content");
-            while (true)
-            {
-                //全局注册
-                MQManager.RegisterConnectionStatusEvent(new ConnectionStatusListener());
-                MQManager.ReceiveContent(GetQueueName(), (message) =>
-                {
-                    Console.WriteLine(currentUserId + " 接收到的消息：" + message);
-                });
-
-                string content = Console.ReadLine();
-                if (!string.IsNullOrEmpty(content) && !string.IsNullOrWhiteSpace(content))
-                {
-                    args = content.Split(' ');
-
-                    UserMessageContent msg = new UserMessageContent()
-                    {
-                        ContentType = 1,
-                        MessageType = 1,
-                        FromUserId = currentUserId,
-                        ToUserId = int.Parse(args[0]),
-                        Content = args[1],
-                    };
-                    MessageHandler messageHandler = new MessageHandler(msg);
-                    messageHandler.SendMessage();
-
-                }
-            }
-
-
-
-
-            //Console.WriteLine(" Press [enter] to exit.");
-            //Console.ReadLine();
-
-        }
-    }
-    internal class ConnectionStatusListener : IConnectionStatus
-    {
-        public void OnClosed(Connection conn, int replyCode, string replyMessage)
-        {
-            Console.WriteLine("OnClosed:" + replyMessage);
-        }
-
-        public void OnDisconnected()
-        {
-            Console.WriteLine("OnDisconnected");
-        }
-
-        public void OnError(AutorecoveringConnection conn, Exception e)
-        {
-            Console.WriteLine("OnError:" + e.Message);
-        }
-
-        public void OnReconnected(AutorecoveringConnection conn)
-        {
-            Console.WriteLine("OnReconnected:" + conn.CloseReason);
-        }
-
-        public void OnSuccess()
-        {
-            Console.WriteLine("OnSuccess");
-        }
-    }
-}
 
 
 2018-02-05：

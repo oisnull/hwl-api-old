@@ -16,7 +16,7 @@ namespace HWL.Unit.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            //RabbitMQ.MQManager.SendMessage("user-1-queue", GetChatGroupMessageBean());
+            RabbitMQ.MQManager.SendMessage("user-1-queue", GetChatGroupMessageBean());
             //RabbitMQ.MQManager.SendMessage("user-1-queue", GetChatUserMessageBean());
             //RabbitMQ.MQManager.SendMessage("user-2-queue", GetChatFriendRequestBean());
             //RabbitMQ.MQManager.SendMessage("user-1-queue", GetAddFriendBean());

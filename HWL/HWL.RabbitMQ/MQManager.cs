@@ -103,7 +103,7 @@ namespace HWL.RabbitMQ
             string groupId = string.Empty;
             byte[] groupIdBytes = null;
             byte[] userIdBytes = null;
-            byte[] msgBytes = null;
+            //byte[] msgBytes = null;
 
             consumer.Received += (model, e) =>
             {

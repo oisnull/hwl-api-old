@@ -9,19 +9,19 @@ namespace HWL.Tools
         public class ThumbnailResult
         {
             public bool Success { get; set; }
-            public long NewImageSize { get; set; }
             public int ImageWidth { get; set; }
             public int ImageHeight { get; set; }
         }
-        public readonly static int FIX_WIDTH = 960;
+        public readonly static int FIX_WIDTH = 960; 
         public readonly static int FIX_HEIGHT = 1280;
+        public readonly static int FIX_QUALITY = 20;
 
         /// 压缩图片    
         /// <param name="orgImagePath">原图片</param>    
         /// <param name="newImagePath">压缩后保存位置</param>    
         /// <param name="flag">压缩质量(数字越小压缩率越高) 1-100</param>    
         /// <returns></returns>    
-        public static ThumbnailResult ThumbnailImage(string orgImagePath, string newImagePath, int flag = 50)
+        public static ThumbnailResult ThumbnailImage(string orgImagePath, string newImagePath)
         {
             Image iSource = Image.FromFile(orgImagePath);
             int dHeight = FIX_HEIGHT;
@@ -51,7 +51,7 @@ namespace HWL.Tools
                 sH = tem_size.Height;
             }
 
-            Bitmap ob = new Bitmap(dWidth, dHeight);
+            Bitmap ob = new Bitmap(sW, sH);
             Graphics g = Graphics.FromImage(ob);
 
             g.Clear(Color.WhiteSmoke);
@@ -59,21 +59,16 @@ namespace HWL.Tools
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
-            g.DrawImage(iSource, new Rectangle((dWidth - sW) / 2, (dHeight - sH) / 2, sW, sH), 0, 0, iSource.Width, iSource.Height, GraphicsUnit.Pixel);
+            //g.DrawImage(iSource, new Rectangle((dWidth - sW) / 2, (dHeight - sH) / 2, sW, sH), 0, 0, sW, sH, GraphicsUnit.Pixel);
+            g.DrawImage(iSource, new Rectangle(0, 0, sW, sH), 0, 0, sW, sH, GraphicsUnit.Pixel);
 
             g.Dispose();
-            //try
-            //{
-            //}
-            //catch (System.Exception ex)
-            //{
-            //    throw new System.Exception("是不是这里的问题？" + ex.Message);
-            //}
+
             //以下代码为保存图片时，设置压缩质量    
             EncoderParameters ep = new EncoderParameters();
             long[] qy = new long[1];
-            qy[0] = flag;//设置压缩的比例1-100    
-            EncoderParameter eParam = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, qy);
+            qy[0] = FIX_QUALITY;//设置压缩的比例1-100    
+            EncoderParameter eParam = new EncoderParameter(Encoder.Quality, qy);
             ep.Param[0] = eParam;
             try
             {
@@ -100,7 +95,6 @@ namespace HWL.Tools
                     Success = true,
                     ImageHeight = dHeight,
                     ImageWidth = dWidth,
-                    NewImageSize = 0,
                 };
             }
             catch
@@ -110,7 +104,6 @@ namespace HWL.Tools
                     Success = false,
                     ImageHeight = dHeight,
                     ImageWidth = dWidth,
-                    NewImageSize = 0,
                 };
             }
             finally

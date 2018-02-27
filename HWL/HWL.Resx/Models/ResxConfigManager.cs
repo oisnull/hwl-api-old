@@ -27,6 +27,12 @@ namespace HWL.Resx.Models
         }
 
         /// <summary>
+        /// 暂时只能一个一个上传,后面再优化
+        /// </summary>
+        public static readonly int RESX_MAX_COUNT = 1;//限制上传资源的数量
+        public static readonly long PREVIEW_IMAGE_SIZE = 30 * 1024;//当图片达到指定值时,需要压缩
+
+        /// <summary>
         /// 定义图片允许上传的文件扩展名
         /// </summary>
         public readonly static string[] IMAGE_FILE_TYPES = { ".gif", ".jpg", ".jpeg", ".png", ".bmp" };

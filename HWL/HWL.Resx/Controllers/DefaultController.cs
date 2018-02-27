@@ -16,6 +16,29 @@ namespace HWL.Resx.Controllers
     {
         LogAction log = new LogAction("api-" + System.DateTime.Now.ToString("yyyyMMdd") + ".txt");
 
+        public Response<ResxResult> Image2()
+        {
+            Upfilehandler2 resx = new Upfilehandler2(HttpContext.Current.Request.Files, new ResxModel()
+            {
+                UserId = 1,
+                ResxType = ResxType.ChatImage,
+                ResxSize = ResxConfigManager.IMAGE_MAX_SIZE,
+                ResxTypes = ResxConfigManager.IMAGE_FILE_TYPES
+            });
+
+            try
+            {
+                var responseResult = resx.SaveStream();
+                var res = GetResult(GMSF.ResponseResult.SUCCESS, null, responseResult);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                log.WriterLog(ex.Message);
+                return GetResult(GMSF.ResponseResult.FAILED, ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<Response<ResxResult>> Image(string token = null, ResxType resxType = ResxType.Other)
         {

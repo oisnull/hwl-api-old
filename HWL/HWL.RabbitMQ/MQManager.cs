@@ -74,32 +74,37 @@ namespace HWL.RabbitMQ
             }
         }
 
-        public static void SendMessage(String queueName, byte[] messageBytes)
+        public static void SendMessage(string queueName, byte[] messageBytes)
         {
             try
             {
                 GetChannel().BasicPublish(HWL_DEFAULT_EXCHANGE, queueName, null, messageBytes);
             }
-            catch (NullReferenceException)
+            catch (Exception ex)
             {
-                GetChannel().QueueDeclare(queueName, true, false, false, null);
-                SendMessage(queueName, messageBytes);
+                throw ex;
+                //GetChannel().QueueDeclare(queueName, true, false, false, null);
+                //SendMessage(queueName, messageBytes);
             }
+        }
 
+        public static void BindQueue(string queueName)
+        {
+            QueueDeclareOk queueInfo = GetChannel().QueueDeclare(queueName, true, false, false, null);
+            GetChannel().QueueBind(queueName, HWL_DEFAULT_EXCHANGE, queueName, null);
         }
 
         public static void ReceiveGroupMessage(Action<int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
         {
+            BindQueue(GROUP_QUEUE_NAME);
             ReceiveMessage(GROUP_QUEUE_NAME, succCallBack, errorCallBackk);
         }
 
         public static void ReceiveMessage(string queueName, Action<int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
         {
-            QueueDeclareOk queueInfo = GetChannel().QueueDeclare(queueName, true, false, false, null);
             var consumer = new EventingBasicConsumer(channel);
             channel.BasicConsume(queueName, false, consumer);
             //receiveChannel.BasicQos(0, 1, false);//这里指示一条条处理
-
             string groupId = string.Empty;
             byte[] groupIdBytes = null;
             byte[] userIdBytes = null;

@@ -142,5 +142,12 @@ namespace HWL.API.Controllers
         {
             return NearService.AddNearCircleInfo(request);
         }
+
+        [HttpPost]
+        [Description("获取附近圈子信息列表")]
+        public Response<GetNearCircleInfosResponseBody> GetNearCircleInfos(Request<GetNearCircleInfosRequestBody> request)
+        {
+            return NearService.GetNearCircleInfos(request);
+        }
     }
 }

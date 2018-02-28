@@ -31,6 +31,10 @@ namespace HWL.Service.Near.Service
             {
                 throw new Exception("发布的用户id不能为空");
             }
+            if (this.request.Lat <= 0 && this.request.Lon <= 0)
+            {
+                throw new Exception("位置参数错误");
+            }
         }
 
         public override AddNearCircleInfoResponseBody ExecuteCore()
@@ -75,13 +79,19 @@ namespace HWL.Service.Near.Service
                         if (this.request.Images != null && this.request.Images.Count > 0)
                         {
                             //添加图片
-                            List<t_near_circle_image> imgModels = this.request.Images
-                                .ConvertAll(i => new t_near_circle_image
+                            List<t_near_circle_image> imgModels = new List<t_near_circle_image>();
+                            this.request.Images.ForEach((i) =>
+                            {
+                                if (string.IsNullOrEmpty(i)) return;
+                                imgModels.Add(new t_near_circle_image()
                                 {
                                     near_circle_id = model.id,
                                     near_circle_user_id = model.user_id,
                                     image_url = i
                                 });
+                            });
+
+                            if (imgModels == null || imgModels.Count <= 0) return res;
 
                             try
                             {

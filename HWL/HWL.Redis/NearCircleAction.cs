@@ -19,7 +19,7 @@ namespace HWL.Redis
         /// <summary>
         /// 附近圈子信息所在的数据库
         /// </summary>
-        const int NEAR_CIRCLE_GEO_DB = 300;
+        const int NEAR_CIRCLE_GEO_DB = 20;
         /// <summary>
         /// 搜索附近信息的范围初始值
         /// </summary>
@@ -50,7 +50,7 @@ namespace HWL.Redis
             base.DbNum = NEAR_CIRCLE_GEO_DB;
             base.Exec(db =>
             {
-                GeoRadiusResult[] results = db.GeoRadius(NEAR_CIRCLE_GEO_KEY, lon, lat, NEAR_CIRCLE_RANGE, GeoUnit.Miles, 1);
+                GeoRadiusResult[] results = db.GeoRadius(NEAR_CIRCLE_GEO_KEY, lon, lat, NEAR_CIRCLE_RANGE, GeoUnit.Miles, -1);
                 if (results != null && results.Length > 0)
                 {
                     ids = results.Select(s => (int)s.Member).ToList();

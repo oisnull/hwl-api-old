@@ -46,7 +46,7 @@ namespace HWL.Service.Near.Service
                     Content = c.content_info,
                     ContentType = c.content_type,
                     FromPosDesc = c.pos_id + "",
-                    Images = null,
+                    //Images = null,
                     LikeCount = c.like_count,
                     LinkImage = c.link_image,
                     LinkTitle = c.link_title,

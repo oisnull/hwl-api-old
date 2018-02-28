@@ -27,13 +27,13 @@ namespace HWL.Redis
          */
 
         const string USER_GEO_KEY = "user:pos";
-        const int USER_TOKEN_DB = 0;
-        const int TOKEN_USER_DB = 1;
-        const int USER_SESSION_DB = 2;
-        //const int USER_CREAT_GROUP_DB = 3;
-        const int USER_GEO_DB = 4;
-        const int USER_BASEINFO_DB = 7;
-        const int USER_FRIEND_DB = 8;
+        const int USER_TOKEN_DB = 00;
+        const int TOKEN_USER_DB = 01;
+        const int USER_SESSION_DB = 02;
+        //const int USER_CREAT_GROUP_DB = 03;
+        const int USER_GEO_DB = 04;
+        const int USER_BASEINFO_DB = 07;
+        const int USER_FRIEND_DB = 08;
 
         const int USER_BASERINFO_ERPIRE_TIME = 30;//用户基本信息过期时间配置，单位：分钟
         const int USER_FRIEND_ERPIRE_TIME = 30;//用户对应的好友信息过期时间配置，单位：分钟

@@ -30,15 +30,11 @@ namespace HWL.Redis
         /// <summary>
         /// 组所在的数据库
         /// </summary>
-        const int GROUP_GEO_DB = 5;
+        const int GROUP_GEO_DB = 10;
         /// <summary>
         /// 组的用户set集合所在的数据库
         /// </summary>
-        const int GROUP_USER_SET_DB = 6;
-        ///// <summary>
-        ///// 组的创建人的数据库
-        ///// </summary>
-        //const int GROUP_CREATE_USER_DB = 7;
+        const int GROUP_USER_SET_DB = 11;
         /// <summary>
         /// 搜索附近的范围初始值
         /// </summary>

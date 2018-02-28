@@ -24,7 +24,7 @@ namespace HWL.Resx.Controllers
                 return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
             }
 
-            Upfilehandler2 resx = new Upfilehandler2(HttpContext.Current.Request.Files, new ResxModel()
+            Upfilehandler resx = new Upfilehandler(HttpContext.Current.Request.Files, new ResxModel()
             {
                 UserId = ret.Item2,
                 ResxType = resxType,

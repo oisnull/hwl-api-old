@@ -93,7 +93,7 @@ namespace HWL.RabbitMQ
             ReceiveMessage(GROUP_QUEUE_NAME, succCallBack, errorCallBackk);
         }
 
-        public static void ReceiveMessage(String queueName, Action<int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
+        public static void ReceiveMessage(string queueName, Action<int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
         {
             QueueDeclareOk queueInfo = GetChannel().QueueDeclare(queueName, true, false, false, null);
             var consumer = new EventingBasicConsumer(channel);

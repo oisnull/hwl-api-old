@@ -310,44 +310,44 @@ namespace HWL.Redis
 
         #region 用户基本信息操作
 
-        /// <summary>
-        /// 获取用户基本信息(infos:[name,headimage])
-        /// </summary>
-        public List<string> GetUserInfo(int userId)
-        {
-            if (userId <= 0) return null;
+        ///// <summary>
+        ///// 获取用户基本信息(infos:[name,headimage])
+        ///// </summary>
+        //public List<string> GetUserInfo(int userId)
+        //{
+        //    if (userId <= 0) return null;
 
-            List<string> infos = null;
+        //    List<string> infos = null;
 
-            base.DbNum = USER_BASEINFO_DB;
-            base.Exec(db =>
-            {
-                string infoStr = db.StringGet(userId.ToString());
-                if (!string.IsNullOrEmpty(infoStr))
-                {
-                    infos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(infoStr);
-                }
-            });
+        //    base.DbNum = USER_BASEINFO_DB;
+        //    base.Exec(db =>
+        //    {
+        //        string infoStr = db.StringGet(userId.ToString());
+        //        if (!string.IsNullOrEmpty(infoStr))
+        //        {
+        //            infos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(infoStr);
+        //        }
+        //    });
 
-            return infos;
-        }
+        //    return infos;
+        //}
 
-        /// <summary>
-        /// 添加用户基本信息(infos:[name,headimage])
-        /// </summary>
-        public bool SaveUserInfo(int userId, List<string> infos)
-        {
-            if (userId <= 0) return false;
-            if (infos == null || infos.Count <= 0) return false;
+        ///// <summary>
+        ///// 添加用户基本信息(infos:[name,headimage])
+        ///// </summary>
+        //public bool SaveUserInfo(int userId, List<string> infos)
+        //{
+        //    if (userId <= 0) return false;
+        //    if (infos == null || infos.Count <= 0) return false;
 
-            base.DbNum = USER_BASEINFO_DB;
-            bool succ = false;
-            base.Exec(db =>
-            {
-                succ = db.StringSet(userId.ToString(), Newtonsoft.Json.JsonConvert.SerializeObject(infos), new TimeSpan(0, USER_BASERINFO_ERPIRE_TIME, 0));
-            });
-            return succ;
-        }
+        //    base.DbNum = USER_BASEINFO_DB;
+        //    bool succ = false;
+        //    base.Exec(db =>
+        //    {
+        //        succ = db.StringSet(userId.ToString(), Newtonsoft.Json.JsonConvert.SerializeObject(infos), new TimeSpan(0, USER_BASERINFO_ERPIRE_TIME, 0));
+        //    });
+        //    return succ;
+        //}
 
         /// <summary>
         /// 设置备注过期

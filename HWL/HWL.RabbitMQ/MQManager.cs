@@ -16,8 +16,8 @@ namespace HWL.RabbitMQ
         public readonly static string HWL_EXCHANGE_MODEL = "direct";
 
         private static MQConnection mqconn;
-        //private static IModel sendChannel;
-        //private static IModel receiveChannel;
+        private static IModel sendChannel;
+        private static IModel receiveChannel;
         private static IModel channel;
         private static IConnectionStatus connStatus;
         private static object obj = new object();
@@ -76,22 +76,13 @@ namespace HWL.RabbitMQ
 
         public static void SendMessage(string queueName, byte[] messageBytes)
         {
-            try
-            {
-                GetChannel().BasicPublish(HWL_DEFAULT_EXCHANGE, queueName, null, messageBytes);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-                //GetChannel().QueueDeclare(queueName, true, false, false, null);
-                //SendMessage(queueName, messageBytes);
-            }
+            GetSendChannel().BasicPublish(HWL_DEFAULT_EXCHANGE, queueName, false, null, messageBytes);
         }
 
         public static void BindQueue(string queueName)
         {
-            QueueDeclareOk queueInfo = GetChannel().QueueDeclare(queueName, true, false, false, null);
-            GetChannel().QueueBind(queueName, HWL_DEFAULT_EXCHANGE, queueName, null);
+            QueueDeclareOk queueInfo = GetReceiveChannel().QueueDeclare(queueName, true, false, false, null);
+            receiveChannel.QueueBind(queueName, HWL_DEFAULT_EXCHANGE, queueName, null);
         }
 
         public static void ReceiveGroupMessage(Action<int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
@@ -102,8 +93,8 @@ namespace HWL.RabbitMQ
 
         public static void ReceiveMessage(string queueName, Action<int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
         {
-            var consumer = new EventingBasicConsumer(channel);
-            channel.BasicConsume(queueName, false, consumer);
+            var consumer = new EventingBasicConsumer(GetReceiveChannel());
+            receiveChannel.BasicConsume(queueName, false, consumer);
             //receiveChannel.BasicQos(0, 1, false);//这里指示一条条处理
             string groupId = string.Empty;
             byte[] groupIdBytes = null;
@@ -112,7 +103,7 @@ namespace HWL.RabbitMQ
 
             consumer.Received += (model, e) =>
             {
-                channel.BasicAck(e.DeliveryTag, false);
+                receiveChannel.BasicAck(e.DeliveryTag, false);
                 if (e != null && e.Body != null && e.Body.Length > 0)
                 {
                     try
@@ -146,41 +137,53 @@ namespace HWL.RabbitMQ
         {
             if (mqconn != null)
             {
-                //mqconn.CloseChannel(sendChannel);
-                //mqconn.CloseChannel(receiveChannel);
-                mqconn.CloseChannel(channel);
+                mqconn.CloseChannel(sendChannel);
+                mqconn.CloseChannel(receiveChannel);
+                //mqconn.CloseChannel(channel);
                 mqconn.closeConnection();
                 mqconn = null;
             }
         }
 
-        ////在当前连接下创建一个发送消息的通道
-        //public static IModel GetSendChannel()
-        //{
-        //    if (mqconn == null)
-        //    {
-        //        InitConnection();
-        //    }
-        //    if (sendChannel == null)
-        //    {
-        //        sendChannel = mqconn.GetChannel();
-        //    }
-        //    return sendChannel;
-        //}
+        //在当前连接下创建一个发送消息的通道
+        public static IModel GetSendChannel()
+        {
+            if (mqconn == null)
+            {
+                InitConnection();
+            }
+            if (sendChannel == null)
+            {
+                sendChannel = mqconn.GetChannel();
+                sendChannel.BasicReturn += Channel_BasicReturn;
+            }
+            return sendChannel;
+        }
 
-        ////在当前连接下创建一个接收消息的通道
-        //public static IModel GetReceiveChannel()
-        //{
-        //    if (mqconn == null)
-        //    {
-        //        InitConnection();
-        //    }
-        //    if (receiveChannel == null)
-        //    {
-        //        receiveChannel = mqconn.GetChannel();
-        //    }
-        //    return receiveChannel;
-        //}
+        private static void Channel_BasicReturn(object sender, BasicReturnEventArgs e)
+        {
+            if (e.ReplyText == "NO_ROUTE")
+            {
+                //GetChannel().QueueDeclare(e.RoutingKey, HWL_DEFAULT_EXCHANGE, e.RoutingKey, null);
+                ////重新发送
+                //SendMessage(e.RoutingKey, e.Body);
+            }
+
+        }
+
+        //在当前连接下创建一个接收消息的通道
+        public static IModel GetReceiveChannel()
+        {
+            if (mqconn == null)
+            {
+                InitConnection();
+            }
+            if (receiveChannel == null)
+            {
+                receiveChannel = mqconn.GetChannel();
+            }
+            return receiveChannel;
+        }
 
         public static IModel GetChannel()
         {
@@ -202,7 +205,8 @@ namespace HWL.RabbitMQ
                 connectionStatus = new DefaultConnectionStatus();
             }
             connStatus = connectionStatus;
-            GetChannel().ExchangeDeclare(HWL_DEFAULT_EXCHANGE, HWL_EXCHANGE_MODEL);
+            GetReceiveChannel().ExchangeDeclare(HWL_DEFAULT_EXCHANGE, HWL_EXCHANGE_MODEL);
+            GetSendChannel().ExchangeDeclare(HWL_DEFAULT_EXCHANGE, HWL_EXCHANGE_MODEL);
         }
     }
 }

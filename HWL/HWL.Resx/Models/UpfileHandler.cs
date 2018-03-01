@@ -48,7 +48,13 @@ namespace HWL.Resx.Models
             }
         }
 
-        public ResxResult SaveStream()
+        public HttpPostedFile GetUpFile()
+        {
+            this.LoadUpfiles();
+            return files.FirstOrDefault();
+        }
+
+        public virtual ResxResult SaveStream()
         {
             var list = this.SaveFile();
             if (list != null && list.Count > 0 && ResxConfigManager.RESX_MAX_COUNT == 1)
@@ -118,16 +124,6 @@ namespace HWL.Resx.Models
                 resxResults.Add(resx);
             }
             return resxResults;
-        }
-
-        private string GetNewFileName(string ext)
-        {
-            string newFileName = "";
-            //string fileExt = Path.GetExtension(orgFileName).ToLower();
-            //newFileName = System.Text.RegularExpressions.Regex.Replace(orgFileName, fileExt, "");
-            //newFileName = System.Text.RegularExpressions.Regex.Replace(newFileName, @"[^\u4e00-\u9fa5_a-zA-Z0-9]", "");
-            newFileName = DateTime.Now.ToString("yyyyMMddHHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo) + ext;
-            return newFileName;
         }
     }
 

@@ -67,6 +67,16 @@ namespace HWL.Resx.Models
 
             return null;
         }
+
+        protected virtual string GetNewFileName(string ext)
+        {
+            string newFileName = "";
+            //string fileExt = Path.GetExtension(orgFileName).ToLower();
+            //newFileName = System.Text.RegularExpressions.Regex.Replace(orgFileName, fileExt, "");
+            //newFileName = System.Text.RegularExpressions.Regex.Replace(newFileName, @"[^\u4e00-\u9fa5_a-zA-Z0-9]", "");
+            newFileName = DateTime.Now.ToString("yyyyMMddHHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo) + ext;
+            return newFileName;
+        }
     }
 
     public class ResxModel
@@ -92,6 +102,7 @@ namespace HWL.Resx.Models
     public class ResxResult
     {
         public bool Success { get; set; }
+        public string Message { get; set; }
         public string OriginalUrl { get; set; }
         public long OriginalSize { get; set; }
         public string PreviewUrl { get; set; }

@@ -1,10 +1,138 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
 
 namespace HWL.Resx.Models
 {
+    public class VideoHandler2 : Upfilehandler
+    {
+        const string CHUNK_EXT_ID = ".tmp";
+        HttpPostedFile file = null;
+        bool isExistsTempFile = false;
+        //string orgFileName;
+        string tempFileLocalPath;
+        string tempFileName;
+        int chunkIndex = 0;
+        int chunkCount = 0;
+
+        public VideoHandler2(HttpFileCollection fileKeys, ResxModel resxModel, int chunkIndex = 1, int chunkCount = 1, string tempFileUrl = null) : base(fileKeys, resxModel)
+        {
+            file = base.GetUpFile();
+            this.chunkIndex = chunkIndex;
+            this.chunkCount = chunkCount;
+            this.tempFileName = Path.GetFileName(tempFileUrl);
+
+            this.LoadFileParams();
+        }
+
+        //first upload video
+        private void LoadFileParams()
+        {
+            if (chunkIndex <= 0) throw new Exception("数据流索引参数错误");
+            if (chunkCount <= 0) throw new Exception("数据流数量参数错误");
+
+            if (file == null)
+                throw new Exception("上传文件是空的");
+
+            //orgFileName = file.FileName;
+            if (string.IsNullOrEmpty(file.FileName))
+                throw new Exception("文件名参数错误");
+
+            if (string.IsNullOrEmpty(tempFileName))
+            {
+                isExistsTempFile = false;
+                this.tempFileName = base.GetNewFileName(Path.GetExtension(file.FileName)) + CHUNK_EXT_ID;
+                tempFileLocalPath = rootDir + this.tempFileName;
+            }
+            else
+            {
+                isExistsTempFile = true;
+            }
+        }
+
+        private Tuple<string, long> ResetFileName()
+        {
+            FileInfo fi = new FileInfo(tempFileLocalPath);
+            if (!fi.Exists)
+            {
+                throw new Exception("数据流文件不存在");
+            }
+            fi.MoveTo(tempFileLocalPath.Replace(CHUNK_EXT_ID, ""));
+            return new Tuple<string, long>(fi.Name, fi.Length);
+        }
+
+        protected override string GetNewFileName(string ext)
+        {
+            return this.tempFileName;//添加临时文件名的后缀
+        }
+
+        public override ResxResult SaveStream()
+        {
+            ResxResult resx = null;
+            if (!isExistsTempFile)//如果不存在则直接保存
+            {
+                resx = base.SaveStream();
+                return resx;
+            }
+
+            //如果存在则将上传的分片追加到临时文件末尾
+            FileStream appendFileStream = null;
+            BinaryWriter writer = null;
+            BinaryReader reader = null;
+
+            try
+            {
+                appendFileStream = new FileStream(tempFileLocalPath, FileMode.Append, FileAccess.Write);
+                writer = new BinaryWriter(appendFileStream);
+                reader = new BinaryReader(file.InputStream);
+                writer.Write(reader.ReadBytes((int)file.InputStream.Length));
+
+                resx = new ResxResult()
+                {
+                    Success = true,
+                    OriginalUrl = accessDir + tempFileName,
+                    OriginalSize = file.InputStream.Length,
+                };
+
+                if (chunkIndex == chunkCount)//说明是最后一块数据流
+                {
+                    var fileInfo = ResetFileName();
+                    resx.OriginalUrl = accessDir + fileInfo.Item1;
+                    resx.OriginalSize = fileInfo.Item2;
+                }
+            }
+            catch (Exception e)
+            {
+                resx = new ResxResult() { Success = false, Message = e.Message };
+            }
+            finally
+            {
+                if (appendFileStream != null)
+                {
+                    appendFileStream.Close();
+                    appendFileStream.Dispose();
+                }
+                if (writer != null)
+                {
+                    writer.Close();
+                    writer.Dispose();
+                }
+                if (file.InputStream != null)
+                {
+                    file.InputStream.Close();
+                    file.InputStream.Dispose();
+                }
+                if (reader != null)
+                {
+                    reader.Close();
+                    reader.Dispose();
+                }
+            }
+            return resx;
+        }
+    }
 
     public class VideoHandler
     {

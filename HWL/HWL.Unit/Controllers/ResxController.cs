@@ -13,5 +13,9 @@ namespace HWL.Unit.Controllers
         {
             return View();
         }
+        public ActionResult Chunked()
+        {
+            return View();
+        }
     }
 }

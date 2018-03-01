@@ -96,6 +96,7 @@
   <ItemGroup>
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="Views\web.config" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -115,7 +116,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
     <Content Include="packages.config" />
     <Content Include="appSettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -125,6 +125,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Resx\Index.cshtml" />
     <None Include="Properties\PublishProfiles\hwl.unit.pubxml" />
+    <Content Include="Views\Resx\Chunked.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

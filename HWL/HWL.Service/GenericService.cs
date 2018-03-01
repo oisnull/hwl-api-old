@@ -10,7 +10,7 @@ namespace HWL.Service
     {
         public static Response<SendEmailResponseBody> SendEmail(Request<SendEmailRequestBody> request)
         {
-            var context = new ServiceContext<SendEmailRequestBody>(request, new RequestValidate(false, true));
+            var context = new ServiceContext<SendEmailRequestBody>(request, new RequestValidate(false, false));
             return ContextProcessor.Execute(context, r =>
             {
                 return new SendEmail(r.Body).Execute();
@@ -18,7 +18,7 @@ namespace HWL.Service
         }
         public static Response<SendSMSResponseBody> SendSMS(Request<SendSMSRequestBody> request)
         {
-            var context = new ServiceContext<SendSMSRequestBody>(request, new RequestValidate(false, true));
+            var context = new ServiceContext<SendSMSRequestBody>(request, new RequestValidate(false, false));
             return ContextProcessor.Execute(context, r =>
             {
                 return new SendSMS(r.Body).Execute();

@@ -45,6 +45,7 @@ namespace HWL.Resx.Controllers
             }
         }
 
+        //语音
         public Response<ResxResult> Audio(string token = null)
         {
             var ret = this.CheckToken(token);

@@ -24,7 +24,7 @@ namespace HWL.Resx.Controllers
                 return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
             }
 
-            Upfilehandler resx = new Upfilehandler(HttpContext.Current.Request.Files, new ResxModel()
+            UpfileHandler resx = new UpfileHandler(HttpContext.Current.Request.Files, new ResxModel()
             {
                 UserId = ret.Item2,
                 ResxType = resxType,
@@ -54,7 +54,7 @@ namespace HWL.Resx.Controllers
                 return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
             }
 
-            Upfilehandler resx = new Upfilehandler(HttpContext.Current.Request.Files, new ResxModel()
+            UpfileHandler resx = new UpfileHandler(HttpContext.Current.Request.Files, new ResxModel()
             {
                 UserId = ret.Item2,
                 ResxType = ResxType.ChatSound,
@@ -87,17 +87,26 @@ namespace HWL.Resx.Controllers
             {
                 return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
             }
+            //System.Threading.Thread.Sleep(1000);
 
-            Upfilehandler resx = new Upfilehandler(HttpContext.Current.Request.Files, new ResxModel()
+            ResxModel resxModel = new ResxModel()
             {
                 UserId = ret.Item2,
                 ResxType = ResxType.ChatVideo,
                 ResxSize = ResxConfigManager.VIDEO_MAX_SIZE,
                 ResxTypes = ResxConfigManager.VIDEO_FILE_TYPES
-            });
+            };
 
             try
             {
+                VideoHandler2 resx = new VideoHandler2(
+                    HttpContext.Current.Request.Files,
+                    resxModel,
+                    CommonCs.GetObjToInt(HttpContext.Current.Request.Form["chunkindex"]),
+                    CommonCs.GetObjToInt(HttpContext.Current.Request.Form["chunkcount"]),
+                    HttpContext.Current.Request.Form["tempfilename"]
+                    );
+
                 var responseResult = resx.SaveStream();
                 var res = GetResult(GMSF.ResponseResult.SUCCESS, null, responseResult);
                 return res;

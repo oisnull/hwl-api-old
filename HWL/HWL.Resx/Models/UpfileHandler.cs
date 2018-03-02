@@ -8,12 +8,12 @@ using HWL.Entity;
 
 namespace HWL.Resx.Models
 {
-    public class Upfilehandler : ResxBase
+    public class UpfileHandler : ResxBase
     {
         private HttpFileCollection fileKeys;
         private List<HttpPostedFile> files = null;
 
-        public Upfilehandler(HttpFileCollection fileKeys, ResxModel resxModel) : base(resxModel)
+        public UpfileHandler(HttpFileCollection fileKeys, ResxModel resxModel) : base(resxModel)
         {
             this.fileKeys = fileKeys;
         }

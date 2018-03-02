@@ -6,7 +6,7 @@ using System.Web;
 
 namespace HWL.Resx.Models
 {
-    public class VideoHandler2 : Upfilehandler
+    public class VideoHandler2 : UpfileHandler
     {
         const string CHUNK_EXT_ID = ".tmp";
         HttpPostedFile file = null;
@@ -24,11 +24,11 @@ namespace HWL.Resx.Models
             this.chunkCount = chunkCount;
             this.tempFileName = Path.GetFileName(tempFileUrl);
 
-            this.LoadFileParams();
+            this.Init();
         }
 
         //first upload video
-        private void LoadFileParams()
+        private void Init()
         {
             if (chunkIndex <= 0) throw new Exception("数据流索引参数错误");
             if (chunkCount <= 0) throw new Exception("数据流数量参数错误");
@@ -44,11 +44,11 @@ namespace HWL.Resx.Models
             {
                 isExistsTempFile = false;
                 this.tempFileName = base.GetNewFileName(Path.GetExtension(file.FileName)) + CHUNK_EXT_ID;
-                tempFileLocalPath = rootDir + this.tempFileName;
             }
             else
             {
                 isExistsTempFile = true;
+                tempFileLocalPath = rootDir + this.tempFileName;
             }
         }
 
@@ -95,13 +95,6 @@ namespace HWL.Resx.Models
                     OriginalUrl = accessDir + tempFileName,
                     OriginalSize = file.InputStream.Length,
                 };
-
-                if (chunkIndex == chunkCount)//说明是最后一块数据流
-                {
-                    var fileInfo = ResetFileName();
-                    resx.OriginalUrl = accessDir + fileInfo.Item1;
-                    resx.OriginalSize = fileInfo.Item2;
-                }
             }
             catch (Exception e)
             {
@@ -128,6 +121,13 @@ namespace HWL.Resx.Models
                 {
                     reader.Close();
                     reader.Dispose();
+                }
+
+                if (chunkIndex == chunkCount)//说明是最后一块数据流
+                {
+                    var fileInfo = ResetFileName();
+                    resx.OriginalUrl = accessDir + fileInfo.Item1;
+                    resx.OriginalSize = fileInfo.Item2;
                 }
             }
             return resx;

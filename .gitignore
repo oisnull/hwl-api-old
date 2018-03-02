@@ -32,6 +32,5 @@
 /HWL/packages/Microsoft.ApplicationInsights.Web.2.2.0
 /HWL/HWL.Unit/bin
 /HWL/HWL.Unit/obj/Debug
+/HWL/HWL.Redis/bin/Debug
 /HWL/HWL.Redis/obj/Debug
-/HWL/HWL.Redis/bin
-/HWL/.vs

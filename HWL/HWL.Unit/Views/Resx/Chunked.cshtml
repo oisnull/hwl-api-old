@@ -34,114 +34,155 @@
     </style>
 </head>
 <body>
-    <form enctype="multipart/form-data" action="file.php" method="post">
-        <!--
-        <input type="file" name="pic" />
-        <div id="img"></div>
-        <input type="button" value="uploadimg" onclick="upimg();" /><br />
-        -->
+    <form enctype="multipart/form-data" method="post">
         <div id="upimg">
             <div id="load"></div>
         </div>
         <input type="file" name="mof" multiple="multiple" />
-        <input type="button" value="uploadfile" onclick="upfile();" />
-        <input type="submit" value="submit" />
+        <input type="button" value="uploadfile" onclick="upload();" />
     </form>
     <div id="test">
         测试是否DIV消失
     </div>
+
+    <script src="~/Content/jquery-1.10.2.min.js"></script>
+    <script src="~/Content/jquery.form.js"></script>
     <script type="text/javascript">
-        var dom = document.getElementsByTagName('form')[0];
-        dom.onsubmit = function () {
-            //return false;
-        }
-        var xhr = new XMLHttpRequest();
-        var fd;
-        var des = document.getElementById('load');
-        var num = document.getElementById('upimg');
-        var file;
-        const LENGTH = 10 * 1024 * 1024;
-        var start;
-        var end;
-        var blob;
-        var pecent;
-        var filename;
-        //var pending;
-        //var clock;
-        function upfile() {
-            start = 0;
-            end = LENGTH + start;
-            //pending=false;
 
-            file = document.getElementsByName('mof')[0].files[0];
-            //filename = file.name;
-            if (!file) {
-                alert('请选择文件');
-                return;
-            }
-            //clock=setInterval('up()',1000);
-            up();
+        var chunkLenght = 10 * 1024;//500K
+        var chunkIndex = 0;
+        var chunkCount = 0;
+        var startLength = 0;
+        var endLength = 0;
 
-        }
+        function upload() {
+            //var file = document.getElementsByName('mof')[0].files[0];
+            //if (!file) {
+            //    alert('请选择文件');
+            //    return;
+            //}
 
-        function up() {
-            /*
-            if(pending){
-                return;
-            }
-            */
-            if (start < file.size) {
-                xhr.open('POST', 'file.php', true);
-                //xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-                xhr.onreadystatechange = function () {
-                    if (this.readyState == 4) {
-                        if (this.status >= 200 && this.status < 300) {
-                            if (this.responseText.indexOf('failed') >= 0) {
-                                //alert(this.responseText);
-                                alert('文件发送失败，请重新发送');
-                                des.style.width = '0%';
-                                //num.innerHTML='';
-                                //clearInterval(clock);
-                            } else {
-                                //alert(this.responseText)
-                                // pending=false;
-                                start = end;
-                                end = start + LENGTH;
-                                setTimeout('up()', 1000);
-                            }
+            //if (endLength >= file.size)
+            //    return;
 
-                        }
-                    }
-                }
-                xhr.upload.onprogress = function (ev) {
-                    if (ev.lengthComputable) {
-                        pecent = 100 * (ev.loaded + start) / file.size;
-                        if (pecent > 100) {
-                            pecent = 100;
-                        }
-                        //num.innerHTML=parseInt(pecent)+'%';
-                        des.style.width = pecent + '%';
-                        des.innerHTML = parseInt(pecent) + '%'
-                    }
-                }
+            //chunkIndex++;
+            //chunkCount = Math.ceil(file.size / chunkLenght);
+            //startLength = endLength;
+            //endLength += chunkLenght;
 
-                //分割文件核心部分slice
-                blob = file.slice(start, end);
-                fd = new FormData();
-                fd.append('mof', blob);
-                fd.append('test', file.name);
-                //console.log(fd);
-                //pending=true;
-                xhr.send(fd);
-            } else {
-                //clearInterval(clock);
-            }
+            ////分割文件核心部分slice
+            //var chunkData = file.slice(startLength, endLength);
+            //var fd = new FormData();
+            //fd.append('mof', chunkData);
+            //fd.append('name', file.name);
+
+            //$("form").add("f", fd);
+            //$("form").submit(function () {
+            //    $(this).ajaxSubmit({
+            //        type: "post",
+            //        //data: { chunkIndex: chunkIndex, chunkCount: chunkCount },
+            //        data: { chunkIndex: 0, chunkCount: 0 },
+            //        url: "http://localhost:18746/resx/video",
+            //        success: function (data) {
+            //            console.log(JSON.stringify(data));
+            //        }
+            //    });
+            //    return false; 
+            //});
+
+            $.post("http://localhost:18746/resx/video", { chunkIndex: 0, chunkCount: 0 }, function (data) {
+                console.log(JSON.stringify(data));
+            });
         }
 
-        function change() {
-            des.style.width = '0%';
-        }
 
     </script>
+    @*<script type="text/javascript">
+            var dom = document.getElementsByTagName('form')[0];
+            dom.onsubmit = function () {
+                //return false;
+            }
+            var xhr = new XMLHttpRequest();
+            var fd;
+            var des = document.getElementById('load');
+            var num = document.getElementById('upimg');
+            var file;
+            const LENGTH = 10 * 1024 * 1024;
+            var start;
+            var end;
+            var blob;
+            var pecent;
+            var filename;
+            function upfile() {
+                start = 0;
+                end = LENGTH + start;
+
+                file = document.getElementsByName('mof')[0].files[0];
+                if (!file) {
+                    alert('请选择文件');
+                    return;
+                }
+                up();
+            }
+
+            function up() {
+                /*
+                if(pending){
+                    return;
+                }
+                */
+                if (start < file.size) {
+                    xhr.open('POST', 'file.php', true);
+                    //xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function () {
+                        if (this.readyState == 4) {
+                            if (this.status >= 200 && this.status < 300) {
+                                if (this.responseText.indexOf('failed') >= 0) {
+                                    //alert(this.responseText);
+                                    alert('文件发送失败，请重新发送');
+                                    des.style.width = '0%';
+                                    //num.innerHTML='';
+                                    //clearInterval(clock);
+                                } else {
+                                    //alert(this.responseText)
+                                    // pending=false;
+                                    start = end;
+                                    end = start + LENGTH;
+                                    setTimeout('up()', 1000);
+                                }
+
+                            }
+                        }
+                    }
+                    xhr.upload.onprogress = function (ev) {
+                        if (ev.lengthComputable) {
+                            pecent = 100 * (ev.loaded + start) / file.size;
+                            if (pecent > 100) {
+                                pecent = 100;
+                            }
+                            //num.innerHTML=parseInt(pecent)+'%';
+                            des.style.width = pecent + '%';
+                            des.innerHTML = parseInt(pecent) + '%'
+                        }
+                    }
+
+                    //分割文件核心部分slice
+                    blob = file.slice(start, end);
+                    fd = new FormData();
+                    fd.append('mof', blob);
+                    fd.append('test', file.name);
+                    //console.log(fd);
+                    //pending=true;
+                    xhr.send(fd);
+                } else {
+                    //clearInterval(clock);
+                }
+            }
+
+            function change() {
+                des.style.width = '0%';
+            }
+
+        </script>*@
 </body>
 </html>

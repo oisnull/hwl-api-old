@@ -34,3 +34,8 @@
 /HWL/HWL.Unit/obj/Debug
 /HWL/HWL.Redis/bin/Debug
 /HWL/HWL.Redis/obj/Debug
+/HWL/HWL.Redis/bin/Release/StackExchange.Redis.dll
+/HWL/HWL.Redis/bin/Release/Newtonsoft.Json.xml
+/HWL/HWL.Redis/bin/Release/Newtonsoft.Json.dll
+/HWL/HWL.Redis/bin/Release/HWL.Redis.pdb
+/HWL/HWL.Redis/bin/Release/HWL.Redis.dll

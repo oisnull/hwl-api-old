@@ -19,7 +19,7 @@ namespace HWL.API.Controllers
         [Description("用户登陆")]
         public Response<UserLoginResponseBody> UserLogin(Request<UserLoginRequestBody> request)
         {
-            log.WriterLog(Newtonsoft.Json.JsonConvert.SerializeObject(request));
+            //log.WriterLog(Newtonsoft.Json.JsonConvert.SerializeObject(request));
             return UserService.UserLogin(request);
         }
 

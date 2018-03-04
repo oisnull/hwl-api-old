@@ -49,6 +49,7 @@ namespace HWL.Resx.Models
         /// 定义视频允许上传的文件扩展名
         /// </summary>
         public readonly static string[] VIDEO_FILE_TYPES = { ".mp4", ".tmp" };
-        public readonly static int VIDEO_MAX_SIZE = 20 * 1024 * 1024;//默认20M
+        //public readonly static int VIDEO_MAX_SIZE = 20 * 1024 * 1024;//默认20M
+        public readonly static int VIDEO_MAX_SIZE = 700 * 1024;//默认600K
     }
 }

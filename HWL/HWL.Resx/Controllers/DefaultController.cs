@@ -96,7 +96,6 @@ namespace HWL.Resx.Controllers
                 ResxSize = ResxConfigManager.VIDEO_MAX_SIZE,
                 ResxTypes = ResxConfigManager.VIDEO_FILE_TYPES
             };
-
             try
             {
                 VideoHandler2 resx = new VideoHandler2(
@@ -104,8 +103,9 @@ namespace HWL.Resx.Controllers
                     resxModel,
                     CommonCs.GetObjToInt(HttpContext.Current.Request.Form["chunkindex"]),
                     CommonCs.GetObjToInt(HttpContext.Current.Request.Form["chunkcount"]),
-                    HttpContext.Current.Request.Form["tempfilename"]
+                    HttpContext.Current.Request.Form["tempfileurl"]
                     );
+                log.WriterLog("Video : chunkIndex="+ CommonCs.GetObjToInt(HttpContext.Current.Request.Form["chunkindex"]) + " chunkCount=" + CommonCs.GetObjToInt(HttpContext.Current.Request.Form["chunkcount"]) + " tempfileurl=" + HttpContext.Current.Request.Form["tempfileurl"]);
 
                 var responseResult = resx.SaveStream();
                 var res = GetResult(GMSF.ResponseResult.SUCCESS, null, responseResult);

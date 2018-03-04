@@ -65,6 +65,10 @@ namespace HWL.Resx.Models
 
         protected override string GetNewFileName(string ext)
         {
+            if (!isExistsTempFile && chunkCount == chunkIndex)
+            {
+                return base.GetNewFileName(ext);
+            }
             return this.tempFileName;//添加临时文件名的后缀
         }
 
@@ -75,6 +79,11 @@ namespace HWL.Resx.Models
             {
                 resx = base.SaveStream();
                 return resx;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(tempFileName))
+                    throw new Exception("未找到需要合并的文件");
             }
 
             //如果存在则将上传的分片追加到临时文件末尾
@@ -122,14 +131,15 @@ namespace HWL.Resx.Models
                     reader.Close();
                     reader.Dispose();
                 }
-
-                if (chunkIndex == chunkCount)//说明是最后一块数据流
-                {
-                    var fileInfo = ResetFileName();
-                    resx.OriginalUrl = accessDir + fileInfo.Item1;
-                    resx.OriginalSize = fileInfo.Item2;
-                }
             }
+
+            if (chunkIndex >= chunkCount)//说明是最后一块数据流
+            {
+                var fileInfo = ResetFileName();
+                resx.OriginalUrl = accessDir + fileInfo.Item1;
+                resx.OriginalSize = fileInfo.Item2;
+            }
+
             return resx;
         }
     }

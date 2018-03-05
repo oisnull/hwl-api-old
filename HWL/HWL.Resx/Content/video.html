@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>分块上传</title>
+    <script src="jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <div>
+        <p>
+            <input type="file" name="mof" multiple="multiple" />
+            <input type="button" value="uploadfile" onclick="upload();" />
+        </p>
+        <span id="span_info"></span>
+    </div>
+
+    <script type="text/javascript">
+
+        var chunkLenght = 10 * 1024;//500K
+        var chunkIndex = 0;
+        var chunkCount = 0;
+        var startLength = 0;
+        var endLength = 0;
+        var tempFileUrl = null;
+
+        function upload() {
+            var file = document.getElementsByName('mof')[0].files[0];
+            if (!file) {
+                alert('请选择文件');
+                return;
+            }
+
+            if (endLength >= file.size)
+                return;
+
+            var fileName = function () {
+                if (tempFileUrl != "" && tempFileUrl != null) {
+                    var pos = tempFileUrl.lastIndexOf("/");
+                    if (pos == -1) {
+                        pos = tempFileUrl.lastIndexOf("\\")
+                    }
+                    return tempFileUrl.substr(pos + 1);
+                }
+                return "";
+            }
+
+            chunkIndex++;
+            chunkCount = Math.ceil(file.size / chunkLenght);
+            startLength = endLength;
+            endLength += chunkLenght;
+
+            //分割文件核心部分slice
+            var chunkData = file.slice(startLength, endLength);
+            var form = new FormData();
+            form.append('data', chunkData, file.name);
+            form.append('chunkIndex', chunkIndex);
+            form.append('chunkCount', chunkCount);
+            form.append('tempfilename', fileName());
+
+            $.ajax({
+                url: "/resx/video",
+                type: "POST",
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    //{
+                    //    "Head": {
+                    //        "ResultCode": "success",
+                    //        "ResultMessage": null
+                    //    },
+                    //    "Body": {
+                    //        "Success": true,
+                    //        "Message": null,
+                    //        "OriginalUrl": "http://192.168.1.4:8033//upload/chat-video/20180302/1/20180302133933.mp4.tmp",
+                    //        "OriginalSize": 148931,
+                    //        "PreviewUrl": null,
+                    //        "PreviewSize": 0,
+                    //        "Width": 0,
+                    //        "Height": 0,
+                    //        "PlayTime": 0
+                    //    }
+                    //}
+                    if (data != null && data.Head != null) {
+                        if (data.Head.ResultCode != null && data.Head.ResultCode == "success") {
+                            if (data.Body != null && data.Body.Success == true) {
+                                tempFileUrl = data.Body.OriginalUrl;
+                                var html = "进度: " + ((endLength > file.size) ? file.size : endLength) + " / " + file.size + "</br>";
+                                html += "数据块: " + chunkIndex + " / " + chunkCount + "</br>";
+                                showResult(true, html);
+                                upload();
+                            } else {
+                                showResult(false, data.Head.ResultMessage);
+                            }
+                        } else {
+                            showResult(false, data.Head.ResultMessage);
+                        }
+                    } else {
+                        showResult(false, "文件错误");
+                    }
+                }
+            });
+        }
+
+        function showResult(isSuccess, message) {
+            if (isSuccess) {
+                $("#span_info").html(message);
+            } else {
+                $("#span_info").html("<font color='red'>" + message + "</font>");
+            }
+        }
+    </script>
+</body>
+</html>

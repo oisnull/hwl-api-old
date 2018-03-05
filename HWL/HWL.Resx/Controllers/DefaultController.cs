@@ -82,6 +82,8 @@ namespace HWL.Resx.Controllers
         /// <returns></returns>
         public Response<ResxResult> Video(string token = null)
         {
+            if (string.IsNullOrEmpty(token))
+                token = "88888888";
             var ret = this.CheckToken(token);
             if (!ret.Item1)
             {

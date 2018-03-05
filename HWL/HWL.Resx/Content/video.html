@@ -55,7 +55,7 @@
             form.append('data', chunkData, file.name);
             form.append('chunkIndex', chunkIndex);
             form.append('chunkCount', chunkCount);
-            form.append('tempfilename', fileName());
+            form.append('tempfileurl', fileName());
 
             $.ajax({
                 url: "/resx/video",
@@ -87,6 +87,7 @@
                                 tempFileUrl = data.Body.OriginalUrl;
                                 var html = "进度: " + ((endLength > file.size) ? file.size : endLength) + " / " + file.size + "</br>";
                                 html += "数据块: " + chunkIndex + " / " + chunkCount + "</br>";
+                                html += JSON.stringify(data);
                                 showResult(true, html);
                                 upload();
                             } else {

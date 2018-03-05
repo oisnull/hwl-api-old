@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HWL.Tools;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -138,47 +139,37 @@ namespace HWL.Resx.Models
                 var fileInfo = ResetFileName();
                 resx.OriginalUrl = accessDir + fileInfo.Item1;
                 resx.OriginalSize = fileInfo.Item2;
+
+                //生成视频预览图片
+                string videoLocalPath = rootDir + fileInfo.Item1;
+                string videoPreviewSavePath = videoLocalPath.Replace(Path.GetExtension(videoLocalPath), "_p.jpg");
+                var tuple = new VideoImageHanlder().CatchImg(videoLocalPath, videoPreviewSavePath);
+                if (tuple.Item1)
+                {
+                    resx.PreviewUrl = accessDir + Path.GetFileName(videoPreviewSavePath);
+                    resx.PlayTime = long.Parse(tuple.Item2 + "");
+                }
             }
 
             return resx;
         }
     }
 
-    public class VideoHandler
+    public class VideoImageHanlder
     {
-        public string ffmpegtool = "~/content/ffmpeg/ffmpeg.exe";
-        public string sizeOfImg = "240x180";
+        private string ffmpegtool = "~/content/ffmpeg/ffmpeg.exe";
+        public string sizeOfImg = ImageAction.FIX_HEIGHT + "x" + ImageAction.FIX_HEIGHT;
 
-        public VideoHandler()
+        public VideoImageHanlder()
         {
             ffmpegtool = HttpContext.Current.Server.MapPath(ffmpegtool);
-        }
-
-        /// <summary>
-        /// 获取文件的名字
-        /// </summary>
-        public static string GetFileName(string fileName)
-        {
-            int i = fileName.LastIndexOf("\\") + 1;
-            string Name = fileName.Substring(i);
-            return Name;
-        }
-
-        /// <summary>
-        /// 获取文件扩展名
-        /// </summary>
-        public static string GetExtension(string fileName)
-        {
-            int i = fileName.LastIndexOf(".") + 1;
-            string Name = fileName.Substring(i);
-            return Name;
         }
 
         /// <summary>
         /// 返回文件名称(文件名,视频时长)
         /// </summary>
         /// <returns></returns>
-        public Tuple<string, double> CatchImg(string videoFullPath, string imgSaveDir)
+        public Tuple<bool, double> CatchImg(string videoFullPath, string saveLocalPath)
         {
             string output;
             this.ExecuteCommand("\"" + this.ffmpegtool + "\"" + " -i " + "\"" + videoFullPath + "\"", out output);
@@ -197,26 +188,26 @@ namespace HWL.Resx.Models
             string sizeString = Regex.Match(output, "(\\d{2,4})x(\\d{2,4})").Value;
             if (string.IsNullOrEmpty(sizeString))
             {
-                sizeString = this.sizeOfImg;
+                sizeString = sizeOfImg;
             }
 
-            string flv_img = DateTime.Now.ToString("yyyyMMddHHmmssffff") + ".jpg";
-            string imgFullPath = imgSaveDir + flv_img;
+            //string flv_img = DateTime.Now.ToString("yyyyMMddHHmmssffff") + ".jpg";
+            //string imgFullPath = imgSaveDir + flv_img;
 
             ProcessStartInfo pro = new ProcessStartInfo(this.ffmpegtool);
             pro.UseShellExecute = false;
             pro.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 
             //获取一张缩略图
-            pro.Arguments = "   -i   " + videoFullPath + "  -y  -f  image2   -ss 2 -vframes 1  -s   " + sizeString + "   " + imgFullPath;
+            pro.Arguments = "   -i   " + videoFullPath + "  -y  -f  image2   -ss 2 -vframes 1  -s   " + sizeString + "   " + saveLocalPath;
             try
             {
                 System.Diagnostics.Process.Start(pro);
-                return Tuple.Create(flv_img, time);
+                return Tuple.Create(true, time);
             }
             catch (Exception) { }
 
-            return null;
+            return Tuple.Create(false, time);
         }
 
         public void ExecuteCommand(string command, out string output)

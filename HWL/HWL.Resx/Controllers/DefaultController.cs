@@ -107,7 +107,7 @@ namespace HWL.Resx.Controllers
                     CommonCs.GetObjToInt(HttpContext.Current.Request.Form["chunkcount"]),
                     HttpContext.Current.Request.Form["tempfileurl"]
                     );
-                log.WriterLog("Video : chunkIndex="+ CommonCs.GetObjToInt(HttpContext.Current.Request.Form["chunkindex"]) + " chunkCount=" + CommonCs.GetObjToInt(HttpContext.Current.Request.Form["chunkcount"]) + " tempfileurl=" + HttpContext.Current.Request.Form["tempfileurl"]);
+                //log.WriterLog("Video : chunkIndex="+ CommonCs.GetObjToInt(HttpContext.Current.Request.Form["chunkindex"]) + " chunkCount=" + CommonCs.GetObjToInt(HttpContext.Current.Request.Form["chunkcount"]) + " tempfileurl=" + HttpContext.Current.Request.Form["tempfileurl"]);
 
                 var responseResult = resx.SaveStream();
                 var res = GetResult(GMSF.ResponseResult.SUCCESS, null, responseResult);

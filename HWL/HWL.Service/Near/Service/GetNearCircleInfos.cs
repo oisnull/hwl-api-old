@@ -12,8 +12,11 @@ namespace HWL.Service.Near.Service
 {
     public class GetNearCircleInfos : GMSF.ServiceHandler<GetNearCircleInfosRequestBody, GetNearCircleInfosResponseBody>
     {
+        private HWLEntities db = null;
+
         public GetNearCircleInfos(GetNearCircleInfosRequestBody request) : base(request)
         {
+            db = new HWLEntities();
         }
 
         protected override void ValidateRequestParams()
@@ -27,6 +30,8 @@ namespace HWL.Service.Near.Service
             {
                 throw new Exception("位置参数错误");
             }
+            if (this.request.Count <= 0)
+                this.request.Count = 10;
         }
 
         public override GetNearCircleInfosResponseBody ExecuteCore()
@@ -34,29 +39,47 @@ namespace HWL.Service.Near.Service
             GetNearCircleInfosResponseBody res = new GetNearCircleInfosResponseBody();
 
             //从redis中获取附近圈子信息id列表
-            List<int> ids = new NearCircleAction().GetNearCircleIds(this.request.Lon, this.request.Lat);
-            if (ids == null || ids.Count <= 0) return res;
+            List<int> geoIdList = new NearCircleAction().GetNearCircleIds(this.request.Lon, this.request.Lat);
+            if (geoIdList == null || geoIdList.Count <= 0) return res;
 
-            using (HWLEntities db = new HWLEntities())
+            List<int> ids = geoIdList.Where(g => g > this.request.LastNearCiclreId).Take(this.request.Count).ToList();
+
+            res.NearCircleInfos = db.t_near_circle.Where(c => ids.Contains(c.id)).Select(c => new NearCircleInfo
             {
-                res.NearCircleInfos = db.t_near_circle.Where(c => ids.Contains(c.id)).Select(c => new NearCircleInfo
-                {
-                    NearCircleId = c.id,
-                    CommentCount = c.comment_count,
-                    Content = c.content_info,
-                    ContentType = c.content_type,
-                    FromPosDesc = c.pos_id + "",
-                    //Images = null,
-                    LikeCount = c.like_count,
-                    LinkImage = c.link_image,
-                    LinkTitle = c.link_title,
-                    LinkUrl = c.link_url,
-                    PublishTime = c.publish_time,
-                    PublishUserId = c.user_id,
-                }).ToList();
+                NearCircleId = c.id,
+                CommentCount = c.comment_count,
+                Content = c.content_info,
+                ContentType = c.content_type,
+                FromPosDesc = c.pos_id + "",
+                //Images = null,
+                LikeCount = c.like_count,
+                LinkImage = c.link_image,
+                LinkTitle = c.link_title,
+                LinkUrl = c.link_url,
+                PublishTime = c.publish_time,
+                PublishUserId = c.user_id,
+            }).ToList();
+
+            //获取图片列表
+            if (res.NearCircleInfos != null && res.NearCircleInfos.Count > 0)
+            {
+                List<int> circleIds = res.NearCircleInfos.Where(n => n.ContentType == CircleContentType.Image).Select(n => n.NearCircleId).ToList();
+                bindImages(circleIds);
             }
 
             return res;
+        }
+
+        private void bindImages(List<int> circleIds)
+        {
+            if (circleIds == null || circleIds.Count <= 0) return;
+            var imageList = db.t_near_circle_image.Where(i => circleIds.Contains(i.near_circle_id)).Select(i => i.image_url).ToList();
+            if (imageList == null || imageList.Count <= 0) return;
+            foreach (var item in imageList)
+            {
+
+
+            }
         }
     }
 }

@@ -102,13 +102,13 @@ namespace HWL.Resx.Models
                             //result.PreviewSize = ;
                             result.Width = ret.ImageWidth;
                             result.Height = ret.ImageHeight;
-                            log.WriterLog("压缩成功：" + result.PreviewUrl);
+                            //log.WriterLog("压缩成功：" + result.PreviewUrl);
                         }
                         else
                         {
                             result.PreviewUrl = orgUrl;
                             result.PreviewSize = sw.BaseStream.Length;
-                            log.WriterLog("压缩失败：" + result.PreviewUrl);
+                            //log.WriterLog("压缩失败：" + result.PreviewUrl);
                         }
                     }
 

@@ -16,7 +16,7 @@ namespace HWL.Entity
     {
         public int id { get; set; }
         public int user_id { get; set; }
-        public int content_type { get; set; }
+        public HWL.Entity.CircleContentType content_type { get; set; }
         public string content_info { get; set; }
         public string link_title { get; set; }
         public string link_url { get; set; }

@@ -9,6 +9,7 @@ namespace HWL.Service.Near.Body
         /// 当前登录的用户id
         /// </summary>
         public int UserId { get; set; }
+        public int NearCircleId { get; set; }
     }
 
     public class GetNearCircleDetailResponseBody

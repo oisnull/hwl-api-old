@@ -304,7 +304,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="content_type" Type="HWL.Entity.ContentType" Nullable="false" />
+          <Property Name="content_type" Type="HWL.Entity.CircleContentType" Nullable="false" />
           <Property Name="content_info" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="link_title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="link_url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -346,7 +346,7 @@
           <Property Name="like_user_id" Type="Int32" Nullable="false" />
           <Property Name="like_time" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EnumType Name="ContentType" a:ExternalTypeName="HWL.Entity.CircleContentType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EnumType Name="CircleContentType" a:ExternalTypeName="HWL.Entity.CircleContentType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

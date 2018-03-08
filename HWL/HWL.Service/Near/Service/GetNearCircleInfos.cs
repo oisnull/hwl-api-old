@@ -64,21 +64,20 @@ namespace HWL.Service.Near.Service
             if (res.NearCircleInfos != null && res.NearCircleInfos.Count > 0)
             {
                 List<int> circleIds = res.NearCircleInfos.Where(n => n.ContentType == CircleContentType.Image).Select(n => n.NearCircleId).ToList();
-                bindImages(circleIds);
+                bindImages(res.NearCircleInfos,circleIds);
             }
 
             return res;
         }
 
-        private void bindImages(List<int> circleIds)
+        private void bindImages(List<NearCircleInfo> infos, List<int> circleIds)
         {
             if (circleIds == null || circleIds.Count <= 0) return;
-            var imageList = db.t_near_circle_image.Where(i => circleIds.Contains(i.near_circle_id)).Select(i => i.image_url).ToList();
+            var imageList = db.t_near_circle_image.Where(i => circleIds.Contains(i.near_circle_id)).Select(i => new { i.near_circle_id, i.image_url }).ToList();
             if (imageList == null || imageList.Count <= 0) return;
-            foreach (var item in imageList)
+            foreach (var item in infos)
             {
-
-
+                item.Images = imageList.Where(i => i.near_circle_id == item.NearCircleId).Select(i => i.image_url).ToList();
             }
         }
     }

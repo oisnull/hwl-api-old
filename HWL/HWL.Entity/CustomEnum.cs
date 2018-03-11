@@ -138,6 +138,7 @@ namespace HWL.Entity
         TextImage = 2,
         Image = 3,
         Link = 4,
+        Other = 5,
     }
 
     /// <summary>

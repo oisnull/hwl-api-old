@@ -88,6 +88,7 @@
   <ItemGroup>
     <Content Include="Content\ffmpeg\ffmpeg.exe" />
     <Content Include="Content\ffmpeg\pthreadGC2.dll" />
+    <Content Include="Content\image.html" />
     <Content Include="Content\jquery-1.10.2.min.js" />
     <Content Include="Content\jquery.form.js" />
     <Content Include="Content\video.html" />

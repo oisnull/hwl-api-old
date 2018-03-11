@@ -28,6 +28,8 @@ namespace HWL.Resx.Controllers
             {
                 UserId = ret.Item2,
                 ResxType = resxType,
+                //UserId = 2,
+                //ResxType = ResxType.ChatImage,
                 ResxSize = ResxConfigManager.IMAGE_MAX_SIZE,
                 ResxTypes = ResxConfigManager.IMAGE_FILE_TYPES
             });
@@ -36,6 +38,7 @@ namespace HWL.Resx.Controllers
             {
                 var responseResult = resx.SaveStream();
                 var res = GetResult(GMSF.ResponseResult.SUCCESS, null, responseResult);
+                //log.WriterLog(Newtonsoft.Json.JsonConvert.SerializeObject(res));
                 return res;
             }
             catch (Exception ex)

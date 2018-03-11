@@ -1,4 +1,6 @@
-﻿using HWL.Entity.Extends;
+﻿using HWL.Entity;
+using HWL.Entity.Extends;
+using System;
 using System.Collections.Generic;
 
 namespace HWL.Service.Near.Body
@@ -14,10 +16,13 @@ namespace HWL.Service.Near.Body
         public string LinkImage { get; set; }
         public double Lon { get; set; }
         public double Lat { get; set; }
+        public int PosId{ get; set; }
     }
 
     public class AddNearCircleInfoResponseBody
     {
         public int NearCircleId { get; set; }
+        public CircleContentType ContentType { get; set; }
+        public DateTime PublishTime { get; set; }
     }
 }

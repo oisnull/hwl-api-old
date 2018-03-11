@@ -52,7 +52,7 @@ namespace HWL.Resx.Models
             return new FileInfo(newLocalPath).Length;
         }
 
-        public string GenerateImagePreview(string localPath)
+        public Tuple<string,int,int> GenerateImagePreview(string localPath)
         {
             string ext = Path.GetExtension(localPath);
             newLocalPath = string.Empty;
@@ -62,7 +62,7 @@ namespace HWL.Resx.Models
             ImageAction.ThumbnailResult ret = ImageAction.ThumbnailImage(localPath, newLocalPath);
             if (ret.Success)
             {
-                return accessDir + Path.GetFileName(newLocalPath);
+                return new Tuple<string, int, int>(accessDir + Path.GetFileName(newLocalPath),ret.ImageWidth,ret.ImageHeight);
             }
 
             return null;
@@ -93,6 +93,14 @@ namespace HWL.Resx.Models
         public bool IsPreview()
         {
             if (this.ResxType == ResxType.ChatImage || this.ResxType == ResxType.CirclePostImage)
+                return true;
+
+            return false;
+        }
+
+        public bool IsImage()
+        {
+            if (this.ResxType == ResxType.ChatImage || this.ResxType == ResxType.CircleBackImage || this.ResxType == ResxType.CirclePostImage || this.ResxType == ResxType.UserHeadImage)
                 return true;
 
             return false;

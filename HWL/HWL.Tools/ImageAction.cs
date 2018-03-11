@@ -118,6 +118,26 @@ namespace HWL.Tools
             return MakeThumbnail(orgImagePath, newImagePath, FIX_WIDTH, FIX_HEIGHT, FIX_QUALITY);
         }
 
+        public static Tuple<int, int> GetSize(string imagePath)
+        {
+            Image originalImage = null;
+            try
+            {
+                originalImage = Image.FromFile(imagePath);
+                return new Tuple<int, int>(originalImage.Width, originalImage.Height);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                if (originalImage != null)
+                    originalImage.Dispose();
+            }
+
+        }
+
         /// <summary>
         /// 生成缩略图
         /// </summary>
@@ -216,8 +236,8 @@ namespace HWL.Tools
                 return new ThumbnailResult()
                 {
                     Success = true,
-                    ImageHeight = toheight,
-                    ImageWidth = towidth,
+                    ImageHeight = bitmap.Height,
+                    ImageWidth = bitmap.Width,
                 };
             }
             catch (Exception)

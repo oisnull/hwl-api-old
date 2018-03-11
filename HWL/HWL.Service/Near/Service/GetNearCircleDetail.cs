@@ -50,7 +50,7 @@ namespace HWL.Service.Near.Service
                     LinkImage = model.link_image,
                     LinkTitle = model.link_title,
                     LinkUrl = model.link_url,
-                    PublishTime = model.publish_time,
+                    PublishTime = model.publish_time.ToString("yyyy-MM-dd HH:mm:ss"),
                     PublishUserId = model.user_id,
                 };
             }

@@ -5,6 +5,7 @@ using System.IO;
 using System.Web;
 using System.Linq;
 using HWL.Entity;
+using HWL.Tools;
 
 namespace HWL.Resx.Models
 {
@@ -101,18 +102,36 @@ namespace HWL.Resx.Models
                     resx = new ResxResult() { Success = false };
                 }
 
-                //检测是否要生成预览图片
-                try
+                if (resx.Success)
                 {
-
-                    if (this.resxModel.IsPreview() && file.InputStream.Length > ResxConfigManager.PREVIEW_IMAGE_SIZE)
+                    //检测是否要生成预览图片
+                    try
                     {
-                        resx.PreviewUrl = GenerateImagePreview(localPath);
-                        resx.PreviewSize = GetResxLength();
+
+                        if (this.resxModel.IsPreview() && file.InputStream.Length > ResxConfigManager.PREVIEW_IMAGE_SIZE)
+                        {
+                            var info = GenerateImagePreview(localPath);
+                            if (info != null)
+                            {
+                                resx.PreviewUrl = info.Item1;
+                                resx.Width = info.Item2;
+                                resx.Height = info.Item3;
+                                resx.PreviewSize = GetResxLength();
+                            }
+                        }
+                        else if (this.resxModel.IsImage())
+                        {
+                            var info = ImageAction.GetSize(localPath);
+                            if (info != null)
+                            {
+                                resx.Width = info.Item1;
+                                resx.Height = info.Item2;
+                            }
+                        }
                     }
-                }
-                catch (Exception)
-                {
+                    catch (Exception ex)
+                    {
+                    }
                 }
 
                 //检测是否是语音文件

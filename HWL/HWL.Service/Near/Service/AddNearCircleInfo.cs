@@ -21,6 +21,7 @@ namespace HWL.Service.Near.Service
             if (
                 string.IsNullOrEmpty(this.request.Content)
                 && (this.request.Images == null || this.request.Images.Count <= 0)
+                && string.IsNullOrEmpty(this.request.LinkUrl)
                 && string.IsNullOrEmpty(this.request.LinkTitle)
                 )
             {
@@ -37,6 +38,27 @@ namespace HWL.Service.Near.Service
             }
         }
 
+        private CircleContentType GetContentType()
+        {
+            if(!string.IsNullOrEmpty(this.request.LinkUrl)&&!string.IsNullOrEmpty(this.request.LinkTitle))
+            {
+                return CircleContentType.Link;
+            }
+            if(!string.IsNullOrEmpty(this.request.Content) && !(this.request.Images == null || this.request.Images.Count <= 0))
+            {
+                return CircleContentType.TextImage;
+            }
+            if (!string.IsNullOrEmpty(this.request.Content))
+            {
+                return CircleContentType.Text;
+            }
+            if(!(this.request.Images == null || this.request.Images.Count <= 0))
+            {
+                return CircleContentType.Image;
+            }
+            return CircleContentType.Other;
+        }
+
         public override AddNearCircleInfoResponseBody ExecuteCore()
         {
             AddNearCircleInfoResponseBody res = new AddNearCircleInfoResponseBody();
@@ -46,14 +68,14 @@ namespace HWL.Service.Near.Service
                 {
                     user_id = this.request.UserId,
                     content_info = this.request.Content,
-                    content_type = 0,
+                    content_type = GetContentType(),
                     link_image = this.request.LinkImage,
                     link_title = this.request.LinkTitle,
                     link_url = this.request.LinkUrl,
                     lat = this.request.Lat,
                     lon = this.request.Lon,
                     id = 0,
-                    pos_id = 0,
+                    pos_id = this.request.PosId,
                     comment_count = 0,
                     image_count = 0,
                     like_count = 0,
@@ -63,6 +85,8 @@ namespace HWL.Service.Near.Service
                 db.SaveChanges();
 
                 res.NearCircleId = model.id;
+                res.ContentType = model.content_type;
+                res.PublishTime = model.publish_time;
 
                 //向redis中添加信息的位置数据
                 if (res.NearCircleId > 0)

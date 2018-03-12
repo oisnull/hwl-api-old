@@ -74,7 +74,7 @@ namespace HWL.Resx.Models
             //string fileExt = Path.GetExtension(orgFileName).ToLower();
             //newFileName = System.Text.RegularExpressions.Regex.Replace(orgFileName, fileExt, "");
             //newFileName = System.Text.RegularExpressions.Regex.Replace(newFileName, @"[^\u4e00-\u9fa5_a-zA-Z0-9]", "");
-            newFileName = DateTime.Now.ToString("yyyyMMddHHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo) + ext;
+            newFileName = DateTime.Now.ToString("yyyyMMddHHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo)+"_"+RandomText.GetNum() + ext;
             return newFileName;
         }
     }

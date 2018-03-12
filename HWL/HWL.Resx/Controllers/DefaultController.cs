@@ -18,18 +18,18 @@ namespace HWL.Resx.Controllers
 
         public Response<ResxResult> Image(string token = null, ResxType resxType = ResxType.Other)
         {
-            var ret = this.CheckToken(token);
-            if (!ret.Item1)
-            {
-                return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
-            }
+            //var ret = this.CheckToken(token);
+            //if (!ret.Item1)
+            //{
+            //    return GetResult(GMSF.ResponseResult.FAILED, "TOKEN 验证失败");
+            //}
 
             UpfileHandler resx = new UpfileHandler(HttpContext.Current.Request.Files, new ResxModel()
             {
-                UserId = ret.Item2,
-                ResxType = resxType,
-                //UserId = 2,
-                //ResxType = ResxType.ChatImage,
+                //UserId = ret.Item2,
+                //ResxType = resxType,
+                UserId = 1,
+                ResxType = ResxType.ChatImage,
                 ResxSize = ResxConfigManager.IMAGE_MAX_SIZE,
                 ResxTypes = ResxConfigManager.IMAGE_FILE_TYPES
             });

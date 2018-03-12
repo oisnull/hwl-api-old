@@ -17,11 +17,11 @@ namespace HWL.Tools
         public readonly static int FIX_HEIGHT = 1280;
         public readonly static int FIX_QUALITY = 20;
 
-        /// 压缩图片    
-        /// <param name="orgImagePath">原图片</param>    
-        /// <param name="newImagePath">压缩后保存位置</param>    
-        /// <param name="flag">压缩质量(数字越小压缩率越高) 1-100</param>    
-        /// <returns></returns>    
+        ///// 压缩图片    
+        ///// <param name="orgImagePath">原图片</param>    
+        ///// <param name="newImagePath">压缩后保存位置</param>    
+        ///// <param name="flag">压缩质量(数字越小压缩率越高) 1-100</param>    
+        ///// <returns></returns>    
         //public static ThumbnailResult ThumbnailImage(string orgImagePath, string newImagePath)
         //{
         //    Image iSource = Image.FromFile(orgImagePath);
@@ -112,6 +112,33 @@ namespace HWL.Tools
         //    }
         //}
 
+        private static Size NewSize(int maxWidth, int maxHeight, int Width, int Height)
+        {
+            double w = 0.0;
+            double h = 0.0;
+            double sw = Convert.ToDouble(Width);
+            double sh = Convert.ToDouble(Height);
+            double mw = Convert.ToDouble(maxWidth);
+            double mh = Convert.ToDouble(maxHeight);
+
+            if (sw < mw && sh < mh)//如果maxWidth和maxHeight大于源图像，则缩略图的长和高不变  
+            {
+                w = sw;
+                h = sh;
+            }
+            else if ((sw / sh) > (mw / mh))
+            {
+                w = maxWidth;
+                h = (w * sh) / sw;
+            }
+            else
+            {
+                h = maxHeight;
+                w = (h * sw) / sh;
+            }
+            return new Size(Convert.ToInt32(w), Convert.ToInt32(h));
+        }
+
 
         public static ThumbnailResult ThumbnailImage(string orgImagePath, string newImagePath)
         {
@@ -150,45 +177,10 @@ namespace HWL.Tools
         {
 
             Image originalImage = Image.FromFile(originalImagePath);
-
-            int towidth = width;
-            int toheight = height;
-
-            int x = 0;
-            int y = 0;
-            int ow = originalImage.Width;
-            int oh = originalImage.Height;
-
-            switch (mode)
-            {
-                case "W"://指定宽，高按比例                    
-                    toheight = originalImage.Height * width / originalImage.Width;
-                    break;
-                case "H"://指定高，宽按比例
-                    towidth = originalImage.Width * height / originalImage.Height;
-                    break;
-                case "Cut"://指定高宽裁减（不变形）                
-                    if ((double)originalImage.Width / (double)originalImage.Height > (double)towidth / (double)toheight)
-                    {
-                        oh = originalImage.Height;
-                        ow = originalImage.Height * towidth / toheight;
-                        y = 0;
-                        x = (originalImage.Width - ow) / 2;
-                    }
-                    else
-                    {
-                        ow = originalImage.Width;
-                        oh = originalImage.Width * height / towidth;
-                        x = 0;
-                        y = (originalImage.Height - oh) / 2;
-                    }
-                    break;
-                default:
-                    break;
-            }
+            Size newSize = NewSize(width, height, originalImage.Width, originalImage.Height);
 
             //新建一个bmp图片
-            Image bitmap = new Bitmap(towidth, toheight);
+            Image bitmap = new Bitmap(newSize.Width, newSize.Height);
 
             //新建一个画板
             Graphics g = Graphics.FromImage(bitmap);
@@ -203,8 +195,8 @@ namespace HWL.Tools
             g.Clear(Color.Transparent);
 
             //在指定位置并且按指定大小绘制原图片的指定部分
-            g.DrawImage(originalImage, new Rectangle(0, 0, towidth, toheight),
-                new Rectangle(x, y, ow, oh),
+            g.DrawImage(originalImage, new Rectangle(0, 0, newSize.Width, newSize.Height),
+                new Rectangle(0, 0, originalImage.Width, originalImage.Height),
                 GraphicsUnit.Pixel);
 
             //以下代码为保存图片时，设置压缩质量    

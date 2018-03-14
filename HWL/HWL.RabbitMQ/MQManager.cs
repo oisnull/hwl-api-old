@@ -204,9 +204,15 @@ namespace HWL.RabbitMQ
             {
                 connectionStatus = new DefaultConnectionStatus();
             }
-            connStatus = connectionStatus;
-            GetReceiveChannel().ExchangeDeclare(HWL_DEFAULT_EXCHANGE, HWL_EXCHANGE_MODEL);
-            GetSendChannel().ExchangeDeclare(HWL_DEFAULT_EXCHANGE, HWL_EXCHANGE_MODEL);
+            try
+            {
+                connStatus = connectionStatus;
+                GetReceiveChannel().ExchangeDeclare(HWL_DEFAULT_EXCHANGE, HWL_EXCHANGE_MODEL);
+                GetSendChannel().ExchangeDeclare(HWL_DEFAULT_EXCHANGE, HWL_EXCHANGE_MODEL);
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

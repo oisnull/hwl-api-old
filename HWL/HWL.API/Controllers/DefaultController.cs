@@ -149,5 +149,19 @@ namespace HWL.API.Controllers
         {
             return NearService.GetNearCircleInfos(request);
         }
+
+        [HttpPost]
+        [Description("附近圈子信息点赞设置")]
+        public Response<SetNearLikeInfoResponseBody> SetNearLikeInfo(Request<SetNearLikeInfoRequestBody> request)
+        {
+            return NearService.SetNearLikeInfo(request);
+        }
+
+        [HttpPost]
+        [Description("添加附近圈子信息评论,回复评论")]
+        public Response<AddNearCommentResponseBody> AddNearComment(Request<AddNearCommentRequestBody> request)
+        {
+            return NearService.AddNearComment(request);
+        }
     }
 }

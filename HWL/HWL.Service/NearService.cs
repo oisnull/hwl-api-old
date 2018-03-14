@@ -25,5 +25,23 @@ namespace HWL.Service
                 return new GetNearCircleInfos(r.Body).Execute();
             });
         }
+
+        public static Response<AddNearCommentResponseBody> AddNearComment(Request<AddNearCommentRequestBody> request)
+        {
+            var context = new ServiceContext<AddNearCommentRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new AddNearComment(r.Body).Execute();
+            });
+        }
+
+        public static Response<SetNearLikeInfoResponseBody> SetNearLikeInfo(Request<SetNearLikeInfoRequestBody> request)
+        {
+            var context = new ServiceContext<SetNearLikeInfoRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetNearLikeInfo(r.Body).Execute();
+            });
+        }
     }
 }

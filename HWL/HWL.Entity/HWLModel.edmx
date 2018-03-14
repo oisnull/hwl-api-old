@@ -85,6 +85,7 @@
           <Property Name="near_circle_id" Type="int" Nullable="false" />
           <Property Name="like_user_id" Type="int" Nullable="false" />
           <Property Name="like_time" Type="datetime" Nullable="false" />
+          <Property Name="is_delete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="t_province">
           <Key>
@@ -345,6 +346,7 @@
           <Property Name="near_circle_id" Type="Int32" Nullable="false" />
           <Property Name="like_user_id" Type="Int32" Nullable="false" />
           <Property Name="like_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_delete" Type="Boolean" Nullable="false" />
         </EntityType>
         <EnumType Name="CircleContentType" a:ExternalTypeName="HWL.Entity.CircleContentType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
       </Schema>
@@ -511,6 +513,7 @@
           <EntitySetMapping Name="t_near_circle_like">
             <EntityTypeMapping TypeName="HWL.Entity.t_near_circle_like">
               <MappingFragment StoreEntitySet="t_near_circle_like">
+                <ScalarProperty Name="is_delete" ColumnName="is_delete" />
                 <ScalarProperty Name="like_time" ColumnName="like_time" />
                 <ScalarProperty Name="like_user_id" ColumnName="like_user_id" />
                 <ScalarProperty Name="near_circle_id" ColumnName="near_circle_id" />

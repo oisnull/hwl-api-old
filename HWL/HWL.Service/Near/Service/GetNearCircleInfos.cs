@@ -65,34 +65,66 @@ namespace HWL.Service.Near.Service
                 PublishUserId = c.user_id,
             }).ToList();
 
-            BindImages(res.NearCircleInfos, res.NearCircleInfos.Where(n => n.ContentType == CircleContentType.Image).Select(n => n.NearCircleId).ToList());
-            BindUser(res.NearCircleInfos, res.NearCircleInfos.Select(u => u.PublishUserId).Distinct().ToList());
+            BindInfo(res.NearCircleInfos);
+
+            //BindLike(res.NearCircleInfos);
+            //BindImages(res.NearCircleInfos, res.NearCircleInfos.Where(n => n.ContentType == CircleContentType.Image).Select(n => n.NearCircleId).ToList());
+            //BindUser(res.NearCircleInfos, res.NearCircleInfos.Select(u => u.PublishUserId).Distinct().ToList());
 
             return res;
         }
 
-        private void BindImages(List<NearCircleInfo> infos, List<int> circleIds)
+        private void BindInfo(List<NearCircleInfo> infos)
         {
-            if (circleIds == null || circleIds.Count <= 0) return;
+            List<int> circleIds = infos.Where(n => n.ContentType == CircleContentType.Image).Select(n => n.NearCircleId).ToList();
             var imageList = db.t_near_circle_image.Where(i => circleIds.Contains(i.near_circle_id)).Select(i => new { i.near_circle_id, i.image_url }).ToList();
-            if (imageList == null || imageList.Count <= 0) return;
+            var likeList = db.t_near_circle_like.Where(l => l.like_user_id == this.request.UserId && circleIds.Contains(l.near_circle_id) && l.is_delete == false).ToList();
+
+            var userIds = infos.Select(u => u.PublishUserId).Distinct().ToList();
+            var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
+
             foreach (var item in infos)
             {
-                item.Images = imageList.Where(i => i.near_circle_id == item.NearCircleId).Select(i => i.image_url).ToList();
+                if (imageList != null && imageList.Count > 0)
+                {
+                    item.Images = imageList.Where(i => i.near_circle_id == item.NearCircleId).Select(i => i.image_url).ToList();
+                }
+                if (userList != null && userList.Count > 0)
+                {
+                    var user = userList.Where(u => u.id == item.PublishUserId).FirstOrDefault();
+                    item.PublishUserName = UserUtility.GetShowName(user.name, user.symbol);
+                    item.PublishUserImage = user.head_image;
+                }
+
+                if (likeList != null && likeList.Count > 0)
+                {
+                    item.IsLiked = likeList.Where(l => l.near_circle_id == item.NearCircleId && l.like_user_id == this.request.UserId).Select(l => l.id).FirstOrDefault() > 0 ? true : false;
+                }
             }
         }
 
-        private void BindUser(List<NearCircleInfo> infos, List<int> userIds)
-        {
-            if (userIds == null || userIds.Count <= 0) return;
-            var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
-            if (userList == null || userList.Count <= 0) return;
-            foreach (var item in infos)
-            {
-                var user = userList.Where(u => u.id == item.PublishUserId).FirstOrDefault();
-                item.PublishUserName = UserUtility.GetShowName(user.name, user.symbol);
-                item.PublishUserImage = user.head_image;
-            }
-        }
+        //private void BindImages(List<NearCircleInfo> infos, List<int> circleIds)
+        //{
+        //    if (circleIds == null || circleIds.Count <= 0) return;
+        //    var imageList = db.t_near_circle_image.Where(i => circleIds.Contains(i.near_circle_id)).Select(i => new { i.near_circle_id, i.image_url }).ToList();
+        //    if (imageList == null || imageList.Count <= 0) return;
+        //    foreach (var item in infos)
+        //    {
+        //        item.Images = imageList.Where(i => i.near_circle_id == item.NearCircleId).Select(i => i.image_url).ToList();
+        //    }
+        //}
+
+        //private void BindUser(List<NearCircleInfo> infos, List<int> userIds)
+        //{
+        //    if (userIds == null || userIds.Count <= 0) return;
+        //    var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
+        //    if (userList == null || userList.Count <= 0) return;
+        //    foreach (var item in infos)
+        //    {
+        //        var user = userList.Where(u => u.id == item.PublishUserId).FirstOrDefault();
+        //        item.PublishUserName = UserUtility.GetShowName(user.name, user.symbol);
+        //        item.PublishUserImage = user.head_image;
+        //    }
+        //}
     }
 }

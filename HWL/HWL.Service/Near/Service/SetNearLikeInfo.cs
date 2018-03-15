@@ -17,13 +17,13 @@ namespace HWL.Service.Near.Service
         protected override void ValidateRequestParams()
         {
             base.ValidateRequestParams();
-            if (this.request.NearCircleId <= 0)
-            {
-                throw new Exception("信息参数错误");
-            }
             if (this.request.ActionType != 0 || this.request.ActionType != 1)
             {
                 throw new Exception("操作类型错误");
+            }
+            if (this.request.NearCircleId <= 0)
+            {
+                throw new Exception("信息参数错误");
             }
             if (this.request.LikeUserId <= 0)
             {
@@ -33,7 +33,7 @@ namespace HWL.Service.Near.Service
 
         public override SetNearLikeInfoResponseBody ExecuteCore()
         {
-            SetNearLikeInfoResponseBody res = new SetNearLikeInfoResponseBody();
+            SetNearLikeInfoResponseBody res = new SetNearLikeInfoResponseBody() { Status = ResultStatus.Failed };
 
             using (HWLEntities db = new HWLEntities())
             {
@@ -43,20 +43,16 @@ namespace HWL.Service.Near.Service
                     throw new Exception("信息不存在");
                 }
 
-                t_near_circle_like model = db.t_near_circle_like.Where(l => l.id == this.request.LikeInfoId).FirstOrDefault();
+                t_near_circle_like model = db.t_near_circle_like.Where(l => l.id == this.request.NearCircleId && l.like_user_id == this.request.LikeUserId).FirstOrDefault();
                 if (this.request.ActionType == 0)//取消点赞
                 {
-                    //if (this.request.LikeInfoId <= 0)
-                    //{
-                    //    throw new Exception("取消点赞的信息参数错误");
-                    //}
                     if (model == null)
                     {
                         throw new Exception("取消点赞的信息不存在");
                     }
                     if (model.is_delete)
                     {
-                        res.LikeInfoId = model.id;
+                        res.Status = ResultStatus.Success;
                         return res;
                     }
                     else
@@ -67,7 +63,7 @@ namespace HWL.Service.Near.Service
                         {
                             circleModel.like_count = 0;
                         }
-                        res.LikeInfoId = model.id;
+                        res.Status = ResultStatus.Success;
                         db.SaveChanges();
                         return res;
                     }
@@ -87,7 +83,7 @@ namespace HWL.Service.Near.Service
                         db.t_near_circle_like.Add(model);
                         circleModel.like_count = circleModel.like_count + 1;
                         db.SaveChanges();
-                        res.LikeInfoId = model.id;
+                        res.Status = ResultStatus.Success;
                         return res;
                     }
                     else
@@ -97,7 +93,7 @@ namespace HWL.Service.Near.Service
                             model.is_delete = false;
                             circleModel.like_count = circleModel.like_count + 1;
                             db.SaveChanges();
-                            res.LikeInfoId = model.id;
+                            res.Status = ResultStatus.Success;
                             return res;
                         }
                     }

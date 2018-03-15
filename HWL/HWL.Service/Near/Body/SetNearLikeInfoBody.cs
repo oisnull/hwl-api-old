@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HWL.Entity;
+using System;
 
 namespace HWL.Service.Near.Body
 {
@@ -18,10 +15,10 @@ namespace HWL.Service.Near.Body
         public int LikeUserId { get; set; }
         public int NearCircleId { get; set; }
 
-        public int LikeInfoId { get; set; }
+        //public int LikeInfoId { get; set; }
     }
     public class SetNearLikeInfoResponseBody
     {
-        public int LikeInfoId { get; set; }
+        public ResultStatus Status { get; set; }
     }
 }

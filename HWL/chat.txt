@@ -23,10 +23,10 @@ rabbitmq:hwl_group_queue
 
 2018-02-22:
 1,表情发送 V
-2,图片发送
-3,语音发送
-4,视频发送
-5,附近圈子API
+2,图片发送 V
+3,语音发送 V
+4,视频发送 V
+5,附近圈子API V
 
 
 //语音：http://blog.csdn.net/lhk147852369/article/details/78658055
@@ -144,3 +144,6 @@ public class AudioManager {
         return mCurrentFilePath;  
     }  
 }  
+
+2018-03-15:
+1,Near IMP

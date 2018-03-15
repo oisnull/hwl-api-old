@@ -23,6 +23,7 @@ namespace HWL.Entity.Extends
         public List<string> Images { get; set; }
         public int CommentCount { get; set; }
         public int LikeCount { get; set; }
+        public bool IsLiked { get; set; }
     }
 
     public class NearCircleCommentInfo

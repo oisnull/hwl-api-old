@@ -17,7 +17,7 @@ namespace HWL.Service.Near.Service
         protected override void ValidateRequestParams()
         {
             base.ValidateRequestParams();
-            if (this.request.ActionType != 0 || this.request.ActionType != 1)
+            if (this.request.ActionType != 0 && this.request.ActionType != 1)
             {
                 throw new Exception("操作类型错误");
             }
@@ -43,7 +43,7 @@ namespace HWL.Service.Near.Service
                     throw new Exception("信息不存在");
                 }
 
-                t_near_circle_like model = db.t_near_circle_like.Where(l => l.id == this.request.NearCircleId && l.like_user_id == this.request.LikeUserId).FirstOrDefault();
+                t_near_circle_like model = db.t_near_circle_like.Where(l => l.near_circle_id == this.request.NearCircleId && l.like_user_id == this.request.LikeUserId).FirstOrDefault();
                 if (this.request.ActionType == 0)//取消点赞
                 {
                     if (model == null)
@@ -57,7 +57,7 @@ namespace HWL.Service.Near.Service
                     }
                     else
                     {
-                        model.is_delete = false;
+                        model.is_delete = true;
                         circleModel.like_count = circleModel.like_count - 1;
                         if (circleModel.like_count < 0)
                         {

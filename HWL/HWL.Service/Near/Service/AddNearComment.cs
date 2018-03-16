@@ -55,7 +55,7 @@ namespace HWL.Service.Near.Service
                 db.t_near_circle_comment.Add(model);
                 circleModel.comment_count = circleModel.comment_count + 1;
                 db.SaveChanges();
-
+                res.CommentId = model.id;
                 //List<UserShowInfo> users = db.t_user.Where(u => u.id == model.com_user_id || u.id == model.reply_user_id).Select(u => new UserShowInfo
                 //{
                 //    UserId = u.id,

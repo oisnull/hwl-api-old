@@ -58,7 +58,7 @@ namespace HWL.Service.Near.Service
                 if (comments == null || comments.Count <= 0) return res;
                 res.NearCircleCommentInfos = new List<NearCircleCommentInfo>();
 
-                var userIds = comments.Select(c => c.CommentUserId).Union(comments.Select(c => c.ReplyUserId));
+                var userIds = comments.Select(c => c.CommentUserId).Union(comments.Select(c => c.ReplyUserId)).ToList();
                 var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
 
                 comments.ForEach(f =>
@@ -79,13 +79,19 @@ namespace HWL.Service.Near.Service
 
                     if (userList != null && userList.Count > 0)
                     {
-                        var comUser = userList.Where(u => u.id == f.CommentUserId).FirstOrDefault();
-                        model.CommentUserName = UserUtility.GetShowName(comUser.name, comUser.symbol);
-                        model.CommentUserImage = comUser.head_image;
+                        if (f.CommentUserId > 0)
+                        {
+                            var comUser = userList.Where(u => u.id == f.CommentUserId).FirstOrDefault();
+                            model.CommentUserName = UserUtility.GetShowName(comUser.name, comUser.symbol);
+                            model.CommentUserImage = comUser.head_image;
+                        }
 
-                        var repUser = userList.Where(u => u.id == f.ReplyUserId).FirstOrDefault();
-                        model.ReplyUserName = UserUtility.GetShowName(repUser.name, repUser.symbol);
-                        model.ReplyUserImage = repUser.head_image;
+                        if (f.ReplyUserId > 0)
+                        {
+                            var repUser = userList.Where(u => u.id == f.ReplyUserId).FirstOrDefault();
+                            model.ReplyUserName = UserUtility.GetShowName(repUser.name, repUser.symbol);
+                            model.ReplyUserImage = repUser.head_image;
+                        }
                     }
                     res.NearCircleCommentInfos.Add(model);
                 });

@@ -71,13 +71,17 @@
     <Compile Include="Group\Service\GroupUsers.cs" />
     <Compile Include="Near\Body\AddNearCircleInfoBody.cs" />
     <Compile Include="Near\Body\AddNearCommentBody.cs" />
+    <Compile Include="Near\Body\DeleteNearCommentBody.cs" />
     <Compile Include="Near\Body\GetNearCircleDetailBody.cs" />
     <Compile Include="Near\Body\GetNearCircleInfosBody.cs" />
+    <Compile Include="Near\Body\GetNearCommentsBody.cs" />
     <Compile Include="Near\Body\SetNearLikeInfoBody.cs" />
     <Compile Include="Near\Service\AddNearCircleInfo.cs" />
     <Compile Include="Near\Service\AddNearComment.cs" />
+    <Compile Include="Near\Service\DeleteNearComment.cs" />
     <Compile Include="Near\Service\GetNearCircleDetail.cs" />
     <Compile Include="Near\Service\GetNearCircleInfos.cs" />
+    <Compile Include="Near\Service\GetNearComments.cs" />
     <Compile Include="Near\Service\SetNearLikeInfo.cs" />
     <Compile Include="RequestValidate.cs" />
     <Compile Include="UserService.cs" />

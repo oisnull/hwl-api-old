@@ -25,6 +25,14 @@ namespace HWL.Service
                 return new GetNearCircleInfos(r.Body).Execute();
             });
         }
+        public static Response<GetNearCircleDetailResponseBody> GetNearCircleDetail(Request<GetNearCircleDetailRequestBody> request)
+        {
+            var context = new ServiceContext<GetNearCircleDetailRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new GetNearCircleDetail(r.Body).Execute();
+            });
+        }
 
         public static Response<AddNearCommentResponseBody> AddNearComment(Request<AddNearCommentRequestBody> request)
         {
@@ -41,6 +49,24 @@ namespace HWL.Service
             return ContextProcessor.Execute(context, r =>
             {
                 return new SetNearLikeInfo(r.Body).Execute();
+            });
+        }
+
+        public static Response<DeleteNearCommentResponseBody> DeleteNearComment(Request<DeleteNearCommentRequestBody> request)
+        {
+            var context = new ServiceContext<DeleteNearCommentRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new DeleteNearComment(r.Body).Execute();
+            });
+        }
+
+        public static Response<GetNearCommentsResponseBody> GetNearComments(Request<GetNearCommentsRequestBody> request)
+        {
+            var context = new ServiceContext<GetNearCommentsRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new GetNearComments(r.Body).Execute();
             });
         }
     }

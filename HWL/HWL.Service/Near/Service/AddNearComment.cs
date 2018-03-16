@@ -45,15 +45,15 @@ namespace HWL.Service.Near.Service
 
                 t_near_circle_comment model = new t_near_circle_comment()
                 {
-                    //circle_id = this.request.NearCircleId,
-                    //com_content = this.request.Content,
-                    //reply_user_id = this.request.ReplyUserId,
-                    //com_user_id = this.request.CommentUserId,
-                    //circle_user_id = this.request.CircleUserId,
+                    comment_user_id = this.request.CommentUserId,
+                    content_info = this.request.Content,
+                    near_circle_id = this.request.NearCircleId,
+                    reply_user_id = this.request.ReplyUserId,
                     id = 0,
                     comment_time = DateTime.Now,
                 };
                 db.t_near_circle_comment.Add(model);
+                circleModel.comment_count = circleModel.comment_count + 1;
                 db.SaveChanges();
 
                 //List<UserShowInfo> users = db.t_user.Where(u => u.id == model.com_user_id || u.id == model.reply_user_id).Select(u => new UserShowInfo
@@ -80,9 +80,6 @@ namespace HWL.Service.Near.Service
                 //    ReplyUserInfo = replyUser,
                 //    Content = model.com_content,
                 //};
-
-                circleModel.comment_count = circleModel.comment_count + 1;
-                db.SaveChanges();
             }
 
             return res;

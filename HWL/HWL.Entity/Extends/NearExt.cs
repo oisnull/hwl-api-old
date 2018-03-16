@@ -28,8 +28,8 @@ namespace HWL.Entity.Extends
 
     public class NearCircleCommentInfo
     {
-        public int Id { get; set; }
-        public int CircleId { get; set; }
+        public int CommentId { get; set; }
+        public int NearCircleId { get; set; }
 
         public int CommentUserId { get; set; }
         public string CommentUserName { get; set; }

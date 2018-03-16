@@ -151,6 +151,13 @@ namespace HWL.API.Controllers
         }
 
         [HttpPost]
+        [Description("获取附近圈子详细信息")]
+        public Response<GetNearCircleDetailResponseBody> GetNearCircleDetail(Request<GetNearCircleDetailRequestBody> request)
+        {
+            return NearService.GetNearCircleDetail(request);
+        }
+
+        [HttpPost]
         [Description("附近圈子信息点赞设置")]
         public Response<SetNearLikeInfoResponseBody> SetNearLikeInfo(Request<SetNearLikeInfoRequestBody> request)
         {
@@ -162,6 +169,20 @@ namespace HWL.API.Controllers
         public Response<AddNearCommentResponseBody> AddNearComment(Request<AddNearCommentRequestBody> request)
         {
             return NearService.AddNearComment(request);
+        }
+
+        [HttpPost]
+        [Description("获取附近圈子信息评论,回复评论列表")]
+        public Response<GetNearCommentsResponseBody> GetNearComments(Request<GetNearCommentsRequestBody> request)
+        {
+            return NearService.GetNearComments(request);
+        }
+
+        [HttpPost]
+        [Description("删除附近圈子信息评论,回复评论")]
+        public Response<DeleteNearCommentResponseBody> DeleteNearComment(Request<DeleteNearCommentRequestBody> request)
+        {
+            return NearService.DeleteNearComment(request);
         }
     }
 }

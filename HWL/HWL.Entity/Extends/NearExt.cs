@@ -24,6 +24,9 @@ namespace HWL.Entity.Extends
         public int CommentCount { get; set; }
         public int LikeCount { get; set; }
         public bool IsLiked { get; set; }
+
+        public List<NearCircleLikeInfo> LikeInfos { get; set; }
+        public List<NearCircleCommentInfo> CommentInfos { get; set; }
     }
 
     public class NearCircleCommentInfo
@@ -41,5 +44,15 @@ namespace HWL.Entity.Extends
 
         public string Content { get; set; }
         public string CommentTime { get; set; }
+    }
+
+    public class NearCircleLikeInfo
+    {
+        public int LikeId { get; set; }
+        public int NearCircleId { get; set; }
+        public int LikeUserId { get; set; }
+        public string LikeUserName { get; set; }
+        public string LikeUserImage { get; set; }
+        public string LikeTime { get; set; }
     }
 }

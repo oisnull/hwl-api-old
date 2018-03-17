@@ -69,5 +69,14 @@ namespace HWL.Service
                 return new GetNearComments(r.Body).Execute();
             });
         }
+
+        public static Response<GetNearLikesResponseBody> GetNearLikes(Request<GetNearLikesRequestBody> request)
+        {
+            var context = new ServiceContext<GetNearLikesRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new GetNearLikes(r.Body).Execute();
+            });
+        }
     }
 }

@@ -184,5 +184,12 @@ namespace HWL.API.Controllers
         {
             return NearService.DeleteNearComment(request);
         }
+
+        [HttpPost]
+        [Description("获取附近圈子信息点赞用户列表")]
+        public Response<GetNearLikesResponseBody> GetNearLikes(Request<GetNearLikesRequestBody> request)
+        {
+            return NearService.GetNearLikes(request);
+        }
     }
 }

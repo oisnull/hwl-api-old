@@ -19,15 +19,10 @@ namespace HWL.Service.Near.Service
         protected override void ValidateRequestParams()
         {
             base.ValidateRequestParams();
-            //     public int UserId { get; set; }
-            //public int NearCircleId { get; set; }
-            //public int Count { get; set; }
-            //public int LastCommentId { get; set; }
-
-            if (this.request.UserId <= 0)
-            {
-                throw new ArgumentNullException("UserId");
-            }
+            //if (this.request.UserId <= 0)
+            //{
+            //    throw new ArgumentNullException("UserId");
+            //}
             if (this.request.NearCircleId <= 0)
             {
                 throw new ArgumentNullException("NearCircleId");
@@ -54,7 +49,7 @@ namespace HWL.Service.Near.Service
                         ReplyUserId = c.reply_user_id,
                         Content = c.content_info,
                         CommentTime = c.comment_time
-                    }).ToList();
+                    }).OrderBy(c => c.Id).ToList();
                 if (comments == null || comments.Count <= 0) return res;
                 res.NearCircleCommentInfos = new List<NearCircleCommentInfo>();
 

@@ -75,12 +75,15 @@
     <Compile Include="Near\Body\GetNearCircleDetailBody.cs" />
     <Compile Include="Near\Body\GetNearCircleInfosBody.cs" />
     <Compile Include="Near\Body\GetNearCommentsBody.cs" />
+    <Compile Include="Near\Body\GetNearLikesBody.cs" />
     <Compile Include="Near\Body\SetNearLikeInfoBody.cs" />
+    <Compile Include="Near\NearUtility.cs" />
     <Compile Include="Near\Service\AddNearCircleInfo.cs" />
     <Compile Include="Near\Service\AddNearComment.cs" />
     <Compile Include="Near\Service\DeleteNearComment.cs" />
     <Compile Include="Near\Service\GetNearCircleDetail.cs" />
     <Compile Include="Near\Service\GetNearCircleInfos.cs" />
+    <Compile Include="Near\Service\GetNearLikes.cs" />
     <Compile Include="Near\Service\GetNearComments.cs" />
     <Compile Include="Near\Service\SetNearLikeInfo.cs" />
     <Compile Include="RequestValidate.cs" />

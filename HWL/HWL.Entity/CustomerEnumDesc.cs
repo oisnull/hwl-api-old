@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HWL.Entity
 {
@@ -79,6 +80,15 @@ namespace HWL.Entity
                     break;
             }
             return path;
+        }
+
+        public static List<CircleContentType> ImageContentTypes()
+        {
+            return new List<CircleContentType>()
+            {
+                CircleContentType.Image,
+                CircleContentType.TextImage
+            };
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HWL.Entity;
+using HWL.Entity.Extends;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,6 @@ namespace HWL.Service.Near.Body
 
     public class AddNearCommentResponseBody
     {
-        public int CommentId { get; set; }
+        public NearCircleCommentInfo NearCircleCommentInfo { get; set; }
     }
 }

@@ -17,7 +17,6 @@ namespace HWL.Service.Near.Service
 
         public GetNearCircleInfos(GetNearCircleInfosRequestBody request) : base(request)
         {
-            db = new HWLEntities();
         }
 
         protected override void ValidateRequestParams()
@@ -38,6 +37,7 @@ namespace HWL.Service.Near.Service
             {
                 return res;
             }
+            db = new HWLEntities();
 
             //从redis中获取附近圈子信息id列表
             List<int> geoIdList = new NearCircleAction().GetNearCircleIds(this.request.Lon, this.request.Lat);
@@ -76,7 +76,7 @@ namespace HWL.Service.Near.Service
 
         private void BindInfo(List<NearCircleInfo> infos)
         {
-            List<int> circleIds = infos.Where(n => n.ContentType == CircleContentType.Image).Select(n => n.NearCircleId).ToList();
+            List<int> circleIds = infos.Where(n => CustomerEnumDesc.ImageContentTypes().Contains(n.ContentType)).Select(n => n.NearCircleId).ToList();
             var imageList = db.t_near_circle_image.Where(i => circleIds.Contains(i.near_circle_id)).Select(i => new { i.near_circle_id, i.image_url }).ToList();
             var likeList = db.t_near_circle_like.Where(l => l.like_user_id == this.request.UserId && circleIds.Contains(l.near_circle_id) && l.is_delete == false).ToList();
 
@@ -100,6 +100,9 @@ namespace HWL.Service.Near.Service
                 {
                     item.IsLiked = likeList.Where(l => l.near_circle_id == item.NearCircleId && l.like_user_id == this.request.UserId).Select(l => l.id).FirstOrDefault() > 0 ? true : false;
                 }
+
+                item.LikeInfos = NearUtility.GetNearLikes(item.NearCircleId);
+                item.CommentInfos = NearUtility.GetNearComments(item.NearCircleId, 20);
             }
         }
 

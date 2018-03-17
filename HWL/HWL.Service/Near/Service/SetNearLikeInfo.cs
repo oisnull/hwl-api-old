@@ -95,6 +95,10 @@ namespace HWL.Service.Near.Service
                             db.SaveChanges();
                             res.Status = ResultStatus.Success;
                             return res;
+                        }else
+                        {
+                            res.Status = ResultStatus.Success;
+                            return res;
                         }
                     }
                 }

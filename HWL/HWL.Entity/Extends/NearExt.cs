@@ -20,7 +20,7 @@ namespace HWL.Entity.Extends
         public string LinkImage { get; set; }
         public string PublishTime { get; set; }
         public string FromPosDesc { get; set; }
-        public List<string> Images { get; set; }
+        public List<ImageInfo> Images { get; set; }
         public int CommentCount { get; set; }
         public int LikeCount { get; set; }
         public bool IsLiked { get; set; }

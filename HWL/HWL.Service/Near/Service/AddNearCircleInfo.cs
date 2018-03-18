@@ -40,11 +40,11 @@ namespace HWL.Service.Near.Service
 
         private CircleContentType GetContentType()
         {
-            if(!string.IsNullOrEmpty(this.request.LinkUrl)&&!string.IsNullOrEmpty(this.request.LinkTitle))
+            if (!string.IsNullOrEmpty(this.request.LinkUrl) && !string.IsNullOrEmpty(this.request.LinkTitle))
             {
                 return CircleContentType.Link;
             }
-            if(!string.IsNullOrEmpty(this.request.Content) && !(this.request.Images == null || this.request.Images.Count <= 0))
+            if (!string.IsNullOrEmpty(this.request.Content) && !(this.request.Images == null || this.request.Images.Count <= 0))
             {
                 return CircleContentType.TextImage;
             }
@@ -52,7 +52,7 @@ namespace HWL.Service.Near.Service
             {
                 return CircleContentType.Text;
             }
-            if(!(this.request.Images == null || this.request.Images.Count <= 0))
+            if (!(this.request.Images == null || this.request.Images.Count <= 0))
             {
                 return CircleContentType.Image;
             }
@@ -106,12 +106,14 @@ namespace HWL.Service.Near.Service
                             List<t_near_circle_image> imgModels = new List<t_near_circle_image>();
                             this.request.Images.ForEach((i) =>
                             {
-                                if (string.IsNullOrEmpty(i)) return;
+                                if (string.IsNullOrEmpty(i.Url)) return;
                                 imgModels.Add(new t_near_circle_image()
                                 {
                                     near_circle_id = model.id,
                                     near_circle_user_id = model.user_id,
-                                    image_url = i
+                                    image_url = i.Url,
+                                    height = i.Height,
+                                    width = i.Width
                                 });
                             });
 

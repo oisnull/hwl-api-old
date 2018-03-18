@@ -54,6 +54,7 @@
     <Compile Include="CustomEnum.cs" />
     <Compile Include="CustomerEnumDesc.cs" />
     <Compile Include="Extends\GroupExt.cs" />
+    <Compile Include="Extends\ImageInfo.cs" />
     <Compile Include="Extends\NearExt.cs" />
     <Compile Include="Extends\PosExt.cs" />
     <Compile Include="Extends\UserExt.cs" />

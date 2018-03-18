@@ -76,6 +76,8 @@
           <Property Name="near_circle_id" Type="int" Nullable="false" />
           <Property Name="near_circle_user_id" Type="int" Nullable="false" />
           <Property Name="image_url" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="width" Type="int" Nullable="false" />
+          <Property Name="height" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="t_near_circle_like">
           <Key>
@@ -337,6 +339,8 @@
           <Property Name="near_circle_id" Type="Int32" Nullable="false" />
           <Property Name="near_circle_user_id" Type="Int32" Nullable="false" />
           <Property Name="image_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="width" Type="Int32" Nullable="false" />
+          <Property Name="height" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="t_near_circle_like">
           <Key>
@@ -503,6 +507,8 @@
           <EntitySetMapping Name="t_near_circle_image">
             <EntityTypeMapping TypeName="HWL.Entity.t_near_circle_image">
               <MappingFragment StoreEntitySet="t_near_circle_image">
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="width" ColumnName="width" />
                 <ScalarProperty Name="image_url" ColumnName="image_url" />
                 <ScalarProperty Name="near_circle_user_id" ColumnName="near_circle_user_id" />
                 <ScalarProperty Name="near_circle_id" ColumnName="near_circle_id" />

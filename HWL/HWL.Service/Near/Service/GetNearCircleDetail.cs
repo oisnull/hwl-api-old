@@ -65,25 +65,17 @@ namespace HWL.Service.Near.Service
 
         private void BindInfo(NearCircleInfo info)
         {
-            var imageList = db.t_near_circle_image.Where(i => i.near_circle_id == info.NearCircleId).Select(i => new { i.near_circle_id, i.image_url }).ToList();
-            var likeList = db.t_near_circle_like.Where(l => l.like_user_id == this.request.UserId && l.near_circle_id == info.NearCircleId && l.is_delete == false).ToList();
-            var userList = db.t_user.Where(i => i.id == info.PublishUserId).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
+            info.Images = db.t_near_circle_image.Where(i => i.near_circle_id == info.NearCircleId).Select(i => new ImageInfo()
+            {
+                Url = i.image_url,
+                Height = i.height,
+                Width = i.width
+            }).ToList();
 
-            if (imageList != null && imageList.Count > 0)
-            {
-                info.Images = imageList.Where(i => i.near_circle_id == info.NearCircleId).Select(i => i.image_url).ToList();
-            }
-            if (userList != null && userList.Count > 0)
-            {
-                var user = userList.Where(u => u.id == info.PublishUserId).FirstOrDefault();
-                info.PublishUserName = UserUtility.GetShowName(user.name, user.symbol);
-                info.PublishUserImage = user.head_image;
-            }
-
-            if (likeList != null && likeList.Count > 0)
-            {
-                info.IsLiked = likeList.Where(l => l.near_circle_id == info.NearCircleId && l.like_user_id == this.request.UserId).Select(l => l.id).FirstOrDefault() > 0 ? true : false;
-            }
+            var user = db.t_user.Where(u => u.id == info.PublishUserId).FirstOrDefault();
+            info.PublishUserName = UserUtility.GetShowName(user.name, user.symbol);
+            info.PublishUserImage = user.head_image;
+            info.IsLiked = db.t_near_circle_like.Where(l => l.near_circle_id == info.NearCircleId && l.like_user_id == this.request.UserId && l.is_delete == false).Select(l => l.id).FirstOrDefault() > 0 ? true : false;
         }
     }
 }

@@ -53,7 +53,7 @@ namespace HWL.Redis
                 GeoRadiusResult[] results = db.GeoRadius(NEAR_CIRCLE_GEO_KEY, lon, lat, NEAR_CIRCLE_RANGE, GeoUnit.Miles, -1);
                 if (results != null && results.Length > 0)
                 {
-                    ids = results.Select(s => (int)s.Member).ToList();
+                    ids = results.Select(s => (int)s.Member).OrderByDescending(s => s).ToList();
                 }
             });
 

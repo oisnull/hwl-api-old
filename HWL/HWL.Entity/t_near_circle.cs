@@ -28,5 +28,6 @@ namespace HWL.Entity
         public int image_count { get; set; }
         public int comment_count { get; set; }
         public int like_count { get; set; }
+        public string pos_desc { get; set; }
     }
 }

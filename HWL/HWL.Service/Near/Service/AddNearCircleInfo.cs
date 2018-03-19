@@ -76,6 +76,7 @@ namespace HWL.Service.Near.Service
                     lon = this.request.Lon,
                     id = 0,
                     pos_id = this.request.PosId,
+                    pos_desc = this.request.PosDesc,
                     comment_count = 0,
                     image_count = 0,
                     like_count = 0,

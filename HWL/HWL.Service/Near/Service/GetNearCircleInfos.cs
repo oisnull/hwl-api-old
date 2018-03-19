@@ -69,7 +69,7 @@ namespace HWL.Service.Near.Service
                 CommentCount = c.comment_count,
                 Content = c.content_info,
                 ContentType = c.content_type,
-                FromPosDesc = c.pos_id + "",
+                PosDesc = c.pos_desc,
                 //Images = null,
                 LikeCount = c.like_count,
                 LinkImage = c.link_image,

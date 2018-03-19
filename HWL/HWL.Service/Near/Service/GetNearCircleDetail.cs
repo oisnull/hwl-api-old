@@ -46,7 +46,7 @@ namespace HWL.Service.Near.Service
                 CommentCount = model.comment_count,
                 Content = model.content_info,
                 ContentType = model.content_type,
-                FromPosDesc = model.pos_id + "",
+                PosDesc = model.pos_desc,
                 //Images = null,
                 LikeCount = model.like_count,
                 LinkImage = model.link_image,

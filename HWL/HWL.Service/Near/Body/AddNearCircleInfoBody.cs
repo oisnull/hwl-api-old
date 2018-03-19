@@ -17,6 +17,7 @@ namespace HWL.Service.Near.Body
         public double Lon { get; set; }
         public double Lat { get; set; }
         public int PosId { get; set; }
+        public string PosDesc { get; set; }
     }
 
     public class AddNearCircleInfoResponseBody

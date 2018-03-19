@@ -78,5 +78,14 @@ namespace HWL.Service
                 return new GetNearLikes(r.Body).Execute();
             });
         }
+
+        public static Response<DeleteNearCircleInfoResponseBody> DeleteNearCircleInfo(Request<DeleteNearCircleInfoRequestBody> request)
+        {
+            var context = new ServiceContext<DeleteNearCircleInfoRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new DeleteNearCircleInfo(r.Body).Execute();
+            });
+        }
     }
 }

@@ -59,5 +59,17 @@ namespace HWL.Redis
 
             return ids;
         }
+
+        public bool DeleteNearCircleId(int nearCircleId)
+        {
+            if (nearCircleId <= 0) return false;
+            bool succ = false;
+            base.DbNum = NEAR_CIRCLE_GEO_DB;
+            base.Exec(db =>
+            {
+                succ = db.GeoRemove(NEAR_CIRCLE_GEO_KEY, nearCircleId);
+            });
+            return succ;
+        }
     }
 }

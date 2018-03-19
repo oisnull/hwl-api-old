@@ -191,5 +191,12 @@ namespace HWL.API.Controllers
         {
             return NearService.GetNearLikes(request);
         }
+
+        [HttpPost]
+        [Description("删除附近圈子信息")]
+        public Response<DeleteNearCircleInfoResponseBody> DeleteNearCircleInfo(Request<DeleteNearCircleInfoRequestBody> request)
+        {
+            return NearService.DeleteNearCircleInfo(request);
+        }
     }
 }

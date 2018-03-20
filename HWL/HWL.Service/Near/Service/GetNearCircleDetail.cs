@@ -54,7 +54,7 @@ namespace HWL.Service.Near.Service
                 LinkUrl = model.link_url,
                 PublishTime = model.publish_time.ToString("yyyy-MM-dd HH:mm:ss"),
                 PublishUserId = model.user_id,
-                CommentInfos = NearUtility.GetNearComments(model.id),
+                CommentInfos = NearUtility.GetNearComments(model.id,3),
                 LikeInfos = NearUtility.GetNearLikes(model.id)
             };
 

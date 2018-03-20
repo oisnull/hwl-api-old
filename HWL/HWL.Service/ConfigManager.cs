@@ -53,6 +53,30 @@ namespace HWL.Service
             }
         }
 
+        public static string UserDefaultHeadImage
+        {
+            get
+            {
+                return FileAccessUrl + "/upload/user/default.png";
+            }
+        }
+
+        public static string UserDefaultLoaclHeadImage
+        {
+            get
+            {
+                return UploadDirectory + "/upload/user/default.png";
+            }
+        }
+
+        public static string UserCircleBackImage
+        {
+            get
+            {
+                return FileAccessUrl + "/upload/user/circleback.png";
+            }
+        }
+
         /// <summary>
         /// 添加好友总数量上限
         /// </summary>

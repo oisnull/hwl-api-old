@@ -107,7 +107,6 @@
     <Compile Include="User\Service\GetUserDetails.cs" />
     <Compile Include="User\Service\SearchUser.cs" />
     <Compile Include="User\Service\SetFriendRemark.cs" />
-    <Compile Include="User\Service\SetUserInfo.cs" />
     <Compile Include="User\Service\SetUserHeadImage.cs" />
     <Compile Include="User\Service\SetUserLifeNotes.cs" />
     <Compile Include="User\Service\SetUserSex.cs" />

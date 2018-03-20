@@ -44,30 +44,6 @@ namespace HWL.Service.User
             return CommonCs.GetMd5Str32(token);
         }
 
-        public static string UserDefaultHeadImage
-        {
-            get
-            {
-                return ConfigManager.FileAccessUrl + "/user/default.png";
-            }
-        }
-
-        public static string UserDefaultLoaclHeadImage
-        {
-            get
-            {
-                return ConfigManager.UploadDirectory + "/user/default.png";
-            }
-        }
-
-        public static string UserCircleBackImage
-        {
-            get
-            {
-                return ConfigManager.FileAccessUrl + "/user/circleback.png";
-            }
-        }
-
         ///// <summary>
         ///// 加密用户token模型信息,作为请求的唯一凭证
         ///// </summary>

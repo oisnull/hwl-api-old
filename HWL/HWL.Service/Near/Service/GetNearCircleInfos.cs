@@ -119,7 +119,7 @@ namespace HWL.Service.Near.Service
                     item.IsLiked = likeList.Where(l => l.near_circle_id == item.NearCircleId && l.like_user_id == this.request.UserId).Select(l => l.id).FirstOrDefault() > 0 ? true : false;
                 }
 
-                item.LikeInfos = NearUtility.GetNearLikes(item.NearCircleId);
+                //item.LikeInfos = NearUtility.GetNearLikes(item.NearCircleId);
                 item.CommentInfos = NearUtility.GetNearComments(item.NearCircleId, 20);
             }
         }

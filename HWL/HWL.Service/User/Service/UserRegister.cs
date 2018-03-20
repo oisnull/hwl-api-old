@@ -88,13 +88,13 @@ namespace HWL.Service.User.Service
                     mobile = this.request.Mobile ?? " ",
                     password = this.request.PasswordOK,
 
-                    //name = "匿名",
                     status = UserStatus.Normal,
                     sex = UserSex.Unknow,
                     register_date = DateTime.Now,
                     update_date = DateTime.Now,
-                    head_image = UserUtility.UserDefaultHeadImage,
-                    circle_back_image = UserUtility.UserCircleBackImage,
+                    name = RandomText.GetNum(),
+                    head_image = ConfigManager.UserDefaultHeadImage,
+                    circle_back_image = ConfigManager.UserCircleBackImage,
                 };
                 db.t_user.Add(model);
                 db.SaveChanges();

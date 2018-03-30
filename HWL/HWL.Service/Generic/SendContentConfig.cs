@@ -15,7 +15,7 @@ namespace HWL.Service.Generic
         /// <returns></returns>
         public static Tuple<string, string> EmailRegisterDesc(string code)
         {
-            string title = "好无聊注册";
+            string title = "HWL1.0注册";
             string content = "您当前的注册验证码是：" + code;
             return new Tuple<string, string>(title, content);
         }
@@ -26,7 +26,7 @@ namespace HWL.Service.Generic
         /// <returns></returns>
         public static string SMSRegisterDesc(string code)
         {
-            string content = "您当前的好无聊注册验证码是：" + code;
+            string content = "您当前的HWL1.0注册验证码是：" + code;
             return content;
         }
 

@@ -57,6 +57,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Circle\Body\AddCircleInfoBody.cs" />
+    <Compile Include="Circle\Body\AddCommentInfoBody.cs" />
+    <Compile Include="Circle\Body\DeleteCircleInfoBody.cs" />
+    <Compile Include="Circle\Body\DeleteCommentInfoBody.cs" />
+    <Compile Include="Circle\Body\GetCircleDetailBody.cs" />
+    <Compile Include="Circle\Body\GetCircleInfosBody.cs" />
+    <Compile Include="Circle\Body\GetUserCircleInfosBody.cs" />
+    <Compile Include="Circle\Body\SetLikeInfoBody.cs" />
+    <Compile Include="Circle\Service\AddCircleInfo.cs" />
+    <Compile Include="Circle\Service\AddCommentInfo.cs" />
+    <Compile Include="Circle\Service\DeleteCircleInfo.cs" />
+    <Compile Include="Circle\Service\DeleteCommentInfo.cs" />
+    <Compile Include="Circle\Service\GetCircleDetail.cs" />
+    <Compile Include="Circle\Service\GetCircleInfos.cs" />
+    <Compile Include="Circle\Service\GetUserCircleInfos.cs" />
+    <Compile Include="Circle\Service\SetLikeInfo.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="NearService.cs" />
     <Compile Include="GenericService.cs" />

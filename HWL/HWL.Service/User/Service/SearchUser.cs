@@ -42,7 +42,7 @@ namespace HWL.Service.User.Service
                 }
                 friendIds.Add(this.request.UserId);
 
-                res.UserInfos = db.t_user.Where(u => u.symbol.Contains(this.request.UserKey) && !friendIds.Contains(u.id)).Select(u => new UserSearchInfo()
+                res.UserInfos = db.t_user.Where(u => (u.symbol.Contains(this.request.UserKey) || u.name.Contains(this.request.UserKey)) && !friendIds.Contains(u.id)).Select(u => new UserSearchInfo()
                 {
                     HeadImage = u.head_image,
                     Id = u.id,

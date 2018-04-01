@@ -101,7 +101,7 @@
           <Property Name="link_image" Type="nvarchar" MaxLength="200" />
           <Property Name="publish_time" Type="datetime" Nullable="false" />
           <Property Name="pos_id" Type="int" Nullable="false" />
-          <Property Name="pos_desc" Type="nvarchar" MaxLength="100" />
+          <Property Name="pos_desc" Type="nvarchar" MaxLength="50" />
           <Property Name="lon" Type="float" Nullable="false" />
           <Property Name="lat" Type="float" Nullable="false" />
           <Property Name="image_count" Type="int" Nullable="false" />
@@ -244,14 +244,14 @@
           <EntitySet Name="t_province" EntityType="HWL.Entity.t_province" />
           <EntitySet Name="t_user_pos" EntityType="HWL.Entity.t_user_pos" />
           <EntitySet Name="t_user_friend" EntityType="HWL.Entity.t_user_friend" />
-          <EntitySet Name="t_near_circle" EntityType="HWL.Entity.t_near_circle" />
           <EntitySet Name="t_near_circle_comment" EntityType="HWL.Entity.t_near_circle_comment" />
-          <EntitySet Name="t_near_circle_image" EntityType="HWL.Entity.t_near_circle_image" />
           <EntitySet Name="t_near_circle_like" EntityType="HWL.Entity.t_near_circle_like" />
           <EntitySet Name="t_circle" EntityType="HWL.Entity.t_circle" />
           <EntitySet Name="t_circle_comment" EntityType="HWL.Entity.t_circle_comment" />
           <EntitySet Name="t_circle_image" EntityType="HWL.Entity.t_circle_image" />
           <EntitySet Name="t_circle_like" EntityType="HWL.Entity.t_circle_like" />
+          <EntitySet Name="t_near_circle" EntityType="HWL.Entity.t_near_circle" />
+          <EntitySet Name="t_near_circle_image" EntityType="HWL.Entity.t_near_circle_image" />
         </EntityContainer>
         <EntityType Name="t_admin">
           <Key>
@@ -360,27 +360,6 @@
           <Property Name="friend_first_spell" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="add_time" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="t_near_circle">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="content_type" Type="HWL.Entity.CircleContentType" Nullable="false" />
-          <Property Name="content_info" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="link_title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="link_url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="link_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="publish_time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="pos_id" Type="Int32" Nullable="false" />
-          <Property Name="lon" Type="Double" Nullable="false" />
-          <Property Name="lat" Type="Double" Nullable="false" />
-          <Property Name="image_count" Type="Int32" Nullable="false" />
-          <Property Name="comment_count" Type="Int32" Nullable="false" />
-          <Property Name="like_count" Type="Int32" Nullable="false" />
-          <Property Name="pos_desc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="pos_desc1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="t_near_circle_comment">
           <Key>
             <PropertyRef Name="id" />
@@ -391,19 +370,6 @@
           <Property Name="content_info" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="reply_user_id" Type="Int32" Nullable="false" />
           <Property Name="comment_time" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="t_near_circle_image">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="near_circle_id" Type="Int32" Nullable="false" />
-          <Property Name="near_circle_user_id" Type="Int32" Nullable="false" />
-          <Property Name="image_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="width" Type="Int32" Nullable="false" />
-          <Property Name="height" Type="Int32" Nullable="false" />
-          <Property Name="width1" Type="Int32" Nullable="false" />
-          <Property Name="height1" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="t_near_circle_like">
           <Key>
@@ -465,6 +431,37 @@
           <Property Name="circle_user_id" Type="Int32" Nullable="false" />
           <Property Name="like_user_id" Type="Int32" Nullable="false" />
           <Property Name="like_time" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="t_near_circle">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="content_type" Nullable="false" Type="HWL.Entity.CircleContentType" />
+          <Property Name="content_info" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="link_title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="link_url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="link_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="publish_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pos_id" Type="Int32" Nullable="false" />
+          <Property Name="pos_desc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lon" Type="Double" Nullable="false" />
+          <Property Name="lat" Type="Double" Nullable="false" />
+          <Property Name="image_count" Type="Int32" Nullable="false" />
+          <Property Name="comment_count" Type="Int32" Nullable="false" />
+          <Property Name="like_count" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_near_circle_image">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="near_circle_id" Type="Int32" Nullable="false" />
+          <Property Name="near_circle_user_id" Type="Int32" Nullable="false" />
+          <Property Name="image_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="width" Type="Int32" Nullable="false" />
+          <Property Name="height" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -585,27 +582,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="t_near_circle">
-            <EntityTypeMapping TypeName="HWL.Entity.t_near_circle">
-              <MappingFragment StoreEntitySet="t_near_circle">
-                <ScalarProperty Name="pos_desc1" ColumnName="pos_desc" />
-                <ScalarProperty Name="like_count" ColumnName="like_count" />
-                <ScalarProperty Name="comment_count" ColumnName="comment_count" />
-                <ScalarProperty Name="image_count" ColumnName="image_count" />
-                <ScalarProperty Name="lat" ColumnName="lat" />
-                <ScalarProperty Name="lon" ColumnName="lon" />
-                <ScalarProperty Name="pos_id" ColumnName="pos_id" />
-                <ScalarProperty Name="publish_time" ColumnName="publish_time" />
-                <ScalarProperty Name="link_image" ColumnName="link_image" />
-                <ScalarProperty Name="link_url" ColumnName="link_url" />
-                <ScalarProperty Name="link_title" ColumnName="link_title" />
-                <ScalarProperty Name="content_info" ColumnName="content_info" />
-                <ScalarProperty Name="content_type" ColumnName="content_type" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="t_near_circle_comment">
             <EntityTypeMapping TypeName="HWL.Entity.t_near_circle_comment">
               <MappingFragment StoreEntitySet="t_near_circle_comment">
@@ -613,18 +589,6 @@
                 <ScalarProperty Name="reply_user_id" ColumnName="reply_user_id" />
                 <ScalarProperty Name="content_info" ColumnName="content_info" />
                 <ScalarProperty Name="comment_user_id" ColumnName="comment_user_id" />
-                <ScalarProperty Name="near_circle_id" ColumnName="near_circle_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="t_near_circle_image">
-            <EntityTypeMapping TypeName="HWL.Entity.t_near_circle_image">
-              <MappingFragment StoreEntitySet="t_near_circle_image">
-                <ScalarProperty Name="height1" ColumnName="height" />
-                <ScalarProperty Name="width1" ColumnName="width" />
-                <ScalarProperty Name="image_url" ColumnName="image_url" />
-                <ScalarProperty Name="near_circle_user_id" ColumnName="near_circle_user_id" />
                 <ScalarProperty Name="near_circle_id" ColumnName="near_circle_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
@@ -691,6 +655,39 @@
                 <ScalarProperty Name="like_user_id" ColumnName="like_user_id" />
                 <ScalarProperty Name="circle_user_id" ColumnName="circle_user_id" />
                 <ScalarProperty Name="circle_id" ColumnName="circle_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_near_circle">
+            <EntityTypeMapping TypeName="HWL.Entity.t_near_circle">
+              <MappingFragment StoreEntitySet="t_near_circle">
+                <ScalarProperty Name="like_count" ColumnName="like_count" />
+                <ScalarProperty Name="comment_count" ColumnName="comment_count" />
+                <ScalarProperty Name="image_count" ColumnName="image_count" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="lon" ColumnName="lon" />
+                <ScalarProperty Name="pos_desc" ColumnName="pos_desc" />
+                <ScalarProperty Name="pos_id" ColumnName="pos_id" />
+                <ScalarProperty Name="publish_time" ColumnName="publish_time" />
+                <ScalarProperty Name="link_image" ColumnName="link_image" />
+                <ScalarProperty Name="link_url" ColumnName="link_url" />
+                <ScalarProperty Name="link_title" ColumnName="link_title" />
+                <ScalarProperty Name="content_info" ColumnName="content_info" />
+                <ScalarProperty Name="content_type" ColumnName="content_type" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_near_circle_image">
+            <EntityTypeMapping TypeName="HWL.Entity.t_near_circle_image">
+              <MappingFragment StoreEntitySet="t_near_circle_image">
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="width" ColumnName="width" />
+                <ScalarProperty Name="image_url" ColumnName="image_url" />
+                <ScalarProperty Name="near_circle_user_id" ColumnName="near_circle_user_id" />
+                <ScalarProperty Name="near_circle_id" ColumnName="near_circle_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

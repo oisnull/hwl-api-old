@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CircleService.cs" />
     <Compile Include="Circle\Body\AddCircleInfoBody.cs" />
     <Compile Include="Circle\Body\AddCommentInfoBody.cs" />
     <Compile Include="Circle\Body\DeleteCircleInfoBody.cs" />

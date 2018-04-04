@@ -1,5 +1,6 @@
 ﻿using GMSF.Model;
 using HWL.Service;
+using HWL.Service.Circle.Body;
 using HWL.Service.Generic.Body;
 using HWL.Service.Group.Body;
 using HWL.Service.Near.Body;
@@ -197,6 +198,63 @@ namespace HWL.API.Controllers
         public Response<DeleteNearCircleInfoResponseBody> DeleteNearCircleInfo(Request<DeleteNearCircleInfoRequestBody> request)
         {
             return NearService.DeleteNearCircleInfo(request);
+        }
+
+
+        [HttpPost]
+        [Description("添加朋友圈子信息")]
+        public Response<AddCircleInfoResponseBody> AddCircleInfo(Request<AddCircleInfoRequestBody> request)
+        {
+            return CircleService.AddCircleInfo(request);
+        }
+
+        [HttpPost]
+        [Description("添加朋友圈子评论信息")]
+        public Response<AddCommentInfoResponseBody> AddCircleCommentInfo(Request<AddCommentInfoRequestBody> request)
+        {
+            return CircleService.AddCommentInfo(request);
+        }
+
+        [HttpPost]
+        [Description("删除朋友圈子信息")]
+        public Response<DeleteCircleInfoResponseBody> DeleteCircleInfo(Request<DeleteCircleInfoRequestBody> request)
+        {
+            return CircleService.DeleteCircleInfo(request);
+        }
+
+        [HttpPost]
+        [Description("删除朋友圈子评论信息")]
+        public Response<DeleteCommentInfoResponseBody> DeleteCircleCommentInfo(Request<DeleteCommentInfoRequestBody> request)
+        {
+            return CircleService.DeleteCommentInfo(request);
+        }
+
+        [HttpPost]
+        [Description("获取朋友圈子详细信息")]
+        public Response<GetCircleDetailResponseBody> GetCircleDetail(Request<GetCircleDetailRequestBody> request)
+        {
+            return CircleService.GetCircleDetail(request);
+        }
+
+        [HttpPost]
+        [Description("获取朋友圈子信息列表")]
+        public Response<GetCircleInfosResponseBody> GetCircleInfos(Request<GetCircleInfosRequestBody> request)
+        {
+            return CircleService.GetCircleInfos(request);
+        }
+
+        [HttpPost]
+        [Description("获取指定朋友圈子信息列表")]
+        public Response<GetUserCircleInfosResponseBody> GetUserCircleInfos(Request<GetUserCircleInfosRequestBody> request)
+        {
+            return CircleService.GetUserCircleInfos(request);
+        }
+
+        [HttpPost]
+        [Description("设置朋友圈点赞信息")]
+        public Response<SetLikeInfoResponseBody> SetCircleLikeInfo(Request<SetLikeInfoRequestBody> request)
+        {
+            return CircleService.SetLikeInfo(request);
         }
     }
 }

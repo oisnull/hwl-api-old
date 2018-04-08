@@ -149,6 +149,7 @@ public class AudioManager {
 1,Near IMP
 
 2018-04-08：
+http://www.cnblogs.com/dasusu/p/6745032.html
 /**
  *
  * Fragment基类，封装了懒加载的实现

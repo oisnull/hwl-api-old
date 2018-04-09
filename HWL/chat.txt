@@ -314,3 +314,6 @@ public class CategoryFragment extends BaseFragment {
         mCategoryController.loadBaseData();
     }
 }
+
+2018-04-09:
+Recycler 上拉加载,下拉刷新 https://blog.csdn.net/mynameishuangshuai/article/details/51153978

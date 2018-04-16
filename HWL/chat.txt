@@ -318,3 +318,17 @@ public class CategoryFragment extends BaseFragment {
 2018-04-09:
 Recycler 上拉加载,下拉刷新 https://blog.csdn.net/mynameishuangshuai/article/details/51153978
 utils https://www.jianshu.com/p/72494773aace
+
+2018-04-16
+1. 引用如下命名空间：
+import java.util.Date;
+import android.text.format.DateFormat;
+2. 设置时间格式：
+
+SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+3. 获取时间：
+
+Date curDate = new Date(System.currentTimeMillis());
+//PROCESSING
+Date endDate = new Date(System.currentTimeMillis());
+long diff = endDate.getTime() - curDate.getTime();

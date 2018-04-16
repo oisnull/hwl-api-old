@@ -29,6 +29,9 @@ namespace HWL.Service.Near.Service
 
             if (this.request.Count <= 0)
                 this.request.Count = 10;
+
+            //if (this.request.PageIndex <= 0)
+            //    this.request.PageIndex = 1;
         }
 
         public override GetNearCircleInfosResponseBody ExecuteCore()
@@ -44,18 +47,27 @@ namespace HWL.Service.Near.Service
             if (geoIdList == null || geoIdList.Count <= 0) return res;
 
             List<int> ids = null;
-            if (this.request.MaxNearCircleId > 0)
-            {
-                ids = geoIdList.Where(g => g > this.request.MaxNearCircleId).Take(this.request.Count).ToList();
-            }
-            else if (this.request.MinNearCircleId > 0)
+            if (this.request.MinNearCircleId > 0)
             {
                 ids = geoIdList.Where(g => g < this.request.MinNearCircleId).Take(this.request.Count).ToList();
             }
             else
             {
                 ids = geoIdList.Take(this.request.Count).ToList();
+                //ids = geoIdList.Skip((this.request.PageIndex - 1) * this.request.Count).Take(this.request.Count).ToList();
             }
+            //if (this.request.MaxNearCircleId > 0)
+            //{
+            //    ids = geoIdList.Where(g => g > this.request.MaxNearCircleId).Take(this.request.Count).ToList();
+            //}
+            //else if (this.request.MinNearCircleId > 0)
+            //{
+            //    ids = geoIdList.Where(g => g < this.request.MinNearCircleId).Take(this.request.Count).ToList();
+            //}
+            //else
+            //{
+            //    ids = geoIdList.Take(this.request.Count).ToList();
+            //}
             if (ids == null || ids.Count <= 0) return res;
 
             db = new HWLEntities();
@@ -78,6 +90,7 @@ namespace HWL.Service.Near.Service
                 PublishTime = c.publish_time.ToString("yyyy-MM-dd HH:mm:ss"),
                 PublishUserId = c.user_id,
             }).ToList();
+
             BindInfo(res.NearCircleInfos);
 
             //BindLike(res.NearCircleInfos);
@@ -119,7 +132,7 @@ namespace HWL.Service.Near.Service
                     item.IsLiked = likeList.Where(l => l.near_circle_id == item.NearCircleId && l.like_user_id == this.request.UserId).Select(l => l.id).FirstOrDefault() > 0 ? true : false;
                 }
 
-                //item.LikeInfos = NearUtility.GetNearLikes(item.NearCircleId);
+                item.LikeInfos = NearUtility.GetNearLikes(item.NearCircleId);
                 item.CommentInfos = NearUtility.GetNearComments(item.NearCircleId, 20);
             }
         }

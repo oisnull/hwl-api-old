@@ -47,6 +47,9 @@ namespace HWL.Service.User.Service
 
                 db.SaveChanges();
                 res.Status = ResultStatus.Success;
+                res.Name = user.name;
+                res.Symbol = user.symbol;
+                res.HeadImage = user.head_image;
             }
 
             return res;

@@ -19,6 +19,9 @@ namespace HWL.Service.User.Body
     public class SetUserInfoResponseBody
     {
         public ResultStatus Status { get; set; }
+        public String Symbol { get; set; }
+        public String Name { get; set; }
+        public String HeadImage { get; set; }
     }
 
     public class SetUserSymbolRequestBody

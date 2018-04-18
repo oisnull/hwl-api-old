@@ -332,3 +332,6 @@ Date curDate = new Date(System.currentTimeMillis());
 //PROCESSING
 Date endDate = new Date(System.currentTimeMillis());
 long diff = endDate.getTime() - curDate.getTime();
+
+2018-04-18:
+开源资料 http://www.cnblogs.com/huolongluo/p/6607704.html

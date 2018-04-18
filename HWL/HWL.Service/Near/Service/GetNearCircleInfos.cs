@@ -193,15 +193,21 @@ namespace HWL.Service.Near.Service
                                 if (c.comment_user_id > 0)
                                 {
                                     var comUser = userList.Where(u => u.id == c.comment_user_id).FirstOrDefault();
-                                    model.CommentUserName = UserUtility.GetShowName(comUser.name, comUser.symbol);
-                                    model.CommentUserImage = comUser.head_image;
+                                    if (comUser != null)
+                                    {
+                                        model.CommentUserName = UserUtility.GetShowName(comUser.name, comUser.symbol);
+                                        model.CommentUserImage = comUser.head_image;
+                                    }
                                 }
 
                                 if (c.reply_user_id > 0)
                                 {
                                     var repUser = userList.Where(u => u.id == c.reply_user_id).FirstOrDefault();
-                                    model.ReplyUserName = UserUtility.GetShowName(repUser.name, repUser.symbol);
-                                    model.ReplyUserImage = repUser.head_image;
+                                    if (repUser != null)
+                                    {
+                                        model.ReplyUserName = UserUtility.GetShowName(repUser.name, repUser.symbol);
+                                        model.ReplyUserImage = repUser.head_image;
+                                    }
                                 }
                             }
                             return model;

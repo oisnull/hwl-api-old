@@ -122,6 +122,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="appSettings.config" />
     <Content Include="Global.asax" />
     <Content Include="test\index.html" />
     <Content Include="test\js\api_test.js" />

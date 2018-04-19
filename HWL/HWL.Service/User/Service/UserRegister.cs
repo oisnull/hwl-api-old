@@ -92,7 +92,7 @@ namespace HWL.Service.User.Service
                     sex = UserSex.Unknow,
                     register_date = DateTime.Now,
                     update_date = DateTime.Now,
-                    name = "HWL-"+RandomText.GetNum(),
+                    name = RandomText.GetNum(),
                     head_image = ConfigManager.UserDefaultHeadImage,
                     circle_back_image = ConfigManager.UserCircleBackImage,
                 };

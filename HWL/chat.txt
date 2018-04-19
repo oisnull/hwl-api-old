@@ -335,3 +335,5 @@ long diff = endDate.getTime() - curDate.getTime();
 
 2018-04-18:
 开源资料 http://www.cnblogs.com/huolongluo/p/6607704.html
+2018-04-19:
+android gitignore : https://github.com/github/gitignore/blob/master/Android.gitignore

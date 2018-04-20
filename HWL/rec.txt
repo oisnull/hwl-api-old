@@ -1,4 +1,7 @@
-﻿ redis3.2
+﻿1577592799@qq.com
+Nv-Wrj7tJR
+
+ redis3.2
  https://github.com/MicrosoftArchive/redis/releases
 
  android hx chat

@@ -108,17 +108,15 @@ namespace HWL.Service.Near.Service
             var likeList = db.t_near_circle_like.Where(l => circleIds.Contains(l.near_circle_id) && l.is_delete == false).ToList();
             var commentList = db.t_near_circle_comment.Where(c => circleIds.Contains(c.near_circle_id)).ToList();
 
-            var userIds = infos.Select(u => u.PublishUserId).Distinct().ToList();
+            List<int> userIds = infos.Select(u => u.PublishUserId).ToList();
             if (likeList != null && likeList.Count > 0)
             {
-                userIds.Union(likeList.Select(u => u.like_user_id))
-                    .ToList();
+                userIds.AddRange(likeList.Select(u => u.like_user_id).ToList());
             }
             if (commentList != null && commentList.Count > 0)
             {
-                userIds.Union(commentList.Select(u => u.comment_user_id))
-                    .Union(commentList.Select(c => c.reply_user_id))
-                    .ToList();
+                userIds.AddRange(commentList.Select(u => u.comment_user_id).ToList());
+                userIds.AddRange(commentList.Select(c => c.reply_user_id).ToList());
             }
             var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
 

@@ -18,5 +18,7 @@ namespace HWL.Entity
         public int circle_id { get; set; }
         public int user_id { get; set; }
         public string image_url { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
     }
 }

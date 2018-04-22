@@ -16,11 +16,10 @@ namespace HWL.Entity
     {
         public int id { get; set; }
         public int user_id { get; set; }
-        public int content_type { get; set; }
+        public HWL.Entity.CircleContentType content_type { get; set; }
         public string circle_content { get; set; }
         public System.DateTime publish_time { get; set; }
         public int pos_id { get; set; }
-        public double lng { get; set; }
         public double lat { get; set; }
         public string link_url { get; set; }
         public string link_title { get; set; }
@@ -28,5 +27,7 @@ namespace HWL.Entity
         public int image_count { get; set; }
         public int comment_count { get; set; }
         public int like_count { get; set; }
+        public string pos_desc { get; set; }
+        public double lon { get; set; }
     }
 }

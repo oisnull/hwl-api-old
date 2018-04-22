@@ -141,15 +141,15 @@ namespace HWL.Entity
         Other = 5,
     }
 
-    /// <summary>
-    /// 圈子类型：1我的 2好友 3附近
-    /// </summary>
-    public enum CircleType
-    {
-        Mine = 1,
-        Friend = 2,
-        Near = 3,
-    }
+    ///// <summary>
+    ///// 圈子类型：1我的 2好友 3附近
+    ///// </summary>
+    //public enum CircleType
+    //{
+    //    Mine = 1,
+    //    Friend = 2,
+    //    Near = 3,
+    //}
 
     /// <summary>
     /// 资源类型：1聊天图片 2圈子背景 3圈子发布的动态图片  4录音文件 5用户头像 6聊天视频文件 7其他 
@@ -158,10 +158,11 @@ namespace HWL.Entity
     {
         ChatImage = 1,
         CircleBackImage = 2,
-        CirclePostImage = 3,
-        ChatSound = 4,
-        UserHeadImage = 5,
-        ChatVideo = 6,
-        Other = 7,
+        NearCirclePostImage = 3,
+        FriendCirclePostImage = 4,
+        ChatSound = 5,
+        UserHeadImage = 6,
+        ChatVideo = 7,
+        Other = 8,
     }
 }

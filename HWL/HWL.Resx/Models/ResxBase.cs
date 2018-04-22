@@ -52,7 +52,7 @@ namespace HWL.Resx.Models
             return new FileInfo(newLocalPath).Length;
         }
 
-        public Tuple<string,int,int> GenerateImagePreview(string localPath)
+        public Tuple<string, int, int> GenerateImagePreview(string localPath)
         {
             string ext = Path.GetExtension(localPath);
             newLocalPath = string.Empty;
@@ -62,7 +62,7 @@ namespace HWL.Resx.Models
             ImageAction.ThumbnailResult ret = ImageAction.ThumbnailImage(localPath, newLocalPath);
             if (ret.Success)
             {
-                return new Tuple<string, int, int>(accessDir + Path.GetFileName(newLocalPath),ret.ImageWidth,ret.ImageHeight);
+                return new Tuple<string, int, int>(accessDir + Path.GetFileName(newLocalPath), ret.ImageWidth, ret.ImageHeight);
             }
 
             return null;
@@ -74,7 +74,7 @@ namespace HWL.Resx.Models
             //string fileExt = Path.GetExtension(orgFileName).ToLower();
             //newFileName = System.Text.RegularExpressions.Regex.Replace(orgFileName, fileExt, "");
             //newFileName = System.Text.RegularExpressions.Regex.Replace(newFileName, @"[^\u4e00-\u9fa5_a-zA-Z0-9]", "");
-            newFileName = DateTime.Now.ToString("yyyyMMddHHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo)+"_"+RandomText.GetNum() + ext;
+            newFileName = DateTime.Now.ToString("yyyyMMddHHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo) + "_" + RandomText.GetNum() + ext;
             return newFileName;
         }
     }
@@ -92,7 +92,7 @@ namespace HWL.Resx.Models
         /// <returns></returns>
         public bool IsPreview()
         {
-            if (this.ResxType == ResxType.ChatImage || this.ResxType == ResxType.CirclePostImage)
+            if (this.ResxType == ResxType.ChatImage || this.ResxType == ResxType.NearCirclePostImage || this.ResxType == ResxType.FriendCirclePostImage)
                 return true;
 
             return false;
@@ -100,7 +100,7 @@ namespace HWL.Resx.Models
 
         public bool IsImage()
         {
-            if (this.ResxType == ResxType.ChatImage || this.ResxType == ResxType.CircleBackImage || this.ResxType == ResxType.CirclePostImage || this.ResxType == ResxType.UserHeadImage)
+            if (this.ResxType == ResxType.ChatImage || this.ResxType == ResxType.CircleBackImage || this.ResxType == ResxType.FriendCirclePostImage || this.ResxType == ResxType.NearCirclePostImage || this.ResxType == ResxType.UserHeadImage)
                 return true;
 
             return false;

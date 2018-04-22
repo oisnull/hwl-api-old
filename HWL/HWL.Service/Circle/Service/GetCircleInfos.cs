@@ -1,4 +1,5 @@
 ﻿using HWL.Entity;
+using HWL.Entity.Extends;
 using HWL.Service.Circle.Body;
 using System;
 using System.Collections.Generic;
@@ -27,169 +28,161 @@ namespace HWL.Service.Circle.Service
             if (this.request.PageIndex <= 0)
                 this.request.PageIndex = 1;
 
-            if (this.request.PageSize <= 0)
-                this.request.PageSize = 10;
+            if (this.request.Count <= 0)
+                this.request.Count = 15;
         }
 
         public override GetCircleInfosResponseBody ExecuteCore()
         {
             GetCircleInfosResponseBody res = new GetCircleInfosResponseBody();
 
-            //using (HWLEntities db = new HWLEntities())
-            //{
-            //    IQueryable<t_circle> query = db.t_circle.OrderByDescending(r => r.id);
+            using (HWLEntities db = new HWLEntities())
+            {
+                List<int> userIds = new List<int>() { this.request.UserId };
 
-            //    switch (this.request.CircleType)
-            //    {
-            //        case CircleType.Mine:
-            //            query = query.Where(q => q.user_id == this.request.UserId);
-            //            break;
-            //        case CircleType.Friend:
-            //            List<int> fuids = this.GetFriendUserIds(db);
-            //            query = query.Where(q => fuids.Contains(q.user_id));
-            //            break;
-            //        case CircleType.Near:
-            //            List<int> nuids = this.GetNearUserIds();
-            //            query = query.Where(q => nuids.Contains(q.user_id));
-            //            break;
-            //        default:
-            //            return res;
-            //    }
+                //获取好友列表
+                var friends = db.t_user_friend.Where(f => f.user_id == this.request.UserId).ToList();
+                if (friends != null)
+                {
+                    userIds.AddRange(friends.Select(f => f.friend_user_id).ToList());
+                }
 
-            //    if (this.request.LastCircleId > 0)
-            //    {
-            //        query = query.Where(q => q.id < this.request.LastCircleId).Take(this.request.PageSize);
-            //    }
-            //    else
-            //    {
-            //        query = query.Skip(this.request.PageSize * (this.request.PageIndex - 1)).Take(this.request.PageSize);
-            //    }
+                IQueryable<t_circle> query = db.t_circle.Where(r => userIds.Contains(r.user_id)).OrderByDescending(r => r.id);
 
-            //    var circleList = query.Select(q => new CircleInfo
-            //    {
-            //        Id = q.id,
-            //        UserId = q.user_id,
-            //        ContentType = q.content_type,
-            //        CircleContent = q.circle_content,
-            //        CommentCount = q.comment_count,
-            //        ImageCount = q.image_count,
-            //        Lat = q.lat,
-            //        LikeCount = q.like_count,
-            //        LinkImage = q.link_image,
-            //        LinkTitle = q.link_title,
-            //        LinkUrl = q.link_url,
-            //        Lng = q.lng,
-            //        PosId = q.pos_id,
-            //        PublishTime = q.publish_time,
+                if (this.request.MinCircleId > 0)
+                {
+                    query = query.Where(q => q.id < this.request.MinCircleId).Take(this.request.Count);
+                }
+                else
+                {
+                    query = query.Skip(this.request.Count * (this.request.PageIndex - 1)).Take(this.request.Count);
+                }
 
-            //        //IsLike = false,
-            //        //CommentInfos = null,
-            //        //Images = null,
-            //        //LikeUserInfos = null,
-            //        //PostUserInfo = null,
+                var circleList = query.Select(q => new CircleInfo
+                {
+                    Id = q.id,
+                    UserId = q.user_id,
+                    ContentType = q.content_type,
+                    CircleContent = q.circle_content,
+                    CommentCount = q.comment_count,
+                    ImageCount = q.image_count,
+                    Lat = q.lat,
+                    LikeCount = q.like_count,
+                    LinkImage = q.link_image,
+                    LinkTitle = q.link_title,
+                    LinkUrl = q.link_url,
+                    Lon = q.lon,
+                    PosId = q.pos_id,
+                    PublishTime = q.publish_time,
 
-            //    }).ToList();
+                    //IsLike = false,
+                    //CommentInfos = null,
+                    //Images = null,
+                    //LikeUserInfos = null,
+                    //PostUserInfo = null,
 
-            //    if (circleList == null || circleList.Count <= 0) return res;
-            //    res.CircleInfos = circleList;
+                }).ToList();
 
-            //    List<int> circleIds = circleList.Select(c => c.Id).ToList();
+                if (circleList == null || circleList.Count <= 0) return res;
+                res.CircleInfos = circleList;
 
-            //    //获取发布的图片
-            //    var images = db.t_circle_image.Where(i => circleIds.Contains(i.circle_id)).Select(i => new { CircleId = i.circle_id, ImageUrl = i.image_url }).ToList();
+                //    List<int> circleIds = circleList.Select(c => c.Id).ToList();
 
-            //    //获取点赞
-            //    var likes = db.t_circle_like.Where(l => circleIds.Contains(l.circle_id)).Select(l => new { CircleId = l.circle_id, LikeUserId = l.like_user_id }).ToList();
+                //    //获取发布的图片
+                //    var images = db.t_circle_image.Where(i => circleIds.Contains(i.circle_id)).Select(i => new { CircleId = i.circle_id, ImageUrl = i.image_url }).ToList();
 
-            //    //获取评论
-            //    var comments = db.t_circle_comment.Where(c => circleIds.Contains(c.circle_id)).Select(c => new
-            //    {
-            //        Id = c.id,
-            //        CircleId = c.circle_id,
-            //        CommentUserId = c.com_user_id,
-            //        ReplyUserId = c.reply_user_id,
-            //        ComContent = c.com_content,
-            //        CommentTime = c.comment_time
-            //    }).ToList();
+                //    //获取点赞
+                //    var likes = db.t_circle_like.Where(l => circleIds.Contains(l.circle_id)).Select(l => new { CircleId = l.circle_id, LikeUserId = l.like_user_id }).ToList();
 
-            //    #region 获取用户id列表
-            //    List<int> userIds = circleList.Select(c => c.UserId).Distinct().ToList();
-            //    if (userIds == null) userIds = new List<int>();
+                //    //获取评论
+                //    var comments = db.t_circle_comment.Where(c => circleIds.Contains(c.circle_id)).Select(c => new
+                //    {
+                //        Id = c.id,
+                //        CircleId = c.circle_id,
+                //        CommentUserId = c.com_user_id,
+                //        ReplyUserId = c.reply_user_id,
+                //        ComContent = c.com_content,
+                //        CommentTime = c.comment_time
+                //    }).ToList();
 
-            //    if (likes != null && likes.Count > 0)
-            //    {
-            //        List<int> likeUserIds = likes.Select(l => l.LikeUserId).Distinct().ToList();
-            //        if (likeUserIds != null && likeUserIds.Count > 0) userIds.AddRange(likeUserIds);
-            //    }
+                //    #region 获取用户id列表
+                //    List<int> userIds = circleList.Select(c => c.UserId).Distinct().ToList();
+                //    if (userIds == null) userIds = new List<int>();
 
-            //    if (comments != null && comments.Count > 0)
-            //    {
-            //        List<int> commentUserIds = comments.Select(c => c.CommentUserId).Distinct().ToList();
-            //        if (commentUserIds != null && commentUserIds.Count > 0) userIds.AddRange(commentUserIds);
+                //    if (likes != null && likes.Count > 0)
+                //    {
+                //        List<int> likeUserIds = likes.Select(l => l.LikeUserId).Distinct().ToList();
+                //        if (likeUserIds != null && likeUserIds.Count > 0) userIds.AddRange(likeUserIds);
+                //    }
 
-            //        List<int> replyUserIds = comments.Where(c => c.ReplyUserId > 0).Select(c => c.ReplyUserId).Distinct().ToList();
-            //        if (replyUserIds != null && replyUserIds.Count > 0) userIds.AddRange(replyUserIds);
-            //    }
+                //    if (comments != null && comments.Count > 0)
+                //    {
+                //        List<int> commentUserIds = comments.Select(c => c.CommentUserId).Distinct().ToList();
+                //        if (commentUserIds != null && commentUserIds.Count > 0) userIds.AddRange(commentUserIds);
 
-            //    userIds = userIds.Distinct().ToList();//去重复
+                //        List<int> replyUserIds = comments.Where(c => c.ReplyUserId > 0).Select(c => c.ReplyUserId).Distinct().ToList();
+                //        if (replyUserIds != null && replyUserIds.Count > 0) userIds.AddRange(replyUserIds);
+                //    }
 
-            //    #endregion
+                //    userIds = userIds.Distinct().ToList();//去重复
 
-            //    //获取用户信息
-            //    List<UserShowInfo> users = null;
-            //    if (userIds != null && userIds.Count > 0)
-            //    {
-            //        users = db.t_user.Where(u => userIds.Contains(u.id)).Select(u => new UserShowInfo
-            //        {
-            //            UserId = u.id,
-            //            HeadImage = u.head_image,
-            //            ShowName = u.nick_name,
-            //        }).ToList();
-            //    }
+                //    #endregion
 
-            //    //绑定到列表
-            //    circleList.ForEach(f =>
-            //    {
-            //        f.PublishTimeDesc = f.PublishTime.ToString("yyyy年MM月dd日 HH:mm");
+                //    //获取用户信息
+                //    List<UserShowInfo> users = null;
+                //    if (userIds != null && userIds.Count > 0)
+                //    {
+                //        users = db.t_user.Where(u => userIds.Contains(u.id)).Select(u => new UserShowInfo
+                //        {
+                //            UserId = u.id,
+                //            HeadImage = u.head_image,
+                //            ShowName = u.nick_name,
+                //        }).ToList();
+                //    }
 
-            //        f.PostUserInfo = users != null && users.Count > 0 ? users.Where(u => u.UserId == f.UserId).FirstOrDefault() : null;
+                //    //绑定到列表
+                //    circleList.ForEach(f =>
+                //    {
+                //        f.PublishTimeDesc = f.PublishTime.ToString("yyyy年MM月dd日 HH:mm");
 
-            //        if (f.ImageCount > 0 && images != null && images.Count > 0)
-            //        {
-            //            f.Images = images.Where(i => i.CircleId == f.Id).Select(i => i.ImageUrl).ToList();
-            //        }
-            //        if (f.LikeCount > 0 && likes != null && likes.Count > 0 && users != null && users.Count > 0)
-            //        {
-            //            var likeUserIds = likes.Where(l => l.CircleId == f.Id).Select(l => l.LikeUserId).ToList();
-            //            if (likeUserIds != null && likeUserIds.Count > 0)
-            //            {
-            //                f.LikeUserInfos = users.Where(u => likeUserIds.Contains(u.UserId)).ToList();
-            //                f.IsLike = likeUserIds.Where(u => u == this.request.UserId).FirstOrDefault() > 0 ? true : false;
-            //            }
-            //        }
-            //        if (f.CommentCount > 0 && comments != null && comments.Count > 0)
-            //        {
-            //            f.CommentInfos = comments.Where(c => c.CircleId == f.Id).Select(c =>
-            //            {
-            //                CommentInfo cinfo = new CommentInfo()
-            //                {
-            //                    Id = c.Id,
-            //                    CircleId = c.CircleId,
-            //                    Content = c.ComContent,
-            //                    CommentTimeDesc = c.CommentTime.ToString("yyyy年MM月dd日 HH:mm"),
-            //                    //CommentUserInfo = null,
-            //                    //ReplyUserInfo = null,
-            //                };
-            //                if (users != null && users.Count > 0)
-            //                {
-            //                    cinfo.CommentUserInfo = users.Where(u => u.UserId == c.CommentUserId).FirstOrDefault();
-            //                    cinfo.ReplyUserInfo = users.Where(u => u.UserId == c.ReplyUserId).FirstOrDefault();
-            //                }
-            //                return cinfo;
-            //            }).ToList();
-            //        }
-            //    });
-            //}
+                //        f.PostUserInfo = users != null && users.Count > 0 ? users.Where(u => u.UserId == f.UserId).FirstOrDefault() : null;
+
+                //        if (f.ImageCount > 0 && images != null && images.Count > 0)
+                //        {
+                //            f.Images = images.Where(i => i.CircleId == f.Id).Select(i => i.ImageUrl).ToList();
+                //        }
+                //        if (f.LikeCount > 0 && likes != null && likes.Count > 0 && users != null && users.Count > 0)
+                //        {
+                //            var likeUserIds = likes.Where(l => l.CircleId == f.Id).Select(l => l.LikeUserId).ToList();
+                //            if (likeUserIds != null && likeUserIds.Count > 0)
+                //            {
+                //                f.LikeUserInfos = users.Where(u => likeUserIds.Contains(u.UserId)).ToList();
+                //                f.IsLike = likeUserIds.Where(u => u == this.request.UserId).FirstOrDefault() > 0 ? true : false;
+                //            }
+                //        }
+                //        if (f.CommentCount > 0 && comments != null && comments.Count > 0)
+                //        {
+                //            f.CommentInfos = comments.Where(c => c.CircleId == f.Id).Select(c =>
+                //            {
+                //                CommentInfo cinfo = new CommentInfo()
+                //                {
+                //                    Id = c.Id,
+                //                    CircleId = c.CircleId,
+                //                    Content = c.ComContent,
+                //                    CommentTimeDesc = c.CommentTime.ToString("yyyy年MM月dd日 HH:mm"),
+                //                    //CommentUserInfo = null,
+                //                    //ReplyUserInfo = null,
+                //                };
+                //                if (users != null && users.Count > 0)
+                //                {
+                //                    cinfo.CommentUserInfo = users.Where(u => u.UserId == c.CommentUserId).FirstOrDefault();
+                //                    cinfo.ReplyUserInfo = users.Where(u => u.UserId == c.ReplyUserId).FirstOrDefault();
+                //                }
+                //                return cinfo;
+                //            }).ToList();
+                //        }
+                //    });
+            }
 
             return res;
         }

@@ -20,7 +20,8 @@ namespace HWL.Entity.Extends
         public DateTime PublishTime { get; set; }
         public string PublishTimeDesc { get; set; }
         public int PosId { get; set; }
-        public double Lng { get; set; }
+        public string PosDesc { get; set; }
+        public double Lon { get; set; }
         public double Lat { get; set; }
         public string LinkUrl { get; set; }
         public string LinkTitle { get; set; }

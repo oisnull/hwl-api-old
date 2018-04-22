@@ -1,4 +1,5 @@
-﻿using HWL.Service.Circle.Body;
+﻿using HWL.Entity;
+using HWL.Service.Circle.Body;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,40 @@ namespace HWL.Service.Circle.Service
         {
         }
 
+        private CircleContentType GetContentType()
+        {
+            if (!string.IsNullOrEmpty(this.request.LinkUrl) && !string.IsNullOrEmpty(this.request.LinkTitle))
+            {
+                return CircleContentType.Link;
+            }
+            if (!string.IsNullOrEmpty(this.request.Content) && !(this.request.Images == null || this.request.Images.Count <= 0))
+            {
+                return CircleContentType.TextImage;
+            }
+            if (!string.IsNullOrEmpty(this.request.Content))
+            {
+                return CircleContentType.Text;
+            }
+            if (!(this.request.Images == null || this.request.Images.Count <= 0))
+            {
+                return CircleContentType.Image;
+            }
+            return CircleContentType.Other;
+        }
+
         protected override void ValidateRequestParams()
         {
             base.ValidateRequestParams();
+
+            if (
+               string.IsNullOrEmpty(this.request.Content)
+               && (this.request.Images == null || this.request.Images.Count <= 0)
+               && string.IsNullOrEmpty(this.request.LinkUrl)
+               && string.IsNullOrEmpty(this.request.LinkTitle)
+               )
+            {
+                throw new Exception("不能发布空信息");
+            }
 
             if (this.request.UserId <= 0)
             {
@@ -26,91 +58,66 @@ namespace HWL.Service.Circle.Service
         public override AddCircleInfoResponseBody ExecuteCore()
         {
             AddCircleInfoResponseBody res = new AddCircleInfoResponseBody();
+            using (HWLEntities db = new HWLEntities())
+            {
+                t_circle model = new t_circle()
+                {
+                    user_id = this.request.UserId,
+                    circle_content = this.request.Content,
+                    content_type = GetContentType(),
+                    link_image = this.request.LinkImage,
+                    link_title = this.request.LinkTitle,
+                    link_url = this.request.LinkUrl,
+                    lat = this.request.Lat,
+                    lon = this.request.Lon,
+                    id = 0,
+                    pos_id = this.request.PosId,
+                    pos_desc = this.request.PosDesc,
+                    comment_count = 0,
+                    image_count = 0,
+                    like_count = 0,
+                    publish_time = DateTime.Now,
+                };
+                db.t_circle.Add(model);
+                db.SaveChanges();
 
-            //using (HWLEntities db = new HWLEntities())
-            //{
-            //    CircleContentType circleContentType = 0;
-            //    if (!string.IsNullOrEmpty(this.request.LinkUrl))
-            //    {
-            //        circleContentType = CircleContentType.Link;
-            //    }
-            //    if (this.request.Images != null && this.request.Images.Count > 0)
-            //    {
-            //        if (!string.IsNullOrEmpty(this.request.Content))
-            //        {
-            //            circleContentType = CircleContentType.TextImage;
-            //        }
-            //        else
-            //        {
-            //            circleContentType = CircleContentType.Image;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (!string.IsNullOrEmpty(this.request.Content))
-            //        {
-            //            circleContentType = CircleContentType.Text;
-            //        }
-            //    }
-            //    if (circleContentType == 0)
-            //    {
-            //        throw new Exception("发布内容错误");
-            //    }
+                res.CircleId = model.id;
+                res.ContentType = model.content_type;
+                res.PublishTime = model.publish_time;
 
-            //    t_circle model = new t_circle()
-            //    {
-            //        user_id = this.request.UserId,
-            //        content_type = circleContentType,
-            //        circle_content = this.request.Content,
-            //        pos_id = this.request.PosId,
-            //        lng = this.request.Longitude,
-            //        lat = this.request.Latitude,
-            //        link_url = this.request.LinkUrl,
-            //        link_title = this.request.LinkTitle,
-            //        link_image = this.request.LinkImage,
+                if (res.CircleId > 0)
+                {
+                    if (this.request.Images != null && this.request.Images.Count > 0)
+                    {
+                        //添加图片
+                        List<t_circle_image> imgModels = new List<t_circle_image>();
+                        this.request.Images.ForEach((i) =>
+                        {
+                            if (string.IsNullOrEmpty(i.Url)) return;
+                            imgModels.Add(new t_circle_image()
+                            {
+                                circle_id = model.id,
+                                user_id = model.user_id,
+                                image_url = i.Url,
+                                height = i.Height,
+                                width = i.Width
+                            });
+                        });
 
-            //        id = 0,
-            //        publish_time = DateTime.Now,
-            //        like_count = 0,
-            //        comment_count = 0,
-            //        image_count = this.request.Images != null && this.request.Images.Count > 0 ? this.request.Images.Count : 0,
-            //    };
+                        if (imgModels == null || imgModels.Count <= 0) return res;
 
-            //    db.t_circle.Add(model);
-            //    db.SaveChanges();
-
-            //    if (model.id > 0 && (model.content_type == CircleContentType.Image || model.content_type == CircleContentType.TextImage))
-            //    {
-            //        List<t_circle_image> circleImgs = new List<t_circle_image>();
-
-            //        //保存图片
-            //        //将base64字符流转换为图片,并保存
-            //        string directory = string.Format("cirlce/{0}/", DateTime.Now.ToString("yyyyMMdd"));
-            //        foreach (var item in this.request.Images)
-            //        {
-            //            Base64ImageAction imageAction = new Base64ImageAction(item);
-            //            imageAction.SaveDirectory = string.Format("{0}{1}", ConfigService.UploadDirectory, directory);
-            //            imageAction.SaveFileName = string.Format("{0}", Guid.NewGuid().ToString());
-            //            imageAction.Save();
-
-            //            circleImgs.Add(new t_circle_image()
-            //            {
-            //                circle_id = model.id,
-            //                image_url = ConfigService.FileAccessUrl + (ConfigService.FileAccessUrl.EndsWith("/") ? "" : "/") + directory + imageAction.SaveFileName,
-            //                user_id = model.user_id,
-            //            });
-            //        }
-
-            //        if (circleImgs.Count > 0)
-            //        {
-            //            db.t_circle_image.AddRange(circleImgs);
-            //            db.SaveChanges();
-            //        }
-            //    }
-
-            //    res.Id = model.id;
-            //}
-
+                        try
+                        {
+                            db.t_circle_image.AddRange(imgModels);
+                            db.SaveChanges();
+                        }
+                        catch (Exception)
+                        {
+                            //可以忽略这个错误
+                        }
+                    }
+                }
+            }
             return res;
         }
     }

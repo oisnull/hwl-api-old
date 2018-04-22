@@ -71,8 +71,11 @@ namespace HWL.Entity
                 case ResxType.CircleBackImage:
                     path = string.Format("circle-back/{0}/", DateTime.Now.ToString("yyyy"));
                     break;
-                case ResxType.CirclePostImage:
-                    path = string.Format("circle-post/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);
+                case ResxType.NearCirclePostImage:
+                    path = string.Format("circle-near-post/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);
+                    break;
+                case ResxType.FriendCirclePostImage:
+                    path = string.Format("circle-user-post/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);
                     break;
                 case ResxType.Other:
                 default:

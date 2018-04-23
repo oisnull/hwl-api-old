@@ -13,11 +13,11 @@ namespace HWL.Entity.Extends
 
     public class CircleInfo
     {
-        public int Id { get; set; }
+        public int CircleId { get; set; }
         public int UserId { get; set; }
         public CircleContentType ContentType { get; set; }
         public string CircleContent { get; set; }
-        public DateTime PublishTime { get; set; }
+        public string PublishTime { get; set; }
         public string PublishTimeDesc { get; set; }
         public int PosId { get; set; }
         public string PosDesc { get; set; }
@@ -32,9 +32,9 @@ namespace HWL.Entity.Extends
         /// <summary>
         /// 是否点赞过
         /// </summary>
-        public bool IsLike { get; set; }
+        public bool IsLiked { get; set; }
 
-        public List<string> Images { get; set; }
+        public List<ImageInfo> Images { get; set; }
 
         public int PublishUserId { get; set; }
         public string PublishUserName { get; set; }
@@ -47,7 +47,7 @@ namespace HWL.Entity.Extends
 
     public class CircleCommentInfo
     {
-        public int Id { get; set; }
+        public int CommentId { get; set; }
         public int CircleId { get; set; }
 
 
@@ -60,7 +60,7 @@ namespace HWL.Entity.Extends
         public string ReplyUserImage { get; set; }
 
         public string Content { get; set; }
-        public string CommentTimeDesc { get; set; }
+        public string CommentTime { get; set; }
     }
 
     public class CircleLikeInfo

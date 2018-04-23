@@ -57,10 +57,12 @@ namespace HWL.Service.Circle.Service
                 {
                     query = query.Skip(this.request.Count * (this.request.PageIndex - 1)).Take(this.request.Count);
                 }
+                var list = query.OrderByDescending(c => c.id).ToList();
+                if (list == null || list.Count <= 0) return res;
 
-                var circleList = query.Select(q => new CircleInfo
+                var circleList = list.ConvertAll(q => new CircleInfo
                 {
-                    Id = q.id,
+                    CircleId = q.id,
                     UserId = q.user_id,
                     ContentType = q.content_type,
                     CircleContent = q.circle_content,
@@ -73,7 +75,7 @@ namespace HWL.Service.Circle.Service
                     LinkUrl = q.link_url,
                     Lon = q.lon,
                     PosId = q.pos_id,
-                    PublishTime = q.publish_time,
+                    PublishTime = q.publish_time.ToString("yyyy-MM-dd HH:mm:ss"),
 
                     //IsLike = false,
                     //CommentInfos = null,
@@ -81,7 +83,7 @@ namespace HWL.Service.Circle.Service
                     //LikeUserInfos = null,
                     //PostUserInfo = null,
 
-                }).ToList();
+                });
 
                 if (circleList == null || circleList.Count <= 0) return res;
                 res.CircleInfos = circleList;

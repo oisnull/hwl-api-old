@@ -13,7 +13,7 @@ namespace HWL.Service.Circle.Body
         /// 点赞的用户id
         /// </summary>
         public int LikeUserId { get; set; }
-        public int NearCircleId { get; set; }
+        public int CircleId { get; set; }
 
         //public int LikeInfoId { get; set; }
     }

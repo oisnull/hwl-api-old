@@ -33,13 +33,13 @@ namespace HWL.Service.Circle.Service
 
             using (HWLEntities db = new HWLEntities())
             {
-                //t_circle model = db.t_circle.Where(l => l.id == this.request.CircleId).FirstOrDefault();
-                //if (model != null)
-                //{
-                //    db.t_circle.Remove(model);
-                //    db.SaveChanges();
-                //    res.Status = ResultStatus.Success;
-                //}
+                t_circle model = db.t_circle.Where(l => l.id == this.request.CircleId).FirstOrDefault();
+                if (model != null)
+                {
+                    db.t_circle.Remove(model);
+                    db.SaveChanges();
+                    res.Status = ResultStatus.Success;
+                }
             }
 
             return res;

@@ -129,7 +129,7 @@ namespace HWL.Resx.Models
                             }
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                     }
                 }

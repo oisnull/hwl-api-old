@@ -23,10 +23,6 @@ namespace HWL.Service.Circle.Service
             {
                 throw new Exception("圈子信息参数错误");
             }
-            if (this.request.CircleUserId <= 0)
-            {
-                throw new Exception("圈子信息的用户参数错误");
-            }
             if (this.request.CommentUserId <= 0 && this.request.ReplyUserId <= 0)
             {
                 throw new Exception("评论或者回复用户参数错误");

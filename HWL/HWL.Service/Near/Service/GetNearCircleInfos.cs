@@ -103,8 +103,13 @@ namespace HWL.Service.Near.Service
 
         private void BindInfo(List<NearCircleInfo> infos)
         {
-            List<int> circleIds = infos.Where(n => CustomerEnumDesc.ImageContentTypes().Contains(n.ContentType)).Select(n => n.NearCircleId).ToList();
-            var imageList = db.t_near_circle_image.Where(i => circleIds.Contains(i.near_circle_id)).Select(i => new { i.near_circle_id, i.image_url, i.width, i.height }).ToList();
+            List<int> imageCircleIds = infos.Where(n => CustomerEnumDesc.ImageContentTypes().Contains(n.ContentType)).Select(n => n.NearCircleId).ToList();
+            List<t_near_circle_image> imageList = null;
+            if (imageCircleIds != null && imageCircleIds.Count > 0)
+            {
+                imageList = db.t_near_circle_image.Where(i => imageCircleIds.Contains(i.near_circle_id)).ToList();
+            }
+            List<int> circleIds = infos.Select(n => n.NearCircleId).ToList();
             var likeList = db.t_near_circle_like.Where(l => circleIds.Contains(l.near_circle_id) && l.is_delete == false).ToList();
             var commentList = db.t_near_circle_comment.Where(c => circleIds.Contains(c.near_circle_id)).ToList();
 

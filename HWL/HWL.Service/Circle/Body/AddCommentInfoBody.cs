@@ -10,10 +10,6 @@ namespace HWL.Service.Circle.Body
     public class AddCommentInfoRequestBody
     {
         /// <summary>
-        /// 发布当前文章的用户id
-        /// </summary>
-        public int CircleUserId { get; set; }
-        /// <summary>
         /// 评论文章的用户id
         /// </summary>
         public int CommentUserId { get; set; }

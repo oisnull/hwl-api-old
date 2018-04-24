@@ -90,7 +90,7 @@ namespace HWL.Entity
             return new List<CircleContentType>()
             {
                 CircleContentType.Image,
-                CircleContentType.TextImage
+                CircleContentType.TextImage,
             };
         }
     }

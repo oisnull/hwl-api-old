@@ -37,7 +37,7 @@ namespace HWL.Service.Circle.Service
         {
             GetCircleInfosResponseBody res = new GetCircleInfosResponseBody();
 
-            using (HWLEntities db = new HWLEntities())
+            using (db = new HWLEntities())
             {
                 List<int> userIds = new List<int>() { this.request.UserId };
 
@@ -76,6 +76,7 @@ namespace HWL.Service.Circle.Service
                     LinkUrl = q.link_url,
                     Lon = q.lon,
                     PosId = q.pos_id,
+                    PublishUserId = q.user_id,
                     PublishTime = q.publish_time.ToString("yyyy-MM-dd HH:mm:ss"),
 
                     //IsLike = false,
@@ -97,8 +98,13 @@ namespace HWL.Service.Circle.Service
 
         private void BindInfo(List<CircleInfo> infos)
         {
-            List<int> circleIds = infos.Where(n => CustomerEnumDesc.ImageContentTypes().Contains(n.ContentType)).Select(n => n.CircleId).ToList();
-            var imageList = db.t_circle_image.Where(i => circleIds.Contains(i.circle_id)).Select(i => new { i.circle_id, i.image_url, i.width, i.height }).ToList();
+            List<int> imageCircleIds = infos.Where(n => CustomerEnumDesc.ImageContentTypes().Contains(n.ContentType)).Select(n => n.CircleId).ToList();
+            List<t_circle_image> imageList = null;
+            if (imageCircleIds != null && imageCircleIds.Count > 0)
+            {
+                imageList = db.t_circle_image.Where(i => imageCircleIds.Contains(i.circle_id)).ToList();
+            }
+            List<int> circleIds = infos.Select(n => n.CircleId).ToList();
             var likeList = db.t_circle_like.Where(l => circleIds.Contains(l.circle_id) && l.is_delete == false).ToList();
             var commentList = db.t_circle_comment.Where(c => circleIds.Contains(c.circle_id)).ToList();
 

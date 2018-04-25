@@ -55,7 +55,7 @@ namespace HWL.Service.Circle.Service
                 var list = query.Skip(this.request.PageSize * (this.request.PageIndex - 1)).Take(this.request.PageSize).ToList();
                 if (list == null || list.Count <= 0) return res;
 
-                var circleList = list.ConvertAll(q => new CircleInfo
+                res.CircleInfos = list.ConvertAll(q => new CircleInfo
                 {
                     CircleId = q.id,
                     UserId = q.user_id,
@@ -80,20 +80,17 @@ namespace HWL.Service.Circle.Service
 
                 });
 
-                if (circleList == null || circleList.Count <= 0) return res;
-                res.CircleInfos = circleList;
-
-                List<int> circleIds = circleList.Select(c => c.CircleId).ToList();
+                List<int> circleIds = res.CircleInfos.Select(c => c.CircleId).ToList();
 
                 //获取发布的图片
                 var images = db.t_circle_image.Where(i => circleIds.Contains(i.circle_id)).ToList();
 
                 //绑定到列表
-                circleList.ForEach(f =>
+                res.CircleInfos.ForEach(f =>
                 {
                     if (f.ImageCount > 0 && images != null && images.Count > 0)
                     {
-                        f.Images = images.Where(i => i.circle_id == f.CircleId).Select(i => new ImageInfo()
+                        f.Images = images.Where(i => i.circle_id == f.CircleId).Select(i => new ImageInfo
                         {
                             Url = i.image_url,
                             Height = i.height,

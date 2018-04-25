@@ -3,6 +3,7 @@ using HWL.Entity.Extends;
 using HWL.Service.Circle.Body;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,20 +41,21 @@ namespace HWL.Service.Circle.Service
 
             using (HWLEntities db = new HWLEntities())
             {
-                var postUser = db.t_user.Where(u => u.id == this.request.ViewUserId).FirstOrDefault();
-                if (postUser == null) throw new Exception("用户不存在");
-                res.ViewUserId = postUser.id;
-                res.ViewUserImage = postUser.head_image;
-                res.ViewUserName = postUser.name;
+                //var postUser = db.t_user.Where(u => u.id == this.request.ViewUserId).FirstOrDefault();
+                //if (postUser == null) throw new Exception("用户不存在");
+                //res.ViewUserId = postUser.id;
+                //res.ViewUserImage = postUser.head_image;
+                //res.ViewUserName = postUser.name;
 
                 IQueryable<t_circle> query = db.t_circle.OrderByDescending(r => r.id);
-
                 if (this.request.ViewUserId > 0)
                 {
                     query = query.Where(q => q.user_id == this.request.ViewUserId);
                 }
+                var list = query.Skip(this.request.PageSize * (this.request.PageIndex - 1)).Take(this.request.PageSize).ToList();
+                if (list == null || list.Count <= 0) return res;
 
-                var circleList = query.Skip(this.request.PageSize * (this.request.PageIndex - 1)).Take(this.request.PageSize).Select(q => new CircleInfo
+                var circleList = list.ConvertAll(q => new CircleInfo
                 {
                     CircleId = q.id,
                     UserId = q.user_id,
@@ -76,7 +78,7 @@ namespace HWL.Service.Circle.Service
                     //LikeUserInfos = null,
                     //PostUserInfo = null,
 
-                }).ToList();
+                });
 
                 if (circleList == null || circleList.Count <= 0) return res;
                 res.CircleInfos = circleList;

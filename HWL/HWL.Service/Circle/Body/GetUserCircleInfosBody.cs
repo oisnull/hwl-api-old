@@ -18,10 +18,12 @@ namespace HWL.Service.Circle.Body
         /// 查看的用户id
         /// </summary>
         public int ViewUserId { get; set; }
+        /// <summary>
+        /// 如果有值，则获取比这个值小的数据列表
+        /// </summary>
+        public int MinCircleId { get; set; }
 
-        public int PageIndex { get; set; }
-
-        public int PageSize { get; set; }
+        public int Count { get; set; }
     }
     public class GetUserCircleInfosResponseBody
     {

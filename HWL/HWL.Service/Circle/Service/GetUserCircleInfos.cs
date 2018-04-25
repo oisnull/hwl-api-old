@@ -28,11 +28,11 @@ namespace HWL.Service.Circle.Service
                 throw new Exception("查看用户的参数错误");
             }
 
-            if (this.request.PageIndex <= 0)
-                this.request.PageIndex = 1;
+            //if (this.request.PageIndex <= 0)
+            //    this.request.PageIndex = 1;
 
-            if (this.request.PageSize <= 0)
-                this.request.PageSize = 20;
+            if (this.request.Count <= 0)
+                this.request.Count = 15;
         }
 
         public override GetUserCircleInfosResponseBody ExecuteCore()
@@ -41,18 +41,23 @@ namespace HWL.Service.Circle.Service
 
             using (HWLEntities db = new HWLEntities())
             {
-                //var postUser = db.t_user.Where(u => u.id == this.request.ViewUserId).FirstOrDefault();
-                //if (postUser == null) throw new Exception("用户不存在");
-                //res.ViewUserId = postUser.id;
-                //res.ViewUserImage = postUser.head_image;
-                //res.ViewUserName = postUser.name;
+                var postUser = db.t_user.Where(u => u.id == this.request.ViewUserId).FirstOrDefault();
+                if (postUser == null) throw new Exception("用户不存在");
+                res.ViewUserId = postUser.id;
+                res.ViewUserImage = postUser.head_image;
+                res.ViewUserName = postUser.name;
 
                 IQueryable<t_circle> query = db.t_circle.OrderByDescending(r => r.id);
                 if (this.request.ViewUserId > 0)
                 {
                     query = query.Where(q => q.user_id == this.request.ViewUserId);
                 }
-                var list = query.Skip(this.request.PageSize * (this.request.PageIndex - 1)).Take(this.request.PageSize).ToList();
+                if (this.request.MinCircleId > 0)
+                {
+                    query = query.Where(q => q.id < this.request.MinCircleId).Take(this.request.Count);
+                }
+                
+                var list = query.ToList();
                 if (list == null || list.Count <= 0) return res;
 
                 res.CircleInfos = list.ConvertAll(q => new CircleInfo

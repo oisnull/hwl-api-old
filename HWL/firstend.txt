@@ -1,0 +1,17 @@
+2018-04-26:
+android:
+1,user circle index 图片布局
+2,user circle details
+3,user index circles list(top 3)
+4,user group manage(list/add/delete)
+5,app share page(html)
+6,app download/update
+7,mqtt long connection optimization
+8,my circle info comment/like message push
+9,my message push manage
+10,image photo view
+11,chat group/user setting
+12,move right and exit activity
+
+net api:
+1,circle comment/like mq message send

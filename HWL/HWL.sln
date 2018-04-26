@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NOTE", "NOTE", "{5BA174E1-C2B4-44F7-9ADB-0351188DDE46}"
 	ProjectSection(SolutionItems) = preProject
 		chat.txt = chat.txt
+		firstend.txt = firstend.txt
 		rec.txt = rec.txt
 	EndProjectSection
 EndProject

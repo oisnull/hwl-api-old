@@ -71,5 +71,13 @@ namespace HWL.Service
                 return new SetLikeInfo(r.Body).Execute();
             });
         }
+        public static Response<GetCircleCommentsResponseBody> GetCircleComments(Request<GetCircleCommentsRequestBody> request)
+        {
+            var context = new ServiceContext<GetCircleCommentsRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new GetCircleComments(r.Body).Execute();
+            });
+        }
     }
 }

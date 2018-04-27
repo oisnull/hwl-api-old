@@ -78,7 +78,7 @@ namespace HWL.Service.Near.Service
                     pos_id = this.request.PosId,
                     pos_desc = this.request.PosDesc,
                     comment_count = 0,
-                    image_count = 0,
+                    image_count = this.request.Images != null ? this.request.Images.Count : 0,
                     like_count = 0,
                     publish_time = DateTime.Now,
                 };

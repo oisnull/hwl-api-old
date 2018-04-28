@@ -59,6 +59,7 @@ namespace HWL.Service.Near.Service
                     {
                         model.is_delete = true;
                         circleModel.like_count = circleModel.like_count - 1;
+                        circleModel.update_time = DateTime.Now;
                         if (circleModel.like_count < 0)
                         {
                             circleModel.like_count = 0;
@@ -82,6 +83,7 @@ namespace HWL.Service.Near.Service
                         };
                         db.t_near_circle_like.Add(model);
                         circleModel.like_count = circleModel.like_count + 1;
+                        circleModel.update_time = DateTime.Now;
                         db.SaveChanges();
                         res.Status = ResultStatus.Success;
                         return res;
@@ -92,6 +94,7 @@ namespace HWL.Service.Near.Service
                         {
                             model.is_delete = false;
                             circleModel.like_count = circleModel.like_count + 1;
+                            circleModel.update_time = DateTime.Now;
                             db.SaveChanges();
                             res.Status = ResultStatus.Success;
                             return res;

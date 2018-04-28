@@ -23,7 +23,6 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="content_type" Type="int" Nullable="false" />
           <Property Name="circle_content" Type="nvarchar" MaxLength="4000" />
-          <Property Name="publish_time" Type="datetime" Nullable="false" />
           <Property Name="pos_id" Type="int" Nullable="false" />
           <Property Name="pos_desc" Type="nvarchar" MaxLength="50" />
           <Property Name="lat" Type="float" Nullable="false" />
@@ -34,6 +33,8 @@
           <Property Name="image_count" Type="int" Nullable="false" />
           <Property Name="comment_count" Type="int" Nullable="false" />
           <Property Name="like_count" Type="int" Nullable="false" />
+          <Property Name="publish_time" Type="datetime" Nullable="false" />
+          <Property Name="update_time" Type="datetime" />
         </EntityType>
         <EntityType Name="t_circle_comment">
           <Key>
@@ -102,7 +103,6 @@
           <Property Name="link_title" Type="nvarchar" MaxLength="100" />
           <Property Name="link_url" Type="nvarchar" MaxLength="200" />
           <Property Name="link_image" Type="nvarchar" MaxLength="200" />
-          <Property Name="publish_time" Type="datetime" Nullable="false" />
           <Property Name="pos_id" Type="int" Nullable="false" />
           <Property Name="pos_desc" Type="nvarchar" MaxLength="50" />
           <Property Name="lon" Type="float" Nullable="false" />
@@ -110,6 +110,8 @@
           <Property Name="image_count" Type="int" Nullable="false" />
           <Property Name="comment_count" Type="int" Nullable="false" />
           <Property Name="like_count" Type="int" Nullable="false" />
+          <Property Name="publish_time" Type="datetime" Nullable="false" />
+          <Property Name="update_time" Type="datetime" />
         </EntityType>
         <EntityType Name="t_near_circle_comment">
           <Key>
@@ -404,6 +406,7 @@
           <Property Name="like_count" Type="Int32" Nullable="false" />
           <Property Name="pos_desc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="lon" Type="Double" Nullable="false" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="t_circle_comment">
           <Key>
@@ -457,6 +460,7 @@
           <Property Name="image_count" Type="Int32" Nullable="false" />
           <Property Name="comment_count" Type="Int32" Nullable="false" />
           <Property Name="like_count" Type="Int32" Nullable="false" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="t_near_circle_image">
           <Key>
@@ -614,6 +618,7 @@
           <EntitySetMapping Name="t_circle">
             <EntityTypeMapping TypeName="HWL.Entity.t_circle">
               <MappingFragment StoreEntitySet="t_circle">
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
                 <ScalarProperty Name="lon" ColumnName="lon" />
                 <ScalarProperty Name="pos_desc" ColumnName="pos_desc" />
                 <ScalarProperty Name="like_count" ColumnName="like_count" />
@@ -671,6 +676,7 @@
           <EntitySetMapping Name="t_near_circle">
             <EntityTypeMapping TypeName="HWL.Entity.t_near_circle">
               <MappingFragment StoreEntitySet="t_near_circle">
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
                 <ScalarProperty Name="like_count" ColumnName="like_count" />
                 <ScalarProperty Name="comment_count" ColumnName="comment_count" />
                 <ScalarProperty Name="image_count" ColumnName="image_count" />

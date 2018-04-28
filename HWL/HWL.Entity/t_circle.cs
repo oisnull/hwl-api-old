@@ -29,5 +29,6 @@ namespace HWL.Entity
         public int like_count { get; set; }
         public string pos_desc { get; set; }
         public double lon { get; set; }
+        public Nullable<System.DateTime> update_time { get; set; }
     }
 }

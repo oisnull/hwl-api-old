@@ -1,6 +1,7 @@
 ﻿using HWL.Entity;
 using HWL.Entity.Extends;
 using HWL.Service.Circle.Body;
+using HWL.Service.Generic;
 using HWL.Service.User;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,8 @@ namespace HWL.Service.Circle.Service
                     Lon = q.lon,
                     PosId = q.pos_id,
                     PublishUserId = q.user_id,
-                    PublishTime = q.publish_time.ToString("yyyy-MM-dd HH:mm:ss"),
+                    PublishTime = GenericUtility.formatDate(q.publish_time),
+                    UpdateTime = GenericUtility.formatDate2(q.update_time),
 
                     //IsLike = false,
                     //CommentInfos = null,

@@ -18,7 +18,7 @@ namespace HWL.Entity.Extends
         public CircleContentType ContentType { get; set; }
         public string CircleContent { get; set; }
         public string PublishTime { get; set; }
-        public string PublishTimeDesc { get; set; }
+        public string UpdateTime { get; set; }
         public int PosId { get; set; }
         public string PosDesc { get; set; }
         public double Lon { get; set; }

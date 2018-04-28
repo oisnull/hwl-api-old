@@ -1,7 +1,7 @@
 2018-04-26:
 android:
 1,user circle index 图片布局 V
-2,user circle details
+2,user circle details V
 3,user index circles list(top 3)
 4,user group manage(list/add/delete)
 5,app share page(html)

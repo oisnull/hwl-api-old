@@ -1,6 +1,7 @@
 ﻿using HWL.Entity;
 using HWL.Entity.Extends;
 using HWL.Service.Circle.Body;
+using HWL.Service.Generic;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
@@ -75,7 +76,8 @@ namespace HWL.Service.Circle.Service
                     LinkUrl = q.link_url,
                     Lon = q.lon,
                     PosId = q.pos_id,
-                    PublishTime = q.publish_time.ToString("yyyy-MM-dd HH:mm:ss"),
+                    PublishTime = GenericUtility.formatDate(q.publish_time),
+                    UpdateTime = GenericUtility.formatDate2(q.update_time),
 
                     //IsLike = false,
                     //CommentInfos = null,

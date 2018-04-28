@@ -1,6 +1,7 @@
 ﻿using HWL.Entity;
 using HWL.Entity.Extends;
 using HWL.Redis;
+using HWL.Service.Generic;
 using HWL.Service.Near.Body;
 using HWL.Service.User;
 using System;
@@ -87,7 +88,8 @@ namespace HWL.Service.Near.Service
                 LinkImage = c.link_image,
                 LinkTitle = c.link_title,
                 LinkUrl = c.link_url,
-                PublishTime = c.publish_time.ToString("yyyy-MM-dd HH:mm:ss"),
+                PublishTime = GenericUtility.formatDate(c.publish_time),
+                UpdateTime = GenericUtility.formatDate2(c.update_time),
                 PublishUserId = c.user_id,
             }).ToList();
 

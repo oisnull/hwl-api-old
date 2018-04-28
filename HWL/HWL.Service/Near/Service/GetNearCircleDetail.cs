@@ -1,5 +1,6 @@
 ﻿using HWL.Entity;
 using HWL.Entity.Extends;
+using HWL.Service.Generic;
 using HWL.Service.Near.Body;
 using HWL.Service.User;
 using System;
@@ -52,7 +53,8 @@ namespace HWL.Service.Near.Service
                 LinkImage = model.link_image,
                 LinkTitle = model.link_title,
                 LinkUrl = model.link_url,
-                PublishTime = model.publish_time.ToString("yyyy-MM-dd HH:mm:ss"),
+                PublishTime = GenericUtility.formatDate(model.publish_time),
+                UpdateTime = GenericUtility.formatDate2(model.update_time),
                 PublishUserId = model.user_id,
                 CommentInfos = NearUtility.GetNearComments(model.id,3),
                 LikeInfos = NearUtility.GetNearLikes(model.id)

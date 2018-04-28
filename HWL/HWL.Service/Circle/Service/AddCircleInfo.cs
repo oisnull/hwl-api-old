@@ -77,6 +77,7 @@ namespace HWL.Service.Circle.Service
                     image_count = this.request.Images != null ? this.request.Images.Count : 0,
                     like_count = 0,
                     publish_time = DateTime.Now,
+                    update_time = DateTime.Now,
                 };
                 db.t_circle.Add(model);
                 db.SaveChanges();

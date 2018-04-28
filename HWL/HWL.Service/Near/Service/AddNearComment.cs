@@ -56,6 +56,7 @@ namespace HWL.Service.Near.Service
                 };
                 db.t_near_circle_comment.Add(model);
                 circleModel.comment_count = circleModel.comment_count + 1;
+                circleModel.update_time = DateTime.Now;
                 db.SaveChanges();
 
                 var userList = db.t_user.Where(i => i.id == model.comment_user_id || i.id == model.reply_user_id).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();

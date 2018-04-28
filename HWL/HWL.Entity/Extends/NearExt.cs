@@ -19,6 +19,7 @@ namespace HWL.Entity.Extends
         public string LinkUrl { get; set; }
         public string LinkImage { get; set; }
         public string PublishTime { get; set; }
+        public string UpdateTime { get; set; }
         public string PosDesc { get; set; }
         public List<ImageInfo> Images { get; set; }
         public int CommentCount { get; set; }

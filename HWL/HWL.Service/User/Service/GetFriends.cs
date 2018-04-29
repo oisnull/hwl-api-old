@@ -1,5 +1,6 @@
 ﻿using HWL.Entity;
 using HWL.Entity.Extends;
+using HWL.Service.Generic;
 using HWL.Service.User.Body;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,8 @@ namespace HWL.Service.User.Service
                                  Symbol = u.symbol,
                                  Sex = u.sex,
                                  CircleBackImage = u.circle_back_image,
-                                 LifeNotes = u.life_notes
+                                 LifeNotes = u.life_notes,
+                                 UpdateTime = u.update_date
                              }).ToList();
                 if (users == null || users.Count <= 0) return res;
 
@@ -73,6 +75,7 @@ namespace HWL.Service.User.Service
                         Sex = u.Sex,
                         CircleBackImage = u.CircleBackImage,
                         LifeNotes = u.LifeNotes,
+                        UpdateTime = GenericUtility.formatDate2(u.UpdateTime),
                     });
                 });
             }

@@ -25,7 +25,6 @@ namespace HWL.Entity.Extends
         public string CircleBackImage { get; set; }
         public UserSex UserSex { get; set; }
         public string LifeNotes { get; set; }
-
         /// <summary>
         /// 概念不能为注册地址，应该为家乡地址
         /// </summary>
@@ -34,6 +33,7 @@ namespace HWL.Entity.Extends
 
         public int FriendCount { get; set; }
     }
+
     public class UserFriendInfo
     {
         public int Id { get; set; }
@@ -46,27 +46,34 @@ namespace HWL.Entity.Extends
         public string Province { get; set; }
         public string CircleBackImage { get; set; }
         public string LifeNotes { get; set; }
+        public string UpdateTime { get; set; }
 
     }
+
     /// <summary>
     /// 用户详情
     /// </summary>
     public class UserDetailsInfo
     {
         public int Id { get; set; }
-        public string NickName { get; set; }
+        public string Symbol { get; set; }
+        public string Name { get; set; }
+        public UserSex Sex { get; set; }
+        public string NameRemark { get; set; }
         public string HeadImage { get; set; }
         public string Country { get; set; }
         public string Province { get; set; }
+        public string CircleBackImage { get; set; }
+        public string LifeNotes { get; set; }
         /// <summary>
         /// 是否是好友
         /// </summary>
         public bool IsFriend { get; set; }
-        /// <summary>
-        /// 好友备注
-        /// </summary>
-        public string NameRemark { get; set; }
         public string FirstSpell { get; set; }
+        public string UpdateTime { get; set; }
+
+        public List<string> CircleImages { get; set; }
+        public List<string> CircleTexts { get; set; }
     }
 
     /// <summary>

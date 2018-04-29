@@ -44,6 +44,7 @@ namespace HWL.Service.User.Service
                 }
 
                 user.symbol = this.request.Symbol;
+                user.update_date = DateTime.Now;
 
                 db.SaveChanges();
                 res.Status = ResultStatus.Success;

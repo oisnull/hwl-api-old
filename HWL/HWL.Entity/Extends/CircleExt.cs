@@ -72,4 +72,18 @@ namespace HWL.Entity.Extends
         public string LikeUserImage { get; set; }
         public string LikeTime { get; set; }
     }
+
+    public class CircleMatchInfo
+    {
+        public CircleMatchInfo() { }
+
+        public CircleMatchInfo(int circleId, string updateTime)
+        {
+            this.CircleId = circleId;
+            this.UpdateTime = updateTime;
+        }
+
+        public int CircleId { get; set; }
+        public string UpdateTime { get; set; }
+    }
 }

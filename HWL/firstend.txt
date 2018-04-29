@@ -12,6 +12,7 @@ android:
 10,image photo view
 11,chat group/user setting
 12,move right and exit activity
+13,receive mq message of sound tip
 
 net api:
 1,circle comment/like mq message send

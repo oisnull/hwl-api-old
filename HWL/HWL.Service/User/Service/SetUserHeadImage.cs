@@ -38,6 +38,7 @@ namespace HWL.Service.User.Service
                 if (user == null) throw new Exception("用户不存在");
 
                 user.head_image = this.request.HeadImageUrl;
+                user.update_date = DateTime.Now;
 
                 db.SaveChanges();
                 res.Status = ResultStatus.Success;

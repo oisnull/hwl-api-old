@@ -40,17 +40,30 @@ namespace HWL.Service.Circle.Service
 
             using (db = new HWLEntities())
             {
-                List<int> userIds = new List<int>() { this.request.UserId };
-
-                //获取好友列表
-                var friends = db.t_user_friend.Where(f => f.user_id == this.request.UserId).ToList();
-                if (friends != null)
+                List<int> userIds = null;
+                IQueryable<t_circle> query = null;
+                if (this.request.ViewUserId > 0)
                 {
-                    userIds.AddRange(friends.Select(f => f.friend_user_id).ToList());
+                    //获取查看用户的信息
+                    var postUser = db.t_user.Where(u => u.id == this.request.ViewUserId).FirstOrDefault();
+                    if (postUser == null) throw new Exception("用户不存在");
+                    res.ViewUserId = postUser.id;
+                    res.ViewUserImage = postUser.head_image;
+                    res.ViewUserName = postUser.name;
+                    userIds = new List<int>() { this.request.ViewUserId };
+                }
+                else
+                {
+                    //获取好友id列表
+                    userIds = new List<int>() { this.request.UserId };
+                    var friendIds = db.t_user_friend.Where(f => f.user_id == this.request.UserId).Select(f => f.friend_user_id).ToList();
+                    if (friendIds != null && friendIds.Count > 0)
+                    {
+                        userIds.AddRange(friendIds);
+                    }
                 }
 
-                IQueryable<t_circle> query = db.t_circle.Where(r => userIds.Contains(r.user_id)).OrderByDescending(r => r.id);
-
+                query = db.t_circle.Where(r => userIds.Contains(r.user_id)).OrderByDescending(r => r.id);
                 if (this.request.MinCircleId > 0)
                 {
                     query = query.Where(q => q.id < this.request.MinCircleId).Take(this.request.Count);
@@ -59,6 +72,7 @@ namespace HWL.Service.Circle.Service
                 {
                     query = query.Skip(this.request.Count * (this.request.PageIndex - 1)).Take(this.request.Count);
                 }
+
                 var list = query.OrderByDescending(c => c.id).ToList();
                 if (list == null || list.Count <= 0) return res;
 
@@ -88,6 +102,11 @@ namespace HWL.Service.Circle.Service
                     //PostUserInfo = null,
 
                 });
+
+                if (this.request.CircleMatchInfos != null && this.request.CircleMatchInfos.Count > 0)
+                {
+                    int removeCount = circleList.RemoveAll(r => this.request.CircleMatchInfos.Exists(c => c.CircleId == r.CircleId && c.UpdateTime == r.UpdateTime));
+                }
 
                 if (circleList == null || circleList.Count <= 0) return res;
                 res.CircleInfos = circleList;
@@ -155,7 +174,7 @@ namespace HWL.Service.Circle.Service
                                 LikeId = l.id,
                                 LikeUserId = l.like_user_id,
                                 CircleId = l.circle_id,
-                                LikeTime = l.like_time.ToString("yyyy-MM-dd HH:mm:ss"),
+                                LikeTime = GenericUtility.formatDate(l.like_time),
                             };
                             if (userList != null && userList.Count > 0)
                             {
@@ -180,7 +199,7 @@ namespace HWL.Service.Circle.Service
                                 CommentId = c.id,
                                 Content = c.com_content,
                                 CircleId = c.circle_id,
-                                CommentTime = c.comment_time.ToString("yyyy-MM-dd HH:mm:ss"),
+                                CommentTime = GenericUtility.formatDate(c.comment_time),
                                 CommentUserId = c.com_user_id,
                                 CommentUserImage = null,
                                 CommentUserName = null,

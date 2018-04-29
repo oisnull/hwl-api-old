@@ -33,6 +33,7 @@ namespace HWL.Service.User.Service
                 if (user == null) throw new Exception("用户不存在");
 
                 user.life_notes = this.request.LifeNotes;
+                user.update_date = DateTime.Now;
 
                 db.SaveChanges();
                 res.Status = ResultStatus.Success;

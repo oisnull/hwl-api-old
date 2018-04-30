@@ -38,6 +38,7 @@ namespace HWL.Service.Group.Service
                 res.GroupUserInfos = db.t_user.Where(u => userIds.Contains(u.id))
                 .Select(u => new GroupUserInfo()
                 {
+                    GroupGuid = this.request.GroupGuid,
                     UserId = u.id,
                     UserName = u.name,
                     UserHeadImage = u.head_image,

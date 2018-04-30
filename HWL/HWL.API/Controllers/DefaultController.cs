@@ -138,6 +138,34 @@ namespace HWL.API.Controllers
         }
 
         [HttpPost]
+        [Description("添加群组")]
+        public Response<AddGroupResponseBody> AddGroup(Request<AddGroupRequestBody> request)
+        {
+            return GroupService.AddGroup(request);
+        }
+
+        [HttpPost]
+        [Description("添加群组用户列表")]
+        public Response<AddGroupUsersResponseBody> AddGroupUsers(Request<AddGroupUsersRequestBody> request)
+        {
+            return GroupService.AddGroupUsers(request);
+        }
+
+        [HttpPost]
+        [Description("解散群组")]
+        public Response<DeleteGroupResponseBody> DeleteGroup(Request<DeleteGroupRequestBody> request)
+        {
+            return GroupService.DeleteGroup(request);
+        }
+
+        [HttpPost]
+        [Description("退出群组")]
+        public Response<DeleteGroupUserResponseBody> DeleteGroupUser(Request<DeleteGroupUserRequestBody> request)
+        {
+            return GroupService.DeleteGroupUser(request);
+        }
+
+        [HttpPost]
         [Description("发布附近圈子信息")]
         public Response<AddNearCircleInfoResponseBody> AddNearCircleInfo(Request<AddNearCircleInfoRequestBody> request)
         {

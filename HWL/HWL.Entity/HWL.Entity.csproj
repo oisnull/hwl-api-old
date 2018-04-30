@@ -99,6 +99,12 @@
     <Compile Include="t_district.cs">
       <DependentUpon>HWLModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="t_group.cs">
+      <DependentUpon>HWLModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="t_group_user.cs">
+      <DependentUpon>HWLModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="t_near_circle.cs">
       <DependentUpon>HWLModel.tt</DependentUpon>
     </Compile>

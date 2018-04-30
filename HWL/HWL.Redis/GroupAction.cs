@@ -39,6 +39,10 @@ namespace HWL.Redis
         /// 搜索附近的范围初始值
         /// </summary>
         const int NEAR_RANGE = 100;
+        /// <summary>
+        /// 个人组所在的数据库
+        /// </summary>
+        const int GROUP_DB = 12;
 
         /// <summary>
         /// 检测周围100M内的组数据,并返回对应的组标识列表
@@ -95,6 +99,55 @@ namespace HWL.Redis
                 }
                 db.SetAdd(groupGuid, array);
             });
+        }
+
+        public bool DeleteGroupUser(string groupGuid, int userId)
+        {
+            if (string.IsNullOrEmpty(groupGuid) || userId <= 0) return false;
+
+            bool succ = false;
+            base.DbNum = GROUP_USER_SET_DB;
+            base.Exec(db =>
+            {
+                RedisValue[] array = new RedisValue[1] { userId };
+                if (db.SetRemove(groupGuid, array) > 0)
+                {
+                    succ = true;
+                }
+            });
+            return succ;
+        }
+
+        public bool DeleteGroup(string groupGuid, List<int> userIds)
+        {
+            if (string.IsNullOrEmpty(groupGuid)) return false;
+
+            bool succ = false;
+            base.DbNum = GROUP_DB;
+            base.Exec(db =>
+            {
+                succ = db.KeyDelete(groupGuid);
+            });
+
+            if (!succ) return false;
+
+            if (userIds != null && userIds.Count > 0)
+            {
+                base.DbNum = GROUP_USER_SET_DB;
+                base.Exec(db =>
+                {
+                    RedisValue[] array = new RedisValue[userIds.Count];
+                    for (int i = 0; i < userIds.Count; i++)
+                    {
+                        array[i] = userIds[i];
+                    }
+                    if (db.SetRemove(groupGuid, array) > 0)
+                    {
+                        succ = true;
+                    }
+                });
+            }
+            return succ;
         }
 
         public int GetGroupUserCount(string groupGuid)

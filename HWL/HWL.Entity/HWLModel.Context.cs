@@ -42,5 +42,7 @@ namespace HWL.Entity
         public virtual DbSet<t_circle_like> t_circle_like { get; set; }
         public virtual DbSet<t_near_circle> t_near_circle { get; set; }
         public virtual DbSet<t_near_circle_image> t_near_circle_image { get; set; }
+        public virtual DbSet<t_group> t_group { get; set; }
+        public virtual DbSet<t_group_user> t_group_user { get; set; }
     }
 }

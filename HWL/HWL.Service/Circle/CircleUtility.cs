@@ -46,13 +46,21 @@ namespace HWL.Service.Circle
             if (userId <= 0) return null;
             if (count <= 0) count = 3;
 
-            var infos = db.t_circle.Where(c => c.user_id == userId).Select(c => new { c.id, c.circle_content, c.image_count }).ToList();
+            var infos = db.t_circle.Where(c => c.user_id == userId)
+                .Select(c => new { c.id, c.circle_content, c.image_count })
+                .OrderByDescending(c => c.id)
+                .Take(count)
+                .ToList();
             if (infos == null) return null;
 
             if (infos.Sum(i => i.image_count) > 0)
             {
                 List<int> cids = infos.Select(i => i.id).ToList();
-                List<string> images = db.t_circle_image.Where(i => cids.Contains(i.circle_id)).Select(i => i.image_url).ToList();
+                List<string> images = db.t_circle_image.Where(i => cids.Contains(i.circle_id))
+                    .OrderByDescending(i => i.circle_id)
+                    .Select(i => i.image_url)
+                    .Take(count)
+                    .ToList();
                 if (images != null && images.Count > 0)
                 {
                     return new Tuple<bool, List<string>>(true, images);

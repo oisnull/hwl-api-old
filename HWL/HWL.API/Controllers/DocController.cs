@@ -78,6 +78,7 @@ namespace HWL.API.Controllers
             MethodInfo[] methods = rootType.GetMethods();
 
             string html = "<script src='/test/js/api_test.js'></script>";
+            int idx = 1;
             foreach (MethodInfo method in methods)
             {
                 if (method.DeclaringType.Name != rootType.Name) continue;
@@ -148,7 +149,8 @@ namespace HWL.API.Controllers
                     }
                 }
 
-                html += string.Format("{0} - {1} <a href='/test/index.html' onclick=addReq(\'{0}\',\'{2}\') target='_blank'>测试</a><br /> request:{2} <br /> response:{3} <br /><br /><br />", method.Name, desc, requestStr, returnStr);
+                html += string.Format("<h1 style='display:inline'>{4}</h1> {0} - {1} <a href='/test/index.html' onclick=addReq(\'{0}\',\'{2}\') target='_blank'>测试</a><br /> request:{2} <br /> response:{3} <br /><br /><br />", method.Name, desc, requestStr, returnStr, idx);
+                idx++;
             }
 
             return Content(html);

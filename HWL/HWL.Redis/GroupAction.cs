@@ -42,7 +42,7 @@ namespace HWL.Redis
         /// <summary>
         /// 个人组所在的数据库
         /// </summary>
-        const int GROUP_DB = 12;
+        //const int GROUP_DB = 12;
 
         /// <summary>
         /// 检测周围100M内的组数据,并返回对应的组标识列表
@@ -123,13 +123,13 @@ namespace HWL.Redis
             if (string.IsNullOrEmpty(groupGuid)) return false;
 
             bool succ = false;
-            base.DbNum = GROUP_DB;
-            base.Exec(db =>
-            {
-                succ = db.KeyDelete(groupGuid);
-            });
+            //base.DbNum = GROUP_DB;
+            //base.Exec(db =>
+            //{
+            //    succ = db.KeyDelete(groupGuid);
+            //});
 
-            if (!succ) return false;
+            //if (!succ) return false;
 
             if (userIds != null && userIds.Count > 0)
             {
@@ -160,6 +160,29 @@ namespace HWL.Redis
                 count = Convert.ToInt32(db.SetLength(groupGuid));
             });
             return count;
+        }
+
+        public List<int> GetNearGroupUserIds(string groupGuid)
+        {
+            if (string.IsNullOrEmpty(groupGuid)) return null;
+
+            List<int> userIds = new List<int>();
+            base.DbNum = GROUP_USER_SET_DB;
+            base.Exec(db =>
+            {
+                RedisValue[] users = db.SetMembers(groupGuid);
+                if (users != null && users.Length > 0)
+                {
+                    userIds.AddRange(users.Select(u =>
+                    {
+                        int uid;
+                        u.TryParse(out uid);
+                        return uid;
+                    }).ToArray());
+                }
+            });
+
+            return userIds;
         }
 
         public List<int> GetGroupUserIds(string groupGuid)

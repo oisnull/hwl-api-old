@@ -92,16 +92,9 @@
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="city_id" Type="int" Nullable="false" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“hwl.dbo.t_group”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="t_group">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="group_guid" />
-            <PropertyRef Name="group_name" />
-            <PropertyRef Name="group_user_count" />
-            <PropertyRef Name="build_user_id" />
-            <PropertyRef Name="build_date" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="group_guid" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -112,14 +105,11 @@
           <Property Name="build_date" Type="datetime" Nullable="false" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“hwl.dbo.t_group_user”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="t_group_user">
           <Key>
-            <PropertyRef Name="group_guid" />
-            <PropertyRef Name="user_id" />
-            <PropertyRef Name="add_date" />
+            <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="group_guid" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="add_date" Type="datetime" Nullable="false" />
@@ -257,6 +247,8 @@
           <EntitySet Name="t_city" EntityType="Self.t_city" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_country" EntityType="Self.t_country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_district" EntityType="Self.t_district" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_group" EntityType="Self.t_group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_group_user" EntityType="Self.t_group_user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_near_circle" EntityType="Self.t_near_circle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_near_circle_comment" EntityType="Self.t_near_circle_comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_near_circle_image" EntityType="Self.t_near_circle_image" Schema="dbo" store:Type="Tables" />
@@ -266,25 +258,6 @@
           <EntitySet Name="t_user_code" EntityType="Self.t_user_code" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_user_friend" EntityType="Self.t_user_friend" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_user_pos" EntityType="Self.t_user_pos" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="t_group" EntityType="Self.t_group" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [t_group].[id] AS [id], 
-    [t_group].[group_guid] AS [group_guid], 
-    [t_group].[group_name] AS [group_name], 
-    [t_group].[group_user_count] AS [group_user_count], 
-    [t_group].[group_note] AS [group_note], 
-    [t_group].[build_user_id] AS [build_user_id], 
-    [t_group].[build_date] AS [build_date], 
-    [t_group].[update_date] AS [update_date]
-    FROM [dbo].[t_group] AS [t_group]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="t_group_user" EntityType="Self.t_group_user" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [t_group_user].[group_guid] AS [group_guid], 
-    [t_group_user].[user_id] AS [user_id], 
-    [t_group_user].[add_date] AS [add_date]
-    FROM [dbo].[t_group_user] AS [t_group_user]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -529,27 +502,21 @@
         <EntityType Name="t_group">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="group_guid" />
-            <PropertyRef Name="group_name" />
-            <PropertyRef Name="group_user_count" />
-            <PropertyRef Name="build_date" />
-            <PropertyRef Name="build_user_id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="group_guid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="group_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="group_user_count" Type="Int32" Nullable="false" />
           <Property Name="group_note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="build_user_id" Type="Int32" Nullable="false" />
           <Property Name="build_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
-          <Property Name="build_user_id" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="t_group_user">
           <Key>
-            <PropertyRef Name="group_guid" />
-            <PropertyRef Name="user_id" />
-            <PropertyRef Name="add_date" />
+            <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="group_guid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="add_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -791,9 +758,9 @@
           <EntitySetMapping Name="t_group">
             <EntityTypeMapping TypeName="HWL.Entity.t_group">
               <MappingFragment StoreEntitySet="t_group">
-                <ScalarProperty Name="build_user_id" ColumnName="build_user_id" />
                 <ScalarProperty Name="update_date" ColumnName="update_date" />
                 <ScalarProperty Name="build_date" ColumnName="build_date" />
+                <ScalarProperty Name="build_user_id" ColumnName="build_user_id" />
                 <ScalarProperty Name="group_note" ColumnName="group_note" />
                 <ScalarProperty Name="group_user_count" ColumnName="group_user_count" />
                 <ScalarProperty Name="group_name" ColumnName="group_name" />
@@ -808,6 +775,7 @@
                 <ScalarProperty Name="add_date" ColumnName="add_date" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="group_guid" ColumnName="group_guid" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

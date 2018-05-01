@@ -22,7 +22,7 @@ namespace HWL.RabbitMQ.android_message
                 groupImage = string.Empty,
                 groupName = "我的附近",
                 content = content,
-                contentType = MQ_Constant.CHAT_MESSAGE_CONTENT_TYPE_WELCOME_TIP,
+                contentType = MQConstant.CHAT_MESSAGE_CONTENT_TYPE_WELCOME_TIP,
                 fromUserHeadImage = string.Empty,
                 fromUserId = 0,
                 fromUserName = string.Empty,
@@ -41,7 +41,7 @@ namespace HWL.RabbitMQ.android_message
             byte[] contentBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(model));
             byte[] messageBytes = new byte[3 + userIdBytes.Length + groupIdBytes.Length + contentBytes.Length];
 
-            messageBytes[0] = MQ_Constant.CHAT_GROUP_MESSAGE;
+            messageBytes[0] = MQConstant.CHAT_GROUP_MESSAGE;
             messageBytes[1] = (byte)userIdBytes.Length;
             messageBytes[2] = (byte)groupIdBytes.Length;
             userIdBytes.CopyTo(messageBytes, 3);

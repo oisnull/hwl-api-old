@@ -20,9 +20,6 @@ namespace HWL.Service.Group.Service
             AddGroupResponseBody res = new AddGroupResponseBody() { Status = ResultStatus.Failed };
 
             string groupGuid = Guid.NewGuid().ToString();
-            //往redis中添加数据
-            new Redis.GroupAction().SaveGroupUser(groupGuid, this.request.GroupUserIds.ToArray());
-
             using (HWLEntities db = new HWLEntities())
             {
                 t_group group = new t_group()
@@ -51,6 +48,10 @@ namespace HWL.Service.Group.Service
                 res.Status = ResultStatus.Success;
                 res.GroupGuid = groupGuid;
                 res.BuildTime = GenericUtility.formatDate2(group.build_date);
+
+                //不能在这里发送创建成功的消息，因为创建群组是客户端的行为，应由客户端来决定MQ消息的发送规则
+                //往redis中添加数据
+                new Redis.GroupAction().SaveGroupUser(groupGuid, this.request.GroupUserIds.ToArray());
             }
 
             return res;
@@ -75,6 +76,7 @@ namespace HWL.Service.Group.Service
             {
                 throw new Exception("组成员不能为空");
             }
+            //this.request.GroupUserIds.Add(this.request.BuildUserId);
 
             if (string.IsNullOrEmpty(this.request.GroupName))
             {

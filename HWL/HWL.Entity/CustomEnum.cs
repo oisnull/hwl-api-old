@@ -165,4 +165,10 @@ namespace HWL.Entity
         ChatVideo = 7,
         Other = 8,
     }
+
+    public enum GroupType
+    {
+        Near = 1,
+        User = 2,
+    }
 }

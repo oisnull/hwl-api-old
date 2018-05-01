@@ -19,8 +19,8 @@ namespace HWL.Entity
         public string group_name { get; set; }
         public int group_user_count { get; set; }
         public string group_note { get; set; }
+        public int build_user_id { get; set; }
         public System.DateTime build_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
-        public int build_user_id { get; set; }
     }
 }

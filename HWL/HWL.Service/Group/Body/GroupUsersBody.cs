@@ -1,4 +1,5 @@
-﻿using HWL.Entity.Extends;
+﻿using HWL.Entity;
+using HWL.Entity.Extends;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace HWL.Service.Group.Body
 {
     public class GroupUsersRequestBody
     {
+        public GroupType GroupType { get; set; }
         public string GroupGuid { get; set; }
     }
 

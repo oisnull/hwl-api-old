@@ -1,4 +1,5 @@
-﻿using HWL.Redis;
+﻿using HWL.RabbitMQ;
+using HWL.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,17 @@ namespace HWL.MQGroupDistribute.message
         }
 
 
-        public List<string> GetUserQueueSymbolList(int fromUserId, string groupGuid)
+        public List<string> GetUserQueueSymbolList(byte messageType, int fromUserId, string groupGuid)
         {
-            List<int> users = groupAction.GetGroupUserIds(groupGuid);
+            List<int> users = null;
+            if (messageType == MQConstant.GROUP_CREATE_MESSAGE)
+            {
+                users = groupAction.GetGroupUserIds(groupGuid);
+            }
+            else
+            {
+                users = groupAction.GetNearGroupUserIds(groupGuid);
+            }
             if (users == null || users.Count <= 0) return null;
 
             if (fromUserId > 0)

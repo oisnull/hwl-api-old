@@ -176,7 +176,7 @@ namespace HWL.Service.User.Service
                 RabbitMQ.android_message.AndroidChatMessage.SendGroup(this.request.UserId, res.UserGroupGuid, "欢迎加入HWL附近聊天组");
 
                 //返回组用户列表
-                List<int> userIds = groupAction.GetGroupUserIds(res.UserGroupGuid);
+                List<int> userIds = groupAction.GetNearGroupUserIds(res.UserGroupGuid);
                 if (userIds == null || userIds.Count <= 0) return res;
 
                 res.GroupUserInfos = db.t_user.Where(u => userIds.Contains(u.id))

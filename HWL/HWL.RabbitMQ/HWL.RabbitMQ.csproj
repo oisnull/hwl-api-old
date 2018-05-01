@@ -55,7 +55,7 @@
   <ItemGroup>
     <Compile Include="android_message\AndroidChatMessage.cs" />
     <Compile Include="android_message\bean\ChatGroupMessageBean.cs" />
-    <Compile Include="android_message\MQ_Constant.cs" />
+    <Compile Include="MQConstant.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DefaultConnectionStatus.cs" />
     <Compile Include="IConnectionStatus.cs" />

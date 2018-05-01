@@ -85,13 +85,13 @@ namespace HWL.RabbitMQ
             receiveChannel.QueueBind(queueName, HWL_DEFAULT_EXCHANGE, queueName, null);
         }
 
-        public static void ReceiveGroupMessage(Action<int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
+        public static void ReceiveGroupMessage(Action<byte, int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
         {
             BindQueue(GROUP_QUEUE_NAME);
             ReceiveMessage(GROUP_QUEUE_NAME, succCallBack, errorCallBackk);
         }
 
-        public static void ReceiveMessage(string queueName, Action<int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
+        public static void ReceiveMessage(string queueName, Action<byte, int, string, byte[]> succCallBack, Action<string> errorCallBackk = null)
         {
             var consumer = new EventingBasicConsumer(GetReceiveChannel());
             receiveChannel.BasicConsume(queueName, false, consumer);
@@ -110,7 +110,7 @@ namespace HWL.RabbitMQ
                     {
                         //组消息格式：byte[]={chat-message-type,chat-send-user-id-length(byte),chat-group-guid-lenght(byte),chat-send-user-id(byte[]),chat-group-guid(byte[]),chat-message-content(byte[])}
 
-                        //byte messageType = e.Body[0];
+                        byte messageType = e.Body[0];
                         int fromUserIdLength = e.Body[1];
                         int groupIdLength = e.Body[2];
 
@@ -122,7 +122,10 @@ namespace HWL.RabbitMQ
                         Array.Copy(e.Body, 3 + fromUserIdLength, groupIdBytes, 0, groupIdLength);
                         //Array.Copy(e.Body, 3 + fromUserIdLength + groupIdLength, msgBytes, 0, msgBytes.Length);
 
-                        succCallBack(BitConverter.ToInt32(userIdBytes, 0), Encoding.UTF8.GetString(groupIdBytes), e.Body);
+                        succCallBack(messageType,
+                            userIdBytes.Length == 1 && userIdBytes[0] == 0 ? 0 : BitConverter.ToInt32(userIdBytes, 0),
+                            Encoding.UTF8.GetString(groupIdBytes),
+                            e.Body);
                     }
                     catch (Exception ex)
                     {

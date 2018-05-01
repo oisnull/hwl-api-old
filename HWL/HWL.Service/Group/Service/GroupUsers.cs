@@ -23,6 +23,8 @@ namespace HWL.Service.Group.Service
             {
                 throw new ArgumentNullException("GroupGuid");
             }
+            if (this.request.GroupType != GroupType.Near && this.request.GroupType != GroupType.User)
+                throw new Exception("组类型参数错误");
         }
 
         public override GroupUsersResponseBody ExecuteCore()
@@ -30,7 +32,16 @@ namespace HWL.Service.Group.Service
             GroupUsersResponseBody res = new GroupUsersResponseBody();
 
             Redis.GroupAction groupAction = new Redis.GroupAction();
-            List<int> userIds = groupAction.GetGroupUserIds(this.request.GroupGuid);
+            List<int> userIds = null;
+            switch (this.request.GroupType)
+            {
+                case GroupType.Near:
+                    userIds = groupAction.GetNearGroupUserIds(this.request.GroupGuid);
+                    break;
+                case GroupType.User:
+                    userIds = groupAction.GetGroupUserIds(this.request.GroupGuid);
+                    break;
+            }
             if (userIds == null || userIds.Count <= 0) return res;
 
             using (HWLEntities db = new HWLEntities())

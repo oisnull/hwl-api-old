@@ -9,11 +9,22 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="login_name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="login_pwd" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="real_name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="create_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="t_app_version">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="app_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="app_version" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="download_url" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="publish_time" Type="datetime" Nullable="false" />
+          <Property Name="update_time" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="t_circle">
           <Key>
@@ -23,17 +34,17 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="content_type" Type="int" Nullable="false" />
           <Property Name="circle_content" Type="nvarchar" MaxLength="4000" />
+          <Property Name="publish_time" Type="datetime" Nullable="false" />
           <Property Name="pos_id" Type="int" Nullable="false" />
-          <Property Name="pos_desc" Type="nvarchar" MaxLength="50" />
           <Property Name="lat" Type="float" Nullable="false" />
-          <Property Name="lon" Type="float" Nullable="false" />
           <Property Name="link_url" Type="nvarchar" MaxLength="200" />
           <Property Name="link_title" Type="nvarchar" MaxLength="300" />
           <Property Name="link_image" Type="nvarchar" MaxLength="200" />
           <Property Name="image_count" Type="int" Nullable="false" />
           <Property Name="comment_count" Type="int" Nullable="false" />
           <Property Name="like_count" Type="int" Nullable="false" />
-          <Property Name="publish_time" Type="datetime" Nullable="false" />
+          <Property Name="pos_desc" Type="nvarchar" MaxLength="50" />
+          <Property Name="lon" Type="float" Nullable="false" />
           <Property Name="update_time" Type="datetime" />
         </EntityType>
         <EntityType Name="t_circle_comment">
@@ -125,6 +136,7 @@
           <Property Name="link_title" Type="nvarchar" MaxLength="100" />
           <Property Name="link_url" Type="nvarchar" MaxLength="200" />
           <Property Name="link_image" Type="nvarchar" MaxLength="200" />
+          <Property Name="publish_time" Type="datetime" Nullable="false" />
           <Property Name="pos_id" Type="int" Nullable="false" />
           <Property Name="pos_desc" Type="nvarchar" MaxLength="50" />
           <Property Name="lon" Type="float" Nullable="false" />
@@ -132,7 +144,6 @@
           <Property Name="image_count" Type="int" Nullable="false" />
           <Property Name="comment_count" Type="int" Nullable="false" />
           <Property Name="like_count" Type="int" Nullable="false" />
-          <Property Name="publish_time" Type="datetime" Nullable="false" />
           <Property Name="update_time" Type="datetime" />
         </EntityType>
         <EntityType Name="t_near_circle_comment">
@@ -179,7 +190,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="symbol" Type="nvarchar" MaxLength="20" />
           <Property Name="name" Type="nvarchar" MaxLength="30" />
           <Property Name="mobile" Type="nvarchar" MaxLength="11" Nullable="false" />
@@ -201,7 +212,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="user_account" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="code_type" Type="int" Nullable="false" />
@@ -240,6 +251,7 @@
         </EntityType>
         <EntityContainer Name="HWLModelStoreContainer">
           <EntitySet Name="t_admin" EntityType="Self.t_admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_app_version" EntityType="Self.t_app_version" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_circle" EntityType="Self.t_circle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_circle_comment" EntityType="Self.t_circle_comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_circle_image" EntityType="Self.t_circle_image" Schema="dbo" store:Type="Tables" />
@@ -283,6 +295,7 @@
           <EntitySet Name="t_near_circle_image" EntityType="HWL.Entity.t_near_circle_image" />
           <EntitySet Name="t_group" EntityType="HWL.Entity.t_group" />
           <EntitySet Name="t_group_user" EntityType="HWL.Entity.t_group_user" />
+          <EntitySet Name="t_app_version" EntityType="HWL.Entity.t_app_version" />
         </EntityContainer>
         <EntityType Name="t_admin">
           <Key>
@@ -520,6 +533,17 @@
           <Property Name="group_guid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="add_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="t_app_version">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="app_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="app_version" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="download_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="publish_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_time" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -775,6 +799,18 @@
                 <ScalarProperty Name="add_date" ColumnName="add_date" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="group_guid" ColumnName="group_guid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_app_version">
+            <EntityTypeMapping TypeName="HWL.Entity.t_app_version">
+              <MappingFragment StoreEntitySet="t_app_version">
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+                <ScalarProperty Name="publish_time" ColumnName="publish_time" />
+                <ScalarProperty Name="download_url" ColumnName="download_url" />
+                <ScalarProperty Name="app_version" ColumnName="app_version" />
+                <ScalarProperty Name="app_name" ColumnName="app_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

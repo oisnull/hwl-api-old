@@ -12,15 +12,13 @@ namespace HWL.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class t_group
+    public partial class t_app_version
     {
         public int id { get; set; }
-        public string group_guid { get; set; }
-        public string group_name { get; set; }
-        public int group_user_count { get; set; }
-        public string group_note { get; set; }
-        public int build_user_id { get; set; }
-        public System.DateTime build_date { get; set; }
-        public Nullable<System.DateTime> update_date { get; set; }
+        public string app_name { get; set; }
+        public string app_version { get; set; }
+        public string download_url { get; set; }
+        public System.DateTime publish_time { get; set; }
+        public System.DateTime update_time { get; set; }
     }
 }

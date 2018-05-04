@@ -24,6 +24,7 @@
         <EntityTypeShape EntityType="HWL.Entity.t_near_circle_image" Width="1.5" PointX="0.75" PointY="12.75" />
         <EntityTypeShape EntityType="HWL.Entity.t_group" Width="1.5" PointX="11.375" PointY="12.75" />
         <EntityTypeShape EntityType="HWL.Entity.t_group_user" Width="1.5" PointX="3.375" PointY="12.75" />
+        <EntityTypeShape EntityType="HWL.Entity.t_app_version" Width="1.5" PointX="5.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -24,6 +24,14 @@ namespace HWL.Service
                 return new SendSMS(r.Body).Execute();
             });
         }
+        public static Response<CheckVersionResponseBody> CheckVersion(Request<CheckVersionRequestBody> request)
+        {
+            var context = new ServiceContext<CheckVersionRequestBody>(request, new RequestValidate(false, false));
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new CheckVersion(r.Body).Execute();
+            });
+        }
 
         //public static Response CheckVersion(Request request)
         //{
@@ -38,6 +46,7 @@ namespace HWL.Service
         //        return new General.CheckVersion.Service(requestBody).Execute();
         //    });
         //}
+
         //public static Response UpImage(Request request)
         //{
         //    if (request == null)

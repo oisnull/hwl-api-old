@@ -2,6 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+/HWL/.vs/
 /HWL/HWL.API
 /HWL/HWL.Entity/bin/Debug
 /HWL/HWL.Service/bin/Debug
@@ -41,4 +42,3 @@
 /HWL/HWL.Redis/bin/Release/Newtonsoft.Json.dll
 /HWL/HWL.Redis/bin/Release/HWL.Redis.pdb
 /HWL/HWL.Redis/bin/Release/HWL.Redis.dll
-HWL/.vs/config/applicationhost.config

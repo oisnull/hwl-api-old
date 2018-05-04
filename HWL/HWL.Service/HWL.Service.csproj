@@ -80,7 +80,9 @@
     <Compile Include="Circle\Service\GetUserCircleInfos.cs" />
     <Compile Include="Circle\Service\SetLikeInfo.cs" />
     <Compile Include="ConfigManager.cs" />
+    <Compile Include="Generic\Body\CheckVersionBody.cs" />
     <Compile Include="Generic\GenericUtility.cs" />
+    <Compile Include="Generic\Service\CheckVersion.cs" />
     <Compile Include="Group\Body\AddGroupBody.cs" />
     <Compile Include="Group\Body\AddGroupUsersBody.cs" />
     <Compile Include="Group\Body\DeleteGroupBody.cs" />

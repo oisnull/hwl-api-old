@@ -78,6 +78,9 @@
     <Compile Include="t_admin.cs">
       <DependentUpon>HWLModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="t_app_version.cs">
+      <DependentUpon>HWLModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="t_circle.cs">
       <DependentUpon>HWLModel.tt</DependentUpon>
     </Compile>

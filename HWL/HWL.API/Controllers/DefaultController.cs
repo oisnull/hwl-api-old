@@ -284,5 +284,12 @@ namespace HWL.API.Controllers
         {
             return CircleService.SetLikeInfo(request);
         }
+
+        [HttpPost]
+        [Description("APP版本检查")]
+        public Response<CheckVersionResponseBody> CheckVersion(Request<CheckVersionRequestBody> request)
+        {
+            return GenericService.CheckVersion(request);
+        }
     }
 }

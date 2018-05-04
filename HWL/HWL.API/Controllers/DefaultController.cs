@@ -138,6 +138,13 @@ namespace HWL.API.Controllers
         }
 
         [HttpPost]
+        [Description("获取所有群组")]
+        public Response<GetGroupsResponseBody> GetGroups(Request<GetGroupsRequestBody> request)
+        {
+            return GroupService.GetGroups(request);
+        }
+
+        [HttpPost]
         [Description("添加群组")]
         public Response<AddGroupResponseBody> AddGroup(Request<AddGroupRequestBody> request)
         {
@@ -163,6 +170,20 @@ namespace HWL.API.Controllers
         public Response<DeleteGroupUserResponseBody> DeleteGroupUser(Request<DeleteGroupUserRequestBody> request)
         {
             return GroupService.DeleteGroupUser(request);
+        }
+
+        [HttpPost]
+        [Description("修改群组公告")]
+        public Response<SetGroupNoteResponseBody> SetGroupNote(Request<SetGroupNoteRequestBody> request)
+        {
+            return GroupService.SetGroupNote(request);
+        }
+
+        [HttpPost]
+        [Description("修改群组名称")]
+        public Response<SetGroupNameResponseBody> SetGroupName(Request<SetGroupNameRequestBody> request)
+        {
+            return GroupService.SetGroupName(request);
         }
 
         [HttpPost]

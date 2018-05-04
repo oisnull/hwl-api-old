@@ -52,5 +52,32 @@ namespace HWL.Service
                 return new DeleteGroupUser(r.Body).Execute();
             });
         }
+
+        public static Response<SetGroupNameResponseBody> SetGroupName(Request<SetGroupNameRequestBody> request)
+        {
+            var context = new ServiceContext<SetGroupNameRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetGroupName(r.Body).Execute();
+            });
+        }
+
+        public static Response<SetGroupNoteResponseBody> SetGroupNote(Request<SetGroupNoteRequestBody> request)
+        {
+            var context = new ServiceContext<SetGroupNoteRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetGroupNote(r.Body).Execute();
+            });
+        }
+
+        public static Response<GetGroupsResponseBody> GetGroups(Request<GetGroupsRequestBody> request)
+        {
+            var context = new ServiceContext<GetGroupsRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new GetGroups(r.Body).Execute();
+            });
+        }
     }
 }

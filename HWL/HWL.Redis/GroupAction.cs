@@ -162,28 +162,28 @@ namespace HWL.Redis
             return count;
         }
 
-        public List<int> GetNearGroupUserIds(string groupGuid)
-        {
-            if (string.IsNullOrEmpty(groupGuid)) return null;
+        //public List<int> GetNearGroupUserIds(string groupGuid)
+        //{
+        //    if (string.IsNullOrEmpty(groupGuid)) return null;
 
-            List<int> userIds = new List<int>();
-            base.DbNum = GROUP_USER_SET_DB;
-            base.Exec(db =>
-            {
-                RedisValue[] users = db.SetMembers(groupGuid);
-                if (users != null && users.Length > 0)
-                {
-                    userIds.AddRange(users.Select(u =>
-                    {
-                        int uid;
-                        u.TryParse(out uid);
-                        return uid;
-                    }).ToArray());
-                }
-            });
+        //    List<int> userIds = new List<int>();
+        //    base.DbNum = GROUP_USER_SET_DB;
+        //    base.Exec(db =>
+        //    {
+        //        RedisValue[] users = db.SetMembers(groupGuid);
+        //        if (users != null && users.Length > 0)
+        //        {
+        //            userIds.AddRange(users.Select(u =>
+        //            {
+        //                int uid;
+        //                u.TryParse(out uid);
+        //                return uid;
+        //            }).ToArray());
+        //        }
+        //    });
 
-            return userIds;
-        }
+        //    return userIds;
+        //}
 
         public List<int> GetGroupUserIds(string groupGuid)
         {

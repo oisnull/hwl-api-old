@@ -47,7 +47,7 @@ namespace HWL.MQGroupDistribute
                 {
                     DateTime beforDT = System.DateTime.Now;
 
-                    var userQueueSymbols = us.GetUserQueueSymbolList(messageType, fromUserId, groupId);
+                    var userQueueSymbols = us.GetUserQueueSymbolList(fromUserId, groupId);
                     MQManager.SendMessage(userQueueSymbols, messageBytes);
 
                     DateTime afterDT = System.DateTime.Now;

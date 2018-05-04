@@ -1,0 +1,174 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="#">首页</a></li>
+                    <li class="active"><span>文章列表</span></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box clearfix">
+                    <header class="main-box-header clearfix">
+                        <h2 style="font-weight:900;" class="pull-left">文章筛选</h2>
+                    </header>
+                    <div class="main-box-body clearfix">
+                        <table>
+                            <tr style="height:55px;">
+                                <th style="width:200px;">标题 ：</th>
+                                <td>
+                                    <input type="text" class="form-control" style="width:200px;" maxlength="50" id="txtname" name="txtname" />
+                                </td>
+                                <td style="width:100px;"></td>
+                                @*<th style="width:200px;">用户状态：</th>
+                                    <td>
+                                        <select style="width:200px;" name="MemberStart" id="MemberStart" class="form-control">
+                                            <option value="0">请选择</option>
+                                            <option value="1">正式</option>
+                                            <option value="2">试用</option>
+                                        </select>
+                                    </td>*@
+                            </tr>
+                            <tr style="height:55px;">
+                                <th style="width:200px;">日期：</th>
+                                <td>
+                                    <input type="text" class="form-control form_datetime" style="width:150px; " value="" id="startDate" size="16" />&nbsp;- &nbsp;
+                                    <input type="text" class="form-control form_datetime" style="width:150px;" value="" id="endDate" size="16" />
+                                </td>
+                                <td style="width:100px;"></td>
+                                <td colspan="3">
+                                    <a href="javascript:;" class="btn btn-default" style="width:100px;" onclick="SellectMember();">查询</a> &nbsp;&nbsp;&nbsp;
+                                    <a href="/Member/List/" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true" style="vertical-align:bottom;">重置</a>
+                                    <a href="/Member/List/" id="a_membersellect" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true" style="display:none;">会员条件筛选</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box clearfix">
+                    <header class="main-box-header clearfix">
+                        <h2 style="font-weight:900;" class="pull-left">文章列表管理</h2>
+                    </header>
+                    <div class="main-box-body clearfix">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="center" style="width:60px;">序号</th>
+                                        <th class="center">类型</th>
+                                        <th class="center">图片</th>
+                                        <th class="center">标题</th>
+                                        <th class="center">阅读量</th>
+                                        <th class="center">发布日期</th>
+                                        <th class="center">更新日期</th>
+                                        <th class="center">推荐</th>
+                                        <th class="center">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.ArticleList == null || ViewBag.ArticleList.Count <= 0)
+                                    {
+                                        <tr style="text-align:center;">
+                                            <td colspan="6">
+                                                <font color="red">没有找到您需要的文章</font>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        foreach (QIQU.Entity.Extend.Article m in ViewBag.ArticleList)
+                                        {
+                                            <tr style="text-align:center;vertical-align:middle;" onmouseover=" this.style.background = '#F4F7FA';" onmouseout="this.style.background = '';">
+                                                <td>@m.Id</td>
+                                                <td>@m.CategoryName</td>
+                                                @if (!string.IsNullOrEmpty(m.ImgUrl))
+                                                {
+                                                    <td onclick="ShowImg('@m.ImgUrl')"><img width="100" height="60" src="@m.ImgUrl" class="attachment-thumbnail wp-post-image" alt="@m.Title"></td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                <td>@m.Title</td>
+                                                <td>@m.ReadCount</td>
+                                                <td>@m.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                                <td>@m.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                                <td>
+                                                    @if (m.Recommend)
+                                                    {
+                                                        <font color="red">是</font>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a href="/Article/Edit/?id=@m.Id" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">编辑</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="page">
+                                @(new HtmlString(ViewBag.PageHtml))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    String.prototype.getParameter = function (key) {
+        var re = new RegExp(key + '=([^&]*)(?:&)?');
+        return this.match(re) && this.match(re)[1];
+    };
+
+    $(function () {
+        $(".form_datetime").datetimepicker({ language: "zh-CN", format: 'yyyy-mm-dd', autoclose: true, todayHighlight: true, minView: 'month' });
+
+        //获取page中的参数
+        var url = $("div.page").find("a:first").attr("href");
+        document.getElementById("txtname").value = url.getParameter("email");
+        var state = url.getParameter("state");
+        if (document.getElementById("MemberStart") != null) {
+            document.getElementById("MemberStart").value = state == null || state == "" ? 0 : state;
+        }
+        document.getElementById("startDate").value = url.getParameter("startdate");
+        document.getElementById("endDate").value = url.getParameter("enddate");
+    })
+    //查询
+    function SellectMember() {
+
+    }
+
+    function ShowImg(src) {
+        var index = layer.open({
+            type: 2,
+            title: false, //不显示标题
+            content: src, //捕获的元素
+            success: function (layer2) {
+                $("<img/>").attr("src", src).load(function () {
+                    layer.style(index, {
+                        width: this.width,
+                        height: this.height,
+                        top: '20%',
+                        left: '25%'
+                    });
+                });
+            }
+        });
+    }
+</script>

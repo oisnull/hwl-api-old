@@ -1,0 +1,128 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model HWL.Entity.Extends.Admin
+
+<div id="poplayer" style="text-align:center;display:none;position:fixed;_position:absolute;z-index:888;top:0px;left:0px;width:100%;height:100%;background-color:#fff;opacity:0.3; ">
+    <img src="~/Content/images/loading.gif" style="margin-top:20%;" />
+</div>
+<div id="theme-wrapper">
+    <header id="header-navbar" class="navbar" style="background-color: #3498db;">
+        <div class="container">
+            <a class="navbar-brand" style="background-color:#2980b9;" id="logo" href="#">
+                <img class="normal-logo logo-white" alt="" src="~/Content/images/logo.png">
+            </a>
+            <h4> <a style="margin-left:75%;" onclick="return window.confirm('确认退出系统？');" href="/Home/Logout"><span style="color:black;">[退出]</span> </a></h4>
+        </div>
+    </header>
+    <div class="container" id="page-wrapper">
+        <div class="row">
+            <div id="nav-col">
+                <section class="col-left-nano" id="col-left">
+                    <div class="col-left-nano-content" id="col-left-inner">
+                        <div class="clearfix hidden-sm hidden-xs" id="user-left-box">
+                            <img src="~/Content/images/scarlet-159.png" alt="">
+                            <div class="user-box">
+                                <span class="name">
+                                    @Model.LoginName <br />&nbsp;
+                                </span>
+                                <span class="status">
+                                    <i class="fa fa-circle"></i> @Model.RealName
+                                </span>
+                            </div>
+                        </div>
+                        <div id="sidebar-nav" class="collapse navbar-collapse navbar-ex1-collapse">
+                            <ul class="nav nav-pills nav-stacked">
+                                @*<li>
+                                        <a href="#">
+                                            <span>后台首页</span>
+                                        </a>
+                                    </li>*@
+                                <li class="open active">
+                                    <a class="dropdown-toggle" href="/User/FeedBack/" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">
+                                        <span>用户管理</span>
+                                    </a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="#" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">用户列表</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">在线监控</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="open">
+                                    <a class="dropdown-toggle" href="/Notice/List/" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">
+                                        <span>公告管理</span>
+                                    </a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="/Notice/List/" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">公告列表</a>
+                                        </li>
+                                        <li>
+                                            <a href="/Notice/Edit/" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">发布公告</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="dropdown-toggle" href="/App/List/" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">
+                                        <span>APP管理</span>
+                                    </a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="/App/List" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">历史版本记录</a>
+                                        </li>
+                                        <li>
+                                            <a href="/App/Publish" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">发布新版本</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                @*<li>
+                                    <a class="dropdown-toggle" href="/Article/Category/" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">
+                                        <span>文章类型管理</span>
+                                    </a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="javascript:;" onclick="Edit()">添加</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="dropdown-toggle" href="/Auditing/Index/" target="_blank">
+                                        <span>文章WAP审核</span>
+                                    </a>
+                                </li>*@
+                                <li>
+                                    <a class="dropdown-toggle" href="#">
+                                        <span>系统设置</span>
+                                    </a>
+                                    @*<ul class="submenu">
+                                        <li>
+                                            <a href="javascript:alert('功能还没实现');">系统用户</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:alert('功能还没实现');">角色权限</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:alert('功能还没实现');">
+                                                <span>密码修改</span>
+                                            </a>
+                                        </li>
+                                    </ul>*@
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!--内容部分-->
+            <div id="main_content">
+                @Html.Action("Default", "Main")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

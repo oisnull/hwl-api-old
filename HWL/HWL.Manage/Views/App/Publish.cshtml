@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Publish";
+}
+@model HWL.Entity.Extends.AppExt
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="/Main/Index">首页</a></li>
+                    <li><a href="/App/List" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">历史版本列表</a></li>
+                    <li class="active"><span>发布新版本</span></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box clearfix">
+                    <form id="form1" action="#" method="post">
+                        <input type="hidden" id="hidden_id" name="Id" value="@Model.Id">
+                        <div style="text-align: left;margin:10px;" class="panel">
+                            <div class="panel-heading">
+                                <b>发布APP新版本</b>
+                            </div>
+
+                            <table class="table">
+                                <tbody>
+
+                                    <tr>
+                                        <th style="width:150px;">APP名称 <font color="red">*</font>：</th>
+                                        <td><input type="text" class="form-control" name="Name" value="@Model.Name" style="width:20%;" maxlength="20"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:150px;">版本号 ：</th>
+                                        <td><input type="text" class="form-control" name="Version" value="@Model.Version" style="width: 20%;" maxlength="10"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:150px;">版本文件 ：</th>
+                                        <td><input type="file" name="file_apk" class="form-control" style="width:20%;height: auto;"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:150px;">下载地址 ：</th>
+                                        <td><input type="text" class="form-control" name="DownloadUrl" value="@Model.DownloadUrl" style="width:50%;" maxlength="300"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>发布日期：</th>
+                                        <td>@Model.PublishTime</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p style="margin:10px;">
+                            <input type="submit" class="btn btn-submit btn-primary" style="width:100px;margin-left: 0px;margin-right:10px;" value="发 布">
+                            <a class="btn btn-default" style="width:100px;margin-left: 10px;margin-right:10px;" href="/App/List?page=0" id="a_return" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">返 回</a>
+                            <a style="vertical-align:bottom;" href="javascript:;" id="a_del_art">删除</a>
+
+                            <span id="span_info" style="margin-left:10px;"></span>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/Scripts/jquery.form.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $("#a_del_art").click(function () { Del(); });
+    });
+
+    var isAction = false;
+    $("form").submit(function () {
+        if (isAction) {
+            return false;
+        }
+        isAction = true;
+
+        $("span#span_info").html("<font color='blue'>数据发布中，请稍后...</font>");
+
+        $(this).ajaxSubmit({
+            type: "post",
+            url: "/App/Action/",
+            success: function (data) {
+                if (data.state > 0) {
+                    $("span#span_info").html("<font color='blue'>发布成功,跳转中...</font>");
+                    Sleep(this, 1500);
+                    this.NextStep = function () {
+                        document.getElementById("a_return").click();
+                    }
+                } else {
+                    $("span#span_info").html("<font color='red'>" + data.error + "</font>");
+                    isAction = false;
+                }
+            }
+        });
+        return false;
+    });
+
+
+    function Del() {
+        if (isAction) {
+            return false;
+        }
+        isAction = true;
+
+        //询问框
+        layer.confirm('数据删除后不能恢复,确认删除？', {
+            btn: ['确认', '取消'] //按钮
+        }, function () {
+            layer.closeAll();
+
+            $("span#span_info").html("<font color='blue'>数据删除中，请稍后...</font>");
+            $.post("/App/DelAppVersion", { id: $("#hidden_id").val() }, function (data) {
+                if (data.state > 0) {
+                    $("span#span_info").html("<font color='blue'>删除成功,跳转中...</font>");
+                    Sleep(this, 1500);
+                    this.NextStep = function () {
+                        document.getElementById("a_return").click();
+                    }
+                } else {
+                    $("span#span_info").html("<font color='red'>" + data.error + "</font>");
+                    isAction = false;
+                }
+            });
+
+        }, function () {
+            isAction = false;
+        });
+    }
+</script>

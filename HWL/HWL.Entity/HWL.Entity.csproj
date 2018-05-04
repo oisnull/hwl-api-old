@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="CustomEnum.cs" />
     <Compile Include="CustomerEnumDesc.cs" />
+    <Compile Include="Extends\Admin.cs" />
+    <Compile Include="Extends\AppExt.cs" />
     <Compile Include="Extends\CircleExt.cs" />
     <Compile Include="Extends\GroupExt.cs" />
     <Compile Include="Extends\ImageInfo.cs" />

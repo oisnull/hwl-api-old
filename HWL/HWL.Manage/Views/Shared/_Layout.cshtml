@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>HWL后台管理系统-首页</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link href="~/Scripts/bootstrap.3.3.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Scripts/layer/layer.js"></script>  
+    <script type="text/javascript">
+        $(function () {
+            $(document).ajaxStart(function () {
+                $("div#poplayer").css("display", "");
+            });
+            $(document).ajaxStop(function () {
+                $("div#poplayer").css("display", "none");
+            });
+
+            //隐藏Loading
+            $("div#poplayer").fadeOut();
+            $("#sidebar-nav ul li a").bind("click", function () {
+                $(this).parent().parent().find("li").attr("class", "");
+                $(this).parent().attr("class", "open active");
+            })
+
+            $.ajaxSetup({
+                error: function (xhr, status, e) {
+                    //alert(xhr.status);
+                    //if (xhr.status == 405) {
+                    //} else if (xhr.status == 406) {
+                    //    var ret= window.confirm("登录超时,请重新登录")
+                    //    if (true) {
+                    //        window.location = "/Home/Login?null";
+                    //    }
+                    //} else {
+                    //    layer.open({ content: "服务器出现未知错误", time: 1.5 });
+                    //}
+                },
+                beforeSend: function (xhr) {
+                    //alert("beforeSend");
+                },
+                complete: function (xhr, textStatus) {
+                    var sessionstatus = xhr.getResponseHeader("sessionstatus");
+                    if (sessionstatus == "timeout") {
+                        TimeoutError();
+                    }
+                }
+            });
+        });
+
+        function TimeoutError() {
+            parent.layer.closeAll();
+            window.confirm("登录超时,请重新登录")
+            window.location = "/Home/Login?null";
+        }
+        function Sleep(obj, iMinSecond) {
+            if (window.eventList == null)
+                window.eventList = new Array();
+            var ind = -1;
+            for (var i = 0; i < window.eventList.length; i++) {
+                if (window.eventList[i] == null) {
+                    window.eventList[i] = obj;
+                    ind = i;
+                    break;
+                }
+            }
+            if (ind == -1) {
+                ind = window.eventList.length;
+                window.eventList[ind] = obj;
+            }
+            setTimeout("GoOn(" + ind + ")", iMinSecond);
+        }
+        function GoOn(ind) {
+            var obj = window.eventList[ind];
+            window.eventList[ind] = null;
+            if (obj.NextStep) obj.NextStep();
+            else obj();
+        }
+    </script>  
+</head>
+
+<body class="theme-whbl pace-done">
+    @RenderBody()
+</body>
+</html>

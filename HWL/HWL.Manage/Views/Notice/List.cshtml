@@ -1,0 +1,62 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="#">首页</a></li>
+                    <li class="active"><span>公告列表</span></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box clearfix">
+                    <header class="main-box-header clearfix">
+                        <h2 style="font-weight:900;" class="pull-left">公告列表</h2>
+                    </header>
+                    <div class="main-box-body clearfix">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="center" style="width:60px;">序号</th>
+                                        <th class="center">类型</th>
+                                        <th class="center">标题</th>
+                                        <th class="center">发布日期</th>
+                                        <th class="center">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.NoticeList == null || ViewBag.NoticeList.Count <= 0)
+                                    {
+                                        <tr style="text-align:center;">
+                                            <td colspan="6">
+                                                <font color="red">还没有发布公告信息</font>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        foreach (HWL.Entity.Extends.NoticeManageModel item in ViewBag.NoticeList)
+                                        {
+                                            <tr style="text-align: center; vertical-align: middle;" onmouseover=" this.style.background = '#F4F7FA';" onmouseout="this.style.background = '';">
+                                                <td>@item.Id</td>
+                                                <td>@item.NoticeType</td>
+                                                <td>@item.Title</td>
+                                                <td>@item.CreateTime</td>
+                                                <td>
+                                                    <a href="/Notice/Edit/?id=@item.Id" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">编辑</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

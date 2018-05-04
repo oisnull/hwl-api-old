@@ -1,0 +1,91 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="#">首页</a></li>
+                    <li class="active"><span>版本列表</span></li>
+                </ol>
+            </div>
+        </div>
+
+        @*<div class="row">
+                <div class="col-lg-12">
+                    <div class="main-box clearfix">
+                        <header class="main-box-header clearfix">
+                            <h2 style="font-weight:900;" class="pull-left">类型筛选</h2>
+                        </header>
+                        <div class="main-box-body clearfix">
+                            <table>
+                                <tbody>
+                                    <tr style="height:55px;">
+                                        <th style="width:200px;">名称 ：</th>
+                                        <td>
+                                            <input type="text" class="form-control" style="width:200px;" maxlength="50" id="txtname" name="txtname">
+                                        </td>
+                                        <td style="width:100px;"></td>
+                                        <td>
+                                            <a href="javascript:;" class="btn btn-default" style="width:100px;" onclick="">查询</a> &nbsp;&nbsp;&nbsp;
+                                            <a href="/Article/Category/" id="a_reset" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true" style="vertical-align:bottom;">重置</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box clearfix">
+                    <header class="main-box-header clearfix">
+                        <h2 style="font-weight:900;" class="pull-left">版本管理</h2>
+                    </header>
+                    <div class="main-box-body clearfix">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="center" style="width:60px;">序号</th>
+                                        <th class="center">APP名称</th>
+                                        <th class="center">版本号</th>
+                                        <th class="center">下载地址</th>
+                                        <th class="center">发布日期</th>
+                                        <th class="center">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.AppList == null || ViewBag.AppList.Count <= 0)
+                                    {
+                                        <tr style="text-align:center;">
+                                            <td colspan="6">
+                                                <font color="red">没有找到您需要的版本信息</font>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        foreach (HWL.Entity.Extends.AppExt item in ViewBag.AppList)
+                                        {
+                                            <tr style="text-align: center; vertical-align: middle;" onmouseover=" this.style.background = '#F4F7FA';" onmouseout="this.style.background = '';">
+                                                <td>@item.Id</td>
+                                                <td>@item.Name</td>
+                                                <td>@item.Version</td>
+                                                <td><a href="@item.DownloadUrl" target="_blank">@item.DownloadUrl</a></td>
+                                                <td>@item.PublishTime</td>
+                                                <td>
+                                                    <a href="/App/Publish/?id=@item.Id" data-ajax-update="#main_content" data-ajax-mode="replace" data-ajax="true">编辑</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

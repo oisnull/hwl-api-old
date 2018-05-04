@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>HWL后台管理系统</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link href="~/Content/login.css" rel="stylesheet" />
+    <link href="~/Scripts/bootstrap.3.3.2/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+    <script type="text/javascript">
+        var isAction = false;
+        $(function () {
+            $("form").submit(function () {
+                //验证表单文本
+                var $uemail = $("input[name=uemail]");
+                if ($uemail == null || $uemail.val() == "" || $uemail.val() == null) {
+                    $uemail.focus();
+                    $uemail.css("border-color", "red");
+                    $("div#span_result").html("<font color='red'>请输入正确的账号</font>");
+                    isAction = false;
+                    return false; //不刷新页面
+                } else {
+                    $uemail.css("border-color", "#ccc");
+                    $("div#span_result").html("");
+                }
+
+                var $upw = $("input[name=upw]");
+                if ($upw == null || $upw.val() == "" || $upw.val() == null || $upw.val().length < 6 || $upw.val().length > 20) {
+                    $upw.css("border-color", "red");
+                    $upw.focus();
+                    $("div#span_result").html("<font color='red'>请输入6-20个字符以的内正确密码</font>");
+                    isAction = false;
+                    return false; //不刷新页面
+                } else {
+                    $upw.css("border-color", "#ccc");
+                    $("div#span_result").html("");
+                }
+
+                form1.btn_submit.value = "登录中...";
+
+                $.post("/Home/LoginDo", { name: $uemail.val(), pwd: $upw.val() }, function (data) {
+                    if (data != null) {
+                        if (data.state > 0) {
+                            form1.btn_submit.value = "登录成功,跳转中...";
+                            window.location.href = data.gto;
+                        } else {
+                            $("div#span_result").html("<span style='color:red'>" + data.error + "</span>");
+                            form1.btn_submit.value = "登 录";
+                            return;
+                        }
+                    }
+                    else {
+                        isAction = false;
+                    }
+                })
+                return false; //不刷新页面
+            })
+        })
+     
+    </script>
+
+</head>
+
+<body class="login">
+    <div class="wrapper">
+        <h1><a href="javascript:;"><img src="~/Content/images/logo-big.png" alt="" class="retina-ready" height="49" width="59">HWL管理系统</a></h1>
+        <div class="login-body">
+            <h2>系统登录</h2>
+            <form id="form1" action="/Home/LoginView" method="post">
+                <div class="control-group">
+                    <div class="email controls">
+                        <input name="uemail" placeholder="用户名" class="form-control" data-rule-required="true" data-rule-email="true" type="text">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="pw controls">
+                        <input name="upw" placeholder="密码" class="form-control" data-rule-required="true" type="password">
+                    </div>
+                </div>
+                <div class="submit">
+                    @*<div class="remember">
+                        <div style="position: relative;" class="icheckbox_square-blue"><input style="position: absolute; top: -10%; left: -10%; display: block; width: 70%; height: 120%; margin: 0px; padding: 0px; " name="remember" class="icheck-me" data-skin="square" data-color="blue" id="remember" type="checkbox"></div> <label for="remember">记住密码</label>
+                    </div>*@
+
+                    <input type="submit" class="btn btn-primary" name="btn_submit" value=" 登 录 ">
+                    <div><div id="span_result" style="padding:6px;"></div></div>
+                    <div class="checkbox">
+                    </div>
+                </div>
+            </form>
+            <div class="forget">
+                <a href="javascript:;"><span>Copyright © 2016-2016 奇趣科技 All Rights Reserved </span></a>
+            </div>
+        </div>
+    </div>
+    @* 模板素材地址： http://www.17sucai.com/preview/2/2015-04-23/Bootstrap_Admin_Template/index.html*@
+</body>
+</html>

@@ -1,4 +1,5 @@
 ﻿using HWL.Entity;
+using HWL.Entity.Extends;
 using HWL.Service.Group.Body;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,17 @@ namespace HWL.Service.Group.Service
                     user_id = f,
                     add_date = DateTime.Now
                 });
-                db.t_group_user.AddRange(users);
+
+                var existsUsers = db.t_group_user.Where(u => u.group_guid == this.request.GroupGuid).ToList();
+                GroupUserEqualityComparer comparer = new GroupUserEqualityComparer();
+                var noExistsUsers = users.Except<t_group_user>(existsUsers, comparer).ToList();
+                if(noExistsUsers==null||noExistsUsers.Count<=0)
+                {
+                    res.Status = ResultStatus.Success;
+                    return res;
+                }
+
+                db.t_group_user.AddRange(noExistsUsers);
                 db.SaveChanges();
                 res.Status = ResultStatus.Success;
             }
@@ -53,7 +64,7 @@ namespace HWL.Service.Group.Service
             this.request.GroupUserIds.RemoveAll(u => u <= 0);
             if (this.request.GroupUserIds.Count <= 0)
             {
-                throw new Exception("组成员不能为空");
+                throw new Exception("群组成员不能为空");
             }
         }
     }

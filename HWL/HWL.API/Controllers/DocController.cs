@@ -149,7 +149,7 @@ namespace HWL.API.Controllers
                     }
                 }
 
-                html += string.Format("<h1 style='display:inline'>{4}</h1> {0} - {1} <a href='/test/index.html' onclick=addReq(\'{0}\',\'{2}\') target='_blank'>测试</a><br /> request:{2} <br /> response:{3} <br /><br /><br />", method.Name, desc, requestStr, returnStr, idx);
+                html += string.Format("<h1 style='display:inline'>{4}</h1> {0} - {1} <a href='/test/index.html' onclick=addReq(\'{0}\',\'{2}\') target='_blank'>测试</a><br /> request:{2} <br /> <div style='width:100%;word-wrap:break-word;'>response:{3}</div> <br /><br /><br />", method.Name, desc, requestStr, returnStr, idx);
                 idx++;
             }
 

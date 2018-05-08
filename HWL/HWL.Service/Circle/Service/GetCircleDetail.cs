@@ -40,7 +40,7 @@ namespace HWL.Service.Circle.Service
             var model = db.t_circle.Where(c => c.id == this.request.CircleId).FirstOrDefault();
             if (model == null)
             {
-                throw new Exception("信息不存在");
+                return res;
             }
 
             res.CircleInfo = new CircleInfo()
@@ -57,7 +57,7 @@ namespace HWL.Service.Circle.Service
                 LinkTitle = model.link_title,
                 LinkUrl = model.link_url,
                 PublishTime = GenericUtility.formatDate(model.publish_time),
-                UpdateTime = GenericUtility.formatDate2(model.publish_time),
+                UpdateTime = GenericUtility.formatDate2(model.update_time),
                 PublishUserId = model.user_id,
                 CommentInfos = CircleUtility.GetComments(model.id, 3),
                 LikeInfos = CircleUtility.GetLikes(model.id)

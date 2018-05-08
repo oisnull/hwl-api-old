@@ -27,6 +27,7 @@ namespace HWL.Service.Near.Body
 
     public class AddNearCommentResponseBody
     {
+        public int NearCirclePublishUserId { get; set; }
         public NearCircleCommentInfo NearCircleCommentInfo { get; set; }
     }
 }

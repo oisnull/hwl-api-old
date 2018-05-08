@@ -56,4 +56,11 @@ namespace HWL.Entity.Extends
         public string LikeUserImage { get; set; }
         public string LikeTime { get; set; }
     }
+
+
+    public class NearCircleMatchInfo
+    {
+        public int NearCircleId { get; set; }
+        public string UpdateTime { get; set; }
+    }
 }

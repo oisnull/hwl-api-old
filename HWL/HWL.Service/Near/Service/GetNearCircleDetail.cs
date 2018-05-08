@@ -38,7 +38,7 @@ namespace HWL.Service.Near.Service
             var model = db.t_near_circle.Where(c => c.id == this.request.NearCircleId).FirstOrDefault();
             if (model == null)
             {
-                throw new Exception("信息不存在");
+                return res;
             }
 
             res.NearCircleInfo = new NearCircleInfo()

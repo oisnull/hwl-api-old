@@ -24,6 +24,7 @@ namespace HWL.Service.Near.Body
         /// 获取数据的条数
         /// </summary>
         public int Count { get; set; }
+        public List<NearCircleMatchInfo> NearCircleMatchInfos { get; set; }
     }
 
     public class GetNearCircleInfosResponseBody

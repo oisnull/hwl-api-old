@@ -3,16 +3,13 @@ android:
 1,user circle index 图片布局 V
 2,user circle details V
 3,user index circles list(top 3 V
-4,user group manage(list/add/delete)
-5,app share page(html)
-6,app download/update
-7,mqtt long connection optimization
-8,my circle info comment/like message push
-9,my message push manage
-10,image photo view
+4,user group manage(list/add/delete) V
+5,app share page(html) 6
+6,app download/update 5
+7,mqtt long connection optimization 4
+8,my circle info comment/like message push 1
+9,my message push manage 1
+10,image photo view 2
 11,chat group/user setting V
-12,move right and exit activity
-13,receive mq message of sound tip
-
-net api:
-1,circle comment/like mq message send
+12,move right and exit activity 7
+13,receive mq message of sound tip 3

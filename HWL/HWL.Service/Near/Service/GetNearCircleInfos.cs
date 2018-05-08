@@ -93,11 +93,13 @@ namespace HWL.Service.Near.Service
                 PublishUserId = c.user_id,
             }).ToList();
 
-            BindInfo(res.NearCircleInfos);
+            if (this.request.NearCircleMatchInfos != null && this.request.NearCircleMatchInfos.Count > 0)
+            {
+                int removeCount = res.NearCircleInfos.RemoveAll(r => this.request.NearCircleMatchInfos.Exists(c => c.NearCircleId == r.NearCircleId && c.UpdateTime == r.UpdateTime));
+            }
+            if (res.NearCircleInfos == null || res.NearCircleInfos.Count <= 0) return res;
 
-            //BindLike(res.NearCircleInfos);
-            //BindImages(res.NearCircleInfos, res.NearCircleInfos.Where(n => n.ContentType == CircleContentType.Image).Select(n => n.NearCircleId).ToList());
-            //BindUser(res.NearCircleInfos, res.NearCircleInfos.Select(u => u.PublishUserId).Distinct().ToList());
+            BindInfo(res.NearCircleInfos);
 
             return res;
         }

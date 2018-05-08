@@ -1,5 +1,6 @@
 ﻿using HWL.Entity;
 using HWL.Entity.Extends;
+using HWL.Service.Generic;
 using HWL.Service.Near.Body;
 using HWL.Service.User;
 using System;
@@ -42,7 +43,7 @@ namespace HWL.Service.Near.Service
                 var circleModel = db.t_near_circle.Where(c => c.id == this.request.NearCircleId).FirstOrDefault();
                 if (circleModel == null)
                 {
-                    throw new Exception("信息不存在");
+                    throw new Exception("你评论的信息已经被用户删除");
                 }
 
                 t_near_circle_comment model = new t_near_circle_comment()
@@ -64,7 +65,7 @@ namespace HWL.Service.Near.Service
                 {
                     CommentId = model.id,
                     Content = model.content_info,
-                    CommentTime = model.comment_time.ToString("yyyy-MM-dd HH:mm:ss"),
+                    CommentTime = GenericUtility.formatDate(model.comment_time),
                     CommentUserId = model.comment_user_id,
                     //CommentUserImage = model.com,
                     //CommentUserName = model.content_info,
@@ -90,31 +91,8 @@ namespace HWL.Service.Near.Service
                     }
                 }
 
+                res.NearCirclePublishUserId = circleModel.user_id;
                 res.NearCircleCommentInfo = info;
-                //List<UserShowInfo> users = db.t_user.Where(u => u.id == model.com_user_id || u.id == model.reply_user_id).Select(u => new UserShowInfo
-                //{
-                //    UserId = u.id,
-                //    HeadImage = u.head_image,
-                //    ShowName = u.nick_name,
-                //}).ToList();
-
-                //UserShowInfo comUser = null;
-                //UserShowInfo replyUser = null;
-                //if (users != null && users.Count > 0)
-                //{
-                //    comUser = users.Where(u => u.UserId == model.com_user_id).FirstOrDefault();
-                //    replyUser = users.Where(u => u.UserId == model.reply_user_id).FirstOrDefault();
-                //}
-
-                //res.CommentInfo = new CommentInfo
-                //{
-                //    Id = model.id,
-                //    CircleId = model.circle_id,
-                //    CommentTimeDesc = model.comment_time.ToString("yyyy年MM月dd日 HH:mm"),
-                //    CommentUserInfo = comUser,
-                //    ReplyUserInfo = replyUser,
-                //    Content = model.com_content,
-                //};
             }
 
             return res;

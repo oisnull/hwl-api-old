@@ -31,7 +31,12 @@ namespace HWL.Service.Generic.Service
             using (HWLEntities db = new HWLEntities())
             {
                 var version = db.t_app_version.OrderByDescending(v => v.publish_time).FirstOrDefault();
-                if (version.app_version != this.request.OldVersion)
+                if (version == null)
+                {
+                    res.IsNewVersion = false;
+                    return res;
+                }
+                if (GenericUtility.CompareVersion(this.request.OldVersion, version.app_version) == -1)
                 {
                     res.IsNewVersion = true;
                     res.NewVersion = version.app_version;

@@ -1,0 +1,38 @@
+﻿<div class="container">
+    <header></header>
+    <content></content>
+    <footer></footer>
+</div>
+
+<style type="text/css">
+    .container {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        background-color: rebeccapurple;
+    }
+
+    header {
+        background: #cecece;
+        min-height: 100px;
+    }
+
+    content {
+        background: #bbbbbb;
+        flex: 1; /* 1 代表盡可能最大，會自動填滿除了 header footer 以外的空間 */
+    }
+
+    footer {
+        background: #333333;
+        min-height: 100px;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+        margin: 0;
+    }
+</style>

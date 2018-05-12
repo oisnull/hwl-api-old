@@ -2,14 +2,18 @@
 android:
 1,user circle index 图片布局 V
 2,user circle details V
-3,user index circles list(top 3 V
+3,user index circles list(top 3) V
 4,user group manage(list/add/delete) V
-5,app share page(html) 5
-6,app download/update 4
+5,app share page(html) V
+6,app download/update V
 7,mqtt long connection optimization 6
 8,my circle info comment/like message push V
 9,my message push manage V
 10,image photo view V
 11,chat group/user setting V
-12,move right and exit activity 7
+12,move right and exit activity V
 13,receive mq message of sound tip V
+
+2018-05-12:
+14,集成第三方登录（QQ，微信，SINA微薄）
+15,实现附近信息/圈子信息删除 

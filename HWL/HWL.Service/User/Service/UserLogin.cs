@@ -1,4 +1,5 @@
 ﻿using HWL.Entity;
+using HWL.RabbitMQ.android_message;
 using HWL.Service.User.Body;
 using System;
 using System.Collections.Generic;
@@ -47,8 +48,17 @@ namespace HWL.Service.User.Service
                 if (user.status != UserStatus.Normal) throw new Exception("用户被禁用");
                 if (user.password != this.request.Password) throw new Exception("密码错误");//CommonCs.GetMd5Str32(this.request.Password)
 
-                string userToken = UserUtility.BuildToken(user.id);
                 Redis.UserAction userAction = new Redis.UserAction();
+                //获取用户之前是否已经登录过，如果登录过则需要发送消息通知用户在其它位置登录
+                string oldToken = userAction.GetUserToken(user.id);
+                if (!string.IsNullOrEmpty(oldToken))
+                {
+                    AndroidChatMessage.SendLogoutMessage(user.id, oldToken, "您的帐号已经在其它位置登录,如果不是您本人操作,建议重新登录后立即更换密码!");
+                }
+
+                //清除用户之前登录用过的TOKEN
+                userAction.removeUserToken(user.id);
+                string userToken = UserUtility.BuildToken(user.id);
                 bool succ = userAction.SaveUserToken(user.id, userToken);
                 if (!succ) throw new Exception("用户登录token生成失败");
 

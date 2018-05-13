@@ -247,6 +247,28 @@ namespace HWL.Redis
             return token;
         }
 
+        //后期需要应用事务
+        public bool removeUserToken(int userId)
+        {
+            if (userId <= 0) return false;
+            string token = GetUserToken(userId);
+            if (string.IsNullOrEmpty(token)) return true;
+
+            base.DbNum = USER_TOKEN_DB;
+            bool succ = false;
+            base.Exec(db =>
+            {
+                succ = db.KeyDelete(userId.ToString());
+            });
+
+            base.DbNum = TOKEN_USER_DB;
+            base.Exec(db =>
+            {
+                succ = db.KeyDelete(token);
+            });
+            return succ;
+        }
+
         #endregion
 
         #region 用户group操作

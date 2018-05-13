@@ -14,7 +14,7 @@ namespace HWL.RabbitMQ.android_message
             return string.Format("user-{0}-queue", userId);
         }
 
-        public static void SendGroup(int toUserId, string gruopGruid, string content)
+        public static void SendNearGroupWelcome(int toUserId, string gruopGruid, string content)
         {
             ChatGroupMessageBean model = new ChatGroupMessageBean()
             {
@@ -29,13 +29,6 @@ namespace HWL.RabbitMQ.android_message
                 sendTime = DateTime.Now
             };
 
-            //[message_type,message_content]
-            //byte[] bodyBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(model));
-            //byte[] messageBytes = new byte[bodyBytes.Length + 1];
-            //messageBytes[0] = MQ_Constant.CHAT_GROUP_MESSAGE;
-            //bodyBytes.CopyTo(messageBytes, 1);
-
-
             byte[] userIdBytes = BitConverter.GetBytes(model.fromUserId);
             byte[] groupIdBytes = Encoding.UTF8.GetBytes(model.groupGuid);
             byte[] contentBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(model));
@@ -49,6 +42,25 @@ namespace HWL.RabbitMQ.android_message
             contentBytes.CopyTo(messageBytes, 3 + userIdBytes.Length + groupIdBytes.Length);
 
             MQManager.SendMessage(GetQueueName(toUserId), messageBytes);
+        }
+
+        public static void SendLogoutMessage(int userId, string token, string hintContent)
+        {
+            var model = new
+            {
+                userId = userId,
+                token = token,
+                loginTime = DateTime.Now,
+                hintContent = hintContent
+            };
+
+            byte[] contentBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(model));
+            byte[] messageBytes = new byte[1 + contentBytes.Length];
+
+            messageBytes[0] = MQConstant.USER_LOGOUT_MESSAGE;
+            contentBytes.CopyTo(messageBytes, 1);
+
+            MQManager.SendMessage(GetQueueName(userId), messageBytes);
         }
 
     }

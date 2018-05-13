@@ -173,7 +173,7 @@ namespace HWL.Service.User.Service
                 groupAction.SaveGroupUser(res.UserGroupGuid, upos.user_id);
 
                 //发送mq welcome组消息给用户
-                RabbitMQ.android_message.AndroidChatMessage.SendGroup(this.request.UserId, res.UserGroupGuid, "欢迎加入HWL附近聊天组");
+                RabbitMQ.android_message.AndroidChatMessage.SendNearGroupWelcome(this.request.UserId, res.UserGroupGuid, "欢迎加入HWL附近聊天组");
 
                 //返回组用户列表
                 List<int> userIds = groupAction.GetGroupUserIds(res.UserGroupGuid);

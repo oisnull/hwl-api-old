@@ -40,7 +40,7 @@ namespace HWL.Service.Circle.Service
                 var circleModel = db.t_circle.Where(c => c.id == this.request.CircleId).FirstOrDefault();
                 if (circleModel == null)
                 {
-                    throw new Exception("信息不存在");
+                    throw new Exception("你点赞的信息已经被用户删除");
                 }
 
                 t_circle_like model = db.t_circle_like.Where(l => l.circle_id == this.request.CircleId && l.like_user_id == this.request.LikeUserId).FirstOrDefault();

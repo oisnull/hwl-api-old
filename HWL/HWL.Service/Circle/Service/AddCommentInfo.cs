@@ -42,7 +42,7 @@ namespace HWL.Service.Circle.Service
                 var circleModel = db.t_circle.Where(c => c.id == this.request.CircleId).FirstOrDefault();
                 if (circleModel == null)
                 {
-                    throw new Exception("信息不存在");
+                    throw new Exception("你评论的信息已经被用户删除");
                 }
 
                 t_circle_comment model = new t_circle_comment()

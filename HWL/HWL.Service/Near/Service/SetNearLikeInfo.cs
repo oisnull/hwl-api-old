@@ -40,7 +40,7 @@ namespace HWL.Service.Near.Service
                 var circleModel = db.t_near_circle.Where(c => c.id == this.request.NearCircleId).FirstOrDefault();
                 if (circleModel == null)
                 {
-                    throw new Exception("信息不存在");
+                    throw new Exception("你点赞的信息已经被用户删除");
                 }
 
                 t_near_circle_like model = db.t_near_circle_like.Where(l => l.near_circle_id == this.request.NearCircleId && l.like_user_id == this.request.LikeUserId).FirstOrDefault();

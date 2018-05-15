@@ -137,7 +137,9 @@
     <Compile Include="User\Body\SearchUserBody.cs" />
     <Compile Include="User\Body\SetFriendRemarkBody.cs" />
     <Compile Include="User\Body\SetUserInfoBody.cs" />
+    <Compile Include="User\Body\ResetUserPasswordBody.cs" />
     <Compile Include="User\Body\SetUserPosBody.cs" />
+    <Compile Include="User\Body\SetUserPasswordBody.cs" />
     <Compile Include="User\Body\UserRegisterBody.cs" />
     <Compile Include="User\Body\UserLoginBody.cs" />
     <Compile Include="User\Service\AddFriend.cs" />
@@ -148,11 +150,13 @@
     <Compile Include="User\Service\SetFriendRemark.cs" />
     <Compile Include="User\Service\SetUserHeadImage.cs" />
     <Compile Include="User\Service\SetUserLifeNotes.cs" />
+    <Compile Include="User\Service\ResetUserPassword.cs" />
     <Compile Include="User\Service\SetUserSex.cs" />
     <Compile Include="User\Service\SetUserPos.cs" />
     <Compile Include="User\Service\SetUserName.cs" />
     <Compile Include="User\Service\SetUserSymbol.cs" />
     <Compile Include="User\Service\UserLogin.cs" />
+    <Compile Include="User\Service\SetUserPassword.cs" />
     <Compile Include="User\Service\UserRegister.cs" />
     <Compile Include="User\UserUtility.cs" />
   </ItemGroup>

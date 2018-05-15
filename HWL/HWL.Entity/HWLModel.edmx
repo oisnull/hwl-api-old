@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="login_name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="login_pwd" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="real_name" Type="nvarchar" MaxLength="30" Nullable="false" />
@@ -34,17 +34,17 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="content_type" Type="int" Nullable="false" />
           <Property Name="circle_content" Type="nvarchar" MaxLength="4000" />
-          <Property Name="publish_time" Type="datetime" Nullable="false" />
           <Property Name="pos_id" Type="int" Nullable="false" />
+          <Property Name="pos_desc" Type="nvarchar" MaxLength="50" />
           <Property Name="lat" Type="float" Nullable="false" />
+          <Property Name="lon" Type="float" Nullable="false" />
           <Property Name="link_url" Type="nvarchar" MaxLength="200" />
           <Property Name="link_title" Type="nvarchar" MaxLength="300" />
           <Property Name="link_image" Type="nvarchar" MaxLength="200" />
           <Property Name="image_count" Type="int" Nullable="false" />
           <Property Name="comment_count" Type="int" Nullable="false" />
           <Property Name="like_count" Type="int" Nullable="false" />
-          <Property Name="pos_desc" Type="nvarchar" MaxLength="50" />
-          <Property Name="lon" Type="float" Nullable="false" />
+          <Property Name="publish_time" Type="datetime" Nullable="false" />
           <Property Name="update_time" Type="datetime" />
         </EntityType>
         <EntityType Name="t_circle_comment">
@@ -136,7 +136,6 @@
           <Property Name="link_title" Type="nvarchar" MaxLength="100" />
           <Property Name="link_url" Type="nvarchar" MaxLength="200" />
           <Property Name="link_image" Type="nvarchar" MaxLength="200" />
-          <Property Name="publish_time" Type="datetime" Nullable="false" />
           <Property Name="pos_id" Type="int" Nullable="false" />
           <Property Name="pos_desc" Type="nvarchar" MaxLength="50" />
           <Property Name="lon" Type="float" Nullable="false" />
@@ -144,6 +143,7 @@
           <Property Name="image_count" Type="int" Nullable="false" />
           <Property Name="comment_count" Type="int" Nullable="false" />
           <Property Name="like_count" Type="int" Nullable="false" />
+          <Property Name="publish_time" Type="datetime" Nullable="false" />
           <Property Name="update_time" Type="datetime" />
         </EntityType>
         <EntityType Name="t_near_circle_comment">
@@ -190,7 +190,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="symbol" Type="nvarchar" MaxLength="20" />
           <Property Name="name" Type="nvarchar" MaxLength="30" />
           <Property Name="mobile" Type="nvarchar" MaxLength="11" Nullable="false" />
@@ -212,7 +212,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="user_account" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="code_type" Type="int" Nullable="false" />

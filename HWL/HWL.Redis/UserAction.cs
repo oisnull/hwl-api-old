@@ -248,7 +248,7 @@ namespace HWL.Redis
         }
 
         //后期需要应用事务
-        public bool removeUserToken(int userId)
+        public bool RemoveUserToken(int userId)
         {
             if (userId <= 0) return false;
             string token = GetUserToken(userId);

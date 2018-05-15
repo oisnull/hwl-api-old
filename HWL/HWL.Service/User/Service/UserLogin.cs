@@ -57,7 +57,7 @@ namespace HWL.Service.User.Service
                 }
 
                 //清除用户之前登录用过的TOKEN
-                userAction.removeUserToken(user.id);
+                userAction.RemoveUserToken(user.id);
                 string userToken = UserUtility.BuildToken(user.id);
                 bool succ = userAction.SaveUserToken(user.id, userToken);
                 if (!succ) throw new Exception("用户登录token生成失败");

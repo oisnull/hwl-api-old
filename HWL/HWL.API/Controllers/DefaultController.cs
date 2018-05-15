@@ -46,6 +46,20 @@ namespace HWL.API.Controllers
         }
 
         [HttpPost]
+        [Description("找回密码")]
+        public Response<SetUserPasswordResponseBody> SetUserPassword(Request<SetUserPasswordRequestBody> request)
+        {
+            return UserService.SetUserPassword(request);
+        }
+
+        [HttpPost]
+        [Description("重置密码")]
+        public Response<ResetUserPasswordResponseBody> ResetUserPassword(Request<ResetUserPasswordRequestBody> request)
+        {
+            return UserService.ResetUserPassword(request);
+        }
+
+        [HttpPost]
         [Description("设置用户位置信息")]
         public Response<SetUserPosResponseBody> SetUserPos(Request<SetUserPosRequestBody> request)
         {

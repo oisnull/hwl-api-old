@@ -26,6 +26,24 @@ namespace HWL.Service
             });
         }
 
+        public static Response<SetUserPasswordResponseBody> SetUserPassword(Request<SetUserPasswordRequestBody> request)
+        {
+            var context = new ServiceContext<SetUserPasswordRequestBody>(request, new RequestValidate(false, false));
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetUserPassword(r.Body).Execute();
+            });
+        }
+
+        public static Response<ResetUserPasswordResponseBody> ResetUserPassword(Request<ResetUserPasswordRequestBody> request)
+        {
+            var context = new ServiceContext<ResetUserPasswordRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new ResetUserPassword(r.Body).Execute();
+            });
+        }
+
         public static Response<SetUserPosResponseBody> SetUserPos(Request<SetUserPosRequestBody> request)
         {
             var context = new ServiceContext<SetUserPosRequestBody>(request, new RequestValidate());

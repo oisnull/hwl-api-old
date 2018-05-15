@@ -85,7 +85,7 @@ namespace HWL.Service.User
                 DateTime currTime = DateTime.Now;
                 t_user_code model = new t_user_code()
                 {
-                    id = 0,
+                    //id = 0,
                     code = code,
                     code_type = codeType,
                     create_date = currTime,

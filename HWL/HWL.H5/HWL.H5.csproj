@@ -89,10 +89,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\banner.png" />
     <Content Include="Content\images\bg_share.png" />
     <Content Include="Content\images\btn.png" />
+    <Content Include="Content\images\join-box1.png" />
+    <Content Include="Content\images\join-box2.png" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\scripts\jquery.jslides.js" />
+    <Content Include="Content\scripts\jquery.min.js" />
+    <Content Include="Content\scripts\jquery.SuperSlide.js" />
+    <Content Include="Content\scripts\layer\demo.html" />
+    <Content Include="Content\scripts\layer\layer.js" />
+    <Content Include="Content\scripts\layer\skin\default\icon-ext.png" />
+    <Content Include="Content\scripts\layer\skin\default\icon.png" />
+    <Content Include="Content\scripts\layer\skin\default\layer.css" />
+    <Content Include="Content\scripts\layer\skin\default\loading-0.gif" />
+    <Content Include="Content\scripts\layer\skin\default\loading-1.gif" />
+    <Content Include="Content\scripts\layer\skin\default\loading-2.gif" />
     <Content Include="Content\share.css" />
+    <Content Include="Content\index.css" />
+    <Content Include="favicon .ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -109,6 +125,7 @@
     <Content Include="packages.config" />
     <Content Include="Views\Home\ShareApp.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

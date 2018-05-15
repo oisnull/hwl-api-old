@@ -11,7 +11,7 @@ namespace HWL.H5.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return Content("你在找什么？？？");
+            return View();
         }
 
         public ActionResult ShareApp()

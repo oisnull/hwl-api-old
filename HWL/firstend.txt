@@ -17,13 +17,17 @@ android:
 2018-05-12:
 14,集成第三方登录（QQ，微信，SINA微薄）审核中
 15,实现附近信息/圈子信息删除 V
-16,隐私设置,密码重置,消息提示设置
+16,隐私设置,密码重置,消息提示设置 V
 17,greendao多帐号登录后串号的bug处理
 18,HWL官网搭建
-19,聊天界面优化（需要长期优化）
+19,聊天界面优化（需要长期优化） https://blog.csdn.net/hbyh632/article/details/78121370
 20,线上测试环境搭建
 
 
 2018-05-15:
 国外ngrok: https://ngrok.com/
 国内ngrok: https://www.ngrok.cc/
+
+wechat:
+wxec3447a989ac662d
+8852ad6cb65c62768f840c0c8f4b554f

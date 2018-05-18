@@ -27,6 +27,7 @@ android:
 2018-05-15:
 国外ngrok: https://ngrok.com/
 国内ngrok: https://www.ngrok.cc/
+opensourceframe https://blog.csdn.net/hbyh632/article/details/78121370
 
 2018-05-18:
 21,图片发送优化
@@ -34,8 +35,7 @@ android:
 23,发送(near/circle)评论回复MQ消息
 24,退出Chat后,如果消息没有发送完毕,可以继续发送
 25,群/用户消息设置,主页显示屏蔽的图标
-26,二维码分享Activity中添加以其它方式分享
+26,二维码分享Activity中添加以其它方式分享 V
 27,显示用户备注,如果设置了备注,则以用户备注为准
 28,用户信息展示界面,需要区分用户的name/remark/symbol
-
-opensourceframe https://blog.csdn.net/hbyh632/article/details/78121370
+29,显示时间处理

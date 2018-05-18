@@ -19,6 +19,11 @@ namespace HWL.H5.Controllers
             return View();
         }
 
+        public ActionResult QRShare()
+        {
+            return View();
+        }
+
         public ActionResult Test()
         {
             return View();

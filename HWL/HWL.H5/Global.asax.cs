@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HWL.H5.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,8 @@ namespace HWL.H5
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            QRCodeBuild.creatQR();
         }
     }
 }

@@ -50,8 +50,8 @@ a {text-decoration:none;}
 .banbox { width:550px; height:auto; float:right; padding-top:120px;}
 
 .banbox h1 { font-size:32px; color:#ffad00; font-weight:normal;}
-.banbox h2 { font-size:48px; color:#fff; font-weight:normal; padding:15px 0;}
-.banbox h3 { font-size:18px; color:#bdfff2; font-weight:normal;}
+.banbox h2 { font-size:24px; color:#fff; font-weight:normal; padding:15px 0;}
+.banbox h3 { font-size:16px; color:#bdfff2; font-weight:normal;}
 .banbox a { width:220px; height:50px; display:block; line-height:50px; font-size:18px; color:#18bd9c; background:#fff; text-align:center; border-radius:5px; margin-top:50px;}
 
 
@@ -315,22 +315,24 @@ a {text-decoration:none;}
 .contact-posi ul { padding:20px 0 0 0;}
 .contact-posi ul li { font-size:14px; color:#666; line-height:32px;}
 
-/*join.html 渠道加盟*/
+/*join.html*/
 
 .join { background:#f2f2f2;}
-.join-box { width:1200px; margin:0 auto;}
+.join-box { width:1200px; margin:0 auto;display:flex;flex-direction:row;}
 .join-list1 { background:url(../content/images/join-box1.png) no-repeat right center; padding:70px 560px 70px 30px;}
 .join-list1 h1 { font-size:30px; color:#333; font-weight:normal;}
 .join-list1 ul { padding-top:20px;}
 .join-list1 ul li { font-size:14px; color:#666; padding:10px 0 10px 10px; position:relative;}
 .join-list1 ul li span { width:4px; height:4px; display:block; background:#57d9bf; position:absolute; left:0; top:19px;}
 
-.join-list2 { background:url(../content/images/join-box2.png) no-repeat left center; padding:70px 30px 70px 710px;}
 .join-list2 h1 { font-size:30px; color:#333; font-weight:normal;}
 .join-list2 ul { padding-top:20px;}
 .join-list2 ul li { font-size:14px; color:#666; padding:10px 0 10px 10px; position:relative;}
 .join-list2 ul li span { width:4px; height:4px; display:block; background:#57d9bf; position:absolute; left:0; top:19px;}
 
+.join-qr{padding:70px 70px 70px 30px;}
+.join-qr p{text-align:center;margin-top:20px;}
+.join-qr-desc{padding-top:30px;}
 
 .process { background:#f2f2f2; padding:80px 0;}
 .process-box { width:1200px; margin:0 auto;}

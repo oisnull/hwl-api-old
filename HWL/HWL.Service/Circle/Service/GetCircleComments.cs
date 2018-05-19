@@ -19,10 +19,10 @@ namespace HWL.Service.Circle.Service
         protected override void ValidateRequestParams()
         {
             base.ValidateRequestParams();
-            //if (this.request.UserId <= 0)
-            //{
-            //    throw new ArgumentNullException("UserId");
-            //}
+            if (this.request.UserId <= 0)
+            {
+                throw new ArgumentNullException("UserId");
+            }
             if (this.request.CircleId <= 0)
             {
                 throw new ArgumentNullException("CircleId");
@@ -55,6 +55,7 @@ namespace HWL.Service.Circle.Service
 
                 var userIds = comments.Select(c => c.CommentUserId).Union(comments.Select(c => c.ReplyUserId)).ToList();
                 var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
+                var friendList = db.t_user_friend.Where(f => f.user_id == this.request.UserId && userIds.Contains(f.friend_user_id)).Select(f => new { f.friend_user_id, f.friend_user_remark }).ToList();
 
                 comments.ForEach(f =>
                 {
@@ -77,14 +78,16 @@ namespace HWL.Service.Circle.Service
                         if (f.CommentUserId > 0)
                         {
                             var comUser = userList.Where(u => u.id == f.CommentUserId).FirstOrDefault();
-                            model.CommentUserName = UserUtility.GetShowName(comUser.name, comUser.symbol);
+                            string friendRemark = friendList != null ? friendList.Where(r => r.friend_user_id == f.CommentUserId).Select(r => r.friend_user_remark).FirstOrDefault() : null;
+                            model.CommentUserName = UserUtility.GetShowName(friendRemark, comUser.name);
                             model.CommentUserImage = comUser.head_image;
                         }
 
                         if (f.ReplyUserId > 0)
                         {
                             var repUser = userList.Where(u => u.id == f.ReplyUserId).FirstOrDefault();
-                            model.ReplyUserName = UserUtility.GetShowName(repUser.name, repUser.symbol);
+                            string friendRemark = friendList != null ? friendList.Where(r => r.friend_user_id == f.ReplyUserId).Select(r => r.friend_user_remark).FirstOrDefault() : null;
+                            model.ReplyUserName = UserUtility.GetShowName(friendRemark, repUser.name);
                             model.ReplyUserImage = repUser.head_image;
                         }
                     }

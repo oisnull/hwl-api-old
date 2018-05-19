@@ -139,7 +139,8 @@ namespace HWL.Service.Circle.Service
                 userIds.AddRange(commentList.Select(u => u.com_user_id).ToList());
                 userIds.AddRange(commentList.Select(c => c.reply_user_id).ToList());
             }
-            var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
+            var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.head_image }).ToList();
+            var friendList = db.t_user_friend.Where(f => f.user_id == this.request.UserId && userIds.Contains(f.friend_user_id)).Select(f => new { f.friend_user_id, f.friend_user_remark }).ToList();
 
             foreach (var item in infos)
             {
@@ -158,7 +159,8 @@ namespace HWL.Service.Circle.Service
                     var user = userList.Where(u => u.id == item.PublishUserId).FirstOrDefault();
                     if (user != null)
                     {
-                        item.PublishUserName = UserUtility.GetShowName(user.name, user.symbol);
+                        string friendRemark = friendList != null ? friendList.Where(f => f.friend_user_id == item.PublishUserId).Select(f => f.friend_user_remark).FirstOrDefault() : null;
+                        item.PublishUserName = UserUtility.GetShowName(friendRemark, user.name);
                         item.PublishUserImage = user.head_image;
                     }
                 }
@@ -181,7 +183,8 @@ namespace HWL.Service.Circle.Service
                                 var likeUser = userList.Where(u => u.id == l.like_user_id).FirstOrDefault();
                                 if (likeUser != null)
                                 {
-                                    model.LikeUserName = UserUtility.GetShowName(likeUser.name, likeUser.symbol);
+                                    string friendRemark = friendList != null ? friendList.Where(f => f.friend_user_id == l.like_user_id).Select(f => f.friend_user_remark).FirstOrDefault() : null;
+                                    model.LikeUserName = UserUtility.GetShowName(friendRemark, likeUser.name);
                                     model.LikeUserImage = likeUser.head_image;
                                 }
                             }
@@ -214,7 +217,8 @@ namespace HWL.Service.Circle.Service
                                     var comUser = userList.Where(u => u.id == c.com_user_id).FirstOrDefault();
                                     if (comUser != null)
                                     {
-                                        model.CommentUserName = UserUtility.GetShowName(comUser.name, comUser.symbol);
+                                        string friendRemark = friendList != null ? friendList.Where(f => f.friend_user_id == c.com_user_id).Select(f => f.friend_user_remark).FirstOrDefault() : null;
+                                        model.CommentUserName = UserUtility.GetShowName(friendRemark, comUser.name);
                                         model.CommentUserImage = comUser.head_image;
                                     }
                                 }
@@ -224,7 +228,8 @@ namespace HWL.Service.Circle.Service
                                     var repUser = userList.Where(u => u.id == c.reply_user_id).FirstOrDefault();
                                     if (repUser != null)
                                     {
-                                        model.ReplyUserName = UserUtility.GetShowName(repUser.name, repUser.symbol);
+                                        string friendRemark = friendList != null ? friendList.Where(f => f.friend_user_id == c.reply_user_id).Select(f => f.friend_user_remark).FirstOrDefault() : null;
+                                        model.ReplyUserName = UserUtility.GetShowName(friendRemark, repUser.name);
                                         model.ReplyUserImage = repUser.head_image;
                                     }
                                 }

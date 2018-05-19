@@ -56,8 +56,8 @@ namespace HWL.Service.Near.Service
                 PublishTime = GenericUtility.formatDate(model.publish_time),
                 UpdateTime = GenericUtility.formatDate2(model.update_time),
                 PublishUserId = model.user_id,
-                CommentInfos = NearUtility.GetNearComments(model.id,3),
-                LikeInfos = NearUtility.GetNearLikes(model.id)
+                CommentInfos = NearUtility.GetNearComments(this.request.UserId, model.id, 3),
+                LikeInfos = NearUtility.GetNearLikes(this.request.UserId, model.id)
             };
 
             BindInfo(res.NearCircleInfo);
@@ -75,7 +75,8 @@ namespace HWL.Service.Near.Service
             }).ToList();
 
             var user = db.t_user.Where(u => u.id == info.PublishUserId).FirstOrDefault();
-            info.PublishUserName = UserUtility.GetShowName(user.name, user.symbol);
+            string friendRemark = db.t_user_friend.Where(f => f.user_id == this.request.UserId && f.friend_user_id == info.PublishUserId).Select(f => f.friend_user_remark).FirstOrDefault();
+            info.PublishUserName = UserUtility.GetShowName(friendRemark, user.name);
             info.PublishUserImage = user.head_image;
             info.IsLiked = db.t_near_circle_like.Where(l => l.near_circle_id == info.NearCircleId && l.like_user_id == this.request.UserId && l.is_delete == false).Select(l => l.id).FirstOrDefault() > 0 ? true : false;
         }

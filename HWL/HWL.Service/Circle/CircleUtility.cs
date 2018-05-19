@@ -12,12 +12,13 @@ namespace HWL.Service.Circle
 {
     public class CircleUtility
     {
-        public static List<CircleCommentInfo> GetComments(int CircleId, int count = 30)
+        public static List<CircleCommentInfo> GetComments(int userId, int circleId, int count = 30)
         {
-            if (CircleId <= 0) return null;
+            if (circleId <= 0) return null;
             GetCircleCommentsResponseBody response = new GetCircleComments(new GetCircleCommentsRequestBody()
             {
-                CircleId = CircleId,
+                UserId = userId,
+                CircleId = circleId,
                 LastCommentId = 0,
                 Count = count
             }).Execute();
@@ -25,11 +26,12 @@ namespace HWL.Service.Circle
             return response.CircleCommentInfos;
         }
 
-        public static List<CircleLikeInfo> GetLikes(int CircleId)
+        public static List<CircleLikeInfo> GetLikes(int userId, int CircleId)
         {
             if (CircleId <= 0) return null;
             GetCircleLikesResponseBody response = new GetCircleLikes(new GetCircleLikesRequestBody()
             {
+                UserId = userId,
                 CircleId = CircleId,
             }).Execute();
             if (response == null || response.CircleLikeInfos == null || response.CircleLikeInfos.Count <= 0) return null;

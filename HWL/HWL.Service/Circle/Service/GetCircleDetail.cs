@@ -51,7 +51,7 @@ namespace HWL.Service.Circle.Service
                 ContentType = model.content_type,
                 PosDesc = model.pos_desc,
                 //Images = null,
-                ImageCount=model.image_count,
+                ImageCount = model.image_count,
                 LikeCount = model.like_count,
                 LinkImage = model.link_image,
                 LinkTitle = model.link_title,
@@ -59,8 +59,8 @@ namespace HWL.Service.Circle.Service
                 PublishTime = GenericUtility.formatDate(model.publish_time),
                 UpdateTime = GenericUtility.formatDate2(model.update_time),
                 PublishUserId = model.user_id,
-                CommentInfos = CircleUtility.GetComments(model.id, 3),
-                LikeInfos = CircleUtility.GetLikes(model.id)
+                CommentInfos = CircleUtility.GetComments(this.request.UserId, model.id, 3),
+                LikeInfos = CircleUtility.GetLikes(this.request.UserId, model.id)
             };
 
             BindInfo(res.CircleInfo);
@@ -78,7 +78,8 @@ namespace HWL.Service.Circle.Service
             }).ToList();
 
             var user = db.t_user.Where(u => u.id == info.PublishUserId).FirstOrDefault();
-            info.PublishUserName = UserUtility.GetShowName(user.name, user.symbol);
+            string friendRemark = db.t_user_friend.Where(f => f.user_id == this.request.UserId && f.friend_user_id == info.PublishUserId).Select(f => f.friend_user_remark).FirstOrDefault();
+            info.PublishUserName = UserUtility.GetShowName(friendRemark, user.name);
             info.PublishUserImage = user.head_image;
             info.IsLiked = db.t_circle_like.Where(l => l.circle_id == info.CircleId && l.like_user_id == this.request.UserId && l.is_delete == false).Select(l => l.id).FirstOrDefault() > 0 ? true : false;
         }

@@ -6,6 +6,7 @@ namespace HWL.Service.Near.Body
 {
     public class GetNearCommentsRequestBody
     {
+        public int UserId { get; set; }
         public int NearCircleId { get; set; }
         public int Count { get; set; }
         public int LastCommentId { get; set; }

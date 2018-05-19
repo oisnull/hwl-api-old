@@ -9,6 +9,7 @@ namespace HWL.Service.Circle.Body
 {
     public class GetCircleCommentsRequestBody
     {
+        public int UserId { get; set; }
         public int CircleId { get; set; }
         public int Count { get; set; }
         public int LastCommentId { get; set; }

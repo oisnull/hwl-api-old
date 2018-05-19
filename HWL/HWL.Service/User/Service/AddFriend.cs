@@ -113,7 +113,7 @@ namespace HWL.Service.User.Service
                 {
                     Id = friendUser.id,
                     HeadImage = friendUser.head_image,
-                    NameRemark = UserUtility.GetShowName(myFriendModel.friend_user_remark, friendUser.name, friendUser.symbol),
+                    NameRemark = UserUtility.GetShowName(myFriendModel.friend_user_remark, friendUser.name),
                     Country = db.t_province.Where(p => p.id == friendUser.register_country).Select(p => p.name).FirstOrDefault(),
                     Province = db.t_province.Where(p => p.id == friendUser.register_province).Select(p => p.name).FirstOrDefault(),
                     Symbol = friendUser.symbol,

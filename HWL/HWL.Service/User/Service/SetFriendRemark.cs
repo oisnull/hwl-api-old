@@ -26,10 +26,10 @@ namespace HWL.Service.User.Service
             {
                 throw new Exception("用户好友参数错误");
             }
-            if (string.IsNullOrEmpty(this.request.FriendUserRemark))
-            {
-                throw new Exception("好友备注不能为空");
-            }
+            //if (string.IsNullOrEmpty(this.request.FriendUserRemark))
+            //{
+            //    throw new Exception("好友备注不能为空");
+            //}
         }
 
         public override SetFriendRemarkResponseBody ExecuteCore()

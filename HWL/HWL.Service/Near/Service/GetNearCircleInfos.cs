@@ -127,7 +127,8 @@ namespace HWL.Service.Near.Service
                 userIds.AddRange(commentList.Select(u => u.comment_user_id).ToList());
                 userIds.AddRange(commentList.Select(c => c.reply_user_id).ToList());
             }
-            var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
+            var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.head_image }).ToList();
+            var friendList = db.t_user_friend.Where(f => f.user_id == this.request.UserId && userIds.Contains(f.friend_user_id)).Select(f => new { f.friend_user_id, f.friend_user_remark }).ToList();
 
             foreach (var item in infos)
             {
@@ -146,7 +147,8 @@ namespace HWL.Service.Near.Service
                     var user = userList.Where(u => u.id == item.PublishUserId).FirstOrDefault();
                     if (user != null)
                     {
-                        item.PublishUserName = UserUtility.GetShowName(user.name, user.symbol);
+                        string friendRemark = friendList != null ? friendList.Where(f => f.friend_user_id == item.PublishUserId).Select(f => f.friend_user_remark).FirstOrDefault() : null;
+                        item.PublishUserName = UserUtility.GetShowName(friendRemark, user.name);
                         item.PublishUserImage = user.head_image;
                     }
                 }
@@ -169,7 +171,8 @@ namespace HWL.Service.Near.Service
                                 var likeUser = userList.Where(u => u.id == l.like_user_id).FirstOrDefault();
                                 if (likeUser != null)
                                 {
-                                    model.LikeUserName = UserUtility.GetShowName(likeUser.name, likeUser.symbol);
+                                    string friendRemark = friendList != null ? friendList.Where(f => f.friend_user_id == l.like_user_id).Select(f => f.friend_user_remark).FirstOrDefault() : null;
+                                    model.LikeUserName = UserUtility.GetShowName(friendRemark, likeUser.name);
                                     model.LikeUserImage = likeUser.head_image;
                                 }
                             }
@@ -202,7 +205,8 @@ namespace HWL.Service.Near.Service
                                     var comUser = userList.Where(u => u.id == c.comment_user_id).FirstOrDefault();
                                     if (comUser != null)
                                     {
-                                        model.CommentUserName = UserUtility.GetShowName(comUser.name, comUser.symbol);
+                                        string friendRemark = friendList != null ? friendList.Where(f => f.friend_user_id == c.comment_user_id).Select(f => f.friend_user_remark).FirstOrDefault() : null;
+                                        model.CommentUserName = UserUtility.GetShowName(friendRemark, comUser.name);
                                         model.CommentUserImage = comUser.head_image;
                                     }
                                 }
@@ -212,7 +216,8 @@ namespace HWL.Service.Near.Service
                                     var repUser = userList.Where(u => u.id == c.reply_user_id).FirstOrDefault();
                                     if (repUser != null)
                                     {
-                                        model.ReplyUserName = UserUtility.GetShowName(repUser.name, repUser.symbol);
+                                        string friendRemark = friendList != null ? friendList.Where(f => f.friend_user_id == c.reply_user_id).Select(f => f.friend_user_remark).FirstOrDefault() : null;
+                                        model.ReplyUserName = UserUtility.GetShowName(friendRemark, repUser.name);
                                         model.ReplyUserImage = repUser.head_image;
                                     }
                                 }
@@ -225,66 +230,5 @@ namespace HWL.Service.Near.Service
                 //item.CommentInfos = NearUtility.GetNearComments(item.NearCircleId, 20);
             }
         }
-
-        //private void BindInfo(List<NearCircleInfo> infos)
-        //{
-        //    List<int> circleIds = infos.Where(n => CustomerEnumDesc.ImageContentTypes().Contains(n.ContentType)).Select(n => n.NearCircleId).ToList();
-        //    var imageList = db.t_near_circle_image.Where(i => circleIds.Contains(i.near_circle_id)).Select(i => new { i.near_circle_id, i.image_url, i.width, i.height }).ToList();
-        //    var likeList = db.t_near_circle_like.Where(l => l.like_user_id == this.request.UserId && circleIds.Contains(l.near_circle_id) && l.is_delete == false).ToList();
-
-        //    var userIds = infos.Select(u => u.PublishUserId).Distinct().ToList();
-        //    var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
-
-        //    foreach (var item in infos)
-        //    {
-        //        if (imageList != null && imageList.Count > 0)
-        //        {
-        //            item.Images = imageList.Where(i => i.near_circle_id == item.NearCircleId).Select(i => new ImageInfo()
-        //            {
-        //                Url = i.image_url,
-        //                Height = i.height,
-        //                Width = i.width
-        //            }).ToList();
-        //        }
-        //        if (userList != null && userList.Count > 0)
-        //        {
-        //            var user = userList.Where(u => u.id == item.PublishUserId).FirstOrDefault();
-        //            item.PublishUserName = UserUtility.GetShowName(user.name, user.symbol);
-        //            item.PublishUserImage = user.head_image;
-        //        }
-
-        //        if (likeList != null && likeList.Count > 0)
-        //        {
-        //            item.IsLiked = likeList.Where(l => l.near_circle_id == item.NearCircleId && l.like_user_id == this.request.UserId).Select(l => l.id).FirstOrDefault() > 0 ? true : false;
-        //        }
-
-        //        //item.LikeInfos = NearUtility.GetNearLikes(item.NearCircleId);
-        //        //item.CommentInfos = NearUtility.GetNearComments(item.NearCircleId, 20);
-        //    }
-        //}
-
-        //private void BindImages(List<NearCircleInfo> infos, List<int> circleIds)
-        //{
-        //    if (circleIds == null || circleIds.Count <= 0) return;
-        //    var imageList = db.t_near_circle_image.Where(i => circleIds.Contains(i.near_circle_id)).Select(i => new { i.near_circle_id, i.image_url }).ToList();
-        //    if (imageList == null || imageList.Count <= 0) return;
-        //    foreach (var item in infos)
-        //    {
-        //        item.Images = imageList.Where(i => i.near_circle_id == item.NearCircleId).Select(i => i.image_url).ToList();
-        //    }
-        //}
-
-        //private void BindUser(List<NearCircleInfo> infos, List<int> userIds)
-        //{
-        //    if (userIds == null || userIds.Count <= 0) return;
-        //    var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
-        //    if (userList == null || userList.Count <= 0) return;
-        //    foreach (var item in infos)
-        //    {
-        //        var user = userList.Where(u => u.id == item.PublishUserId).FirstOrDefault();
-        //        item.PublishUserName = UserUtility.GetShowName(user.name, user.symbol);
-        //        item.PublishUserImage = user.head_image;
-        //    }
-        //}
     }
 }

@@ -19,7 +19,10 @@ namespace HWL.Service.Circle.Service
         protected override void ValidateRequestParams()
         {
             base.ValidateRequestParams();
-
+            if (this.request.UserId <= 0)
+            {
+                throw new ArgumentNullException("UserId");
+            }
             if (this.request.CircleId <= 0)
             {
                 throw new ArgumentNullException("CircleId");

@@ -9,6 +9,7 @@ namespace HWL.Service.Circle.Body
 {
     public class GetCircleLikesRequestBody
     {
+        public int UserId { get; set; }
         public int CircleId { get; set; }
     }
     public class GetCircleLikesResponseBody

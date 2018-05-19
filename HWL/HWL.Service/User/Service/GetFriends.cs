@@ -69,7 +69,7 @@ namespace HWL.Service.User.Service
                         Country = countryName,
                         Province = provinceName,
                         HeadImage = u.HeadImage,
-                        NameRemark = UserUtility.GetShowName(u.NameRemark, u.Name, u.Symbol),
+                        NameRemark = UserUtility.GetShowName(u.NameRemark, u.Name),
                         Name = u.Name,
                         Symbol = u.Symbol,
                         Sex = u.Sex,

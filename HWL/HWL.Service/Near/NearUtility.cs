@@ -11,11 +11,12 @@ namespace HWL.Service.Near
 {
     public class NearUtility
     {
-        public static List<NearCircleCommentInfo> GetNearComments(int nearCircleId, int count = 30)
+        public static List<NearCircleCommentInfo> GetNearComments(int userId, int nearCircleId, int count = 30)
         {
             if (nearCircleId <= 0) return null;
             GetNearCommentsResponseBody response = new GetNearComments(new GetNearCommentsRequestBody()
             {
+                UserId = userId,
                 NearCircleId = nearCircleId,
                 LastCommentId = 0,
                 Count = count
@@ -24,11 +25,12 @@ namespace HWL.Service.Near
             return response.NearCircleCommentInfos;
         }
 
-        public static List<NearCircleLikeInfo> GetNearLikes(int nearCircleId)
+        public static List<NearCircleLikeInfo> GetNearLikes(int userId, int nearCircleId)
         {
             if (nearCircleId <= 0) return null;
             GetNearLikesResponseBody response = new GetNearLikes(new GetNearLikesRequestBody()
             {
+                UserId = userId,
                 NearCircleId = nearCircleId,
             }).Execute();
             if (response == null || response.NearCircleLikeInfos == null || response.NearCircleLikeInfos.Count <= 0) return null;

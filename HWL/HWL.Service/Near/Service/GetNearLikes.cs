@@ -19,7 +19,10 @@ namespace HWL.Service.Near.Service
         protected override void ValidateRequestParams()
         {
             base.ValidateRequestParams();
-
+            if (this.request.UserId <= 0)
+            {
+                throw new ArgumentNullException("UserId");
+            }
             if (this.request.NearCircleId <= 0)
             {
                 throw new ArgumentNullException("NearCircleId");
@@ -39,12 +42,13 @@ namespace HWL.Service.Near.Service
                                 NearCircleId = c.near_circle_id,
                                 LikeUserId = c.like_user_id,
                                 LikeTime = c.like_time
-                            }).OrderBy(c=>c.LikeId).ToList();
+                            }).OrderBy(c => c.LikeId).ToList();
                 if (likes == null || likes.Count <= 0) return res;
                 res.NearCircleLikeInfos = new List<NearCircleLikeInfo>();
 
                 var userIds = likes.Select(c => c.LikeUserId).ToList();
-                var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.symbol, i.head_image }).ToList();
+                var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.head_image }).ToList();
+                var friendList = db.t_user_friend.Where(f => f.user_id == this.request.UserId && userIds.Contains(f.friend_user_id)).Select(f => new { f.friend_user_id, f.friend_user_remark }).ToList();
 
                 likes.ForEach(f =>
                 {
@@ -61,7 +65,8 @@ namespace HWL.Service.Near.Service
                         var likeUser = userList.Where(u => u.id == f.LikeUserId).FirstOrDefault();
                         if (likeUser != null)
                         {
-                            model.LikeUserName = UserUtility.GetShowName(likeUser.name, likeUser.symbol);
+                            string friendRemark = friendList != null ? friendList.Where(r => r.friend_user_id == f.LikeUserId).Select(r => r.friend_user_remark).FirstOrDefault() : null;
+                            model.LikeUserName = UserUtility.GetShowName(friendRemark, likeUser.name);
                             model.LikeUserImage = likeUser.head_image;
                         }
                     }

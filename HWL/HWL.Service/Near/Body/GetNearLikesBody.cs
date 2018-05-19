@@ -9,6 +9,7 @@ namespace HWL.Service.Near.Body
 {
     public class GetNearLikesRequestBody
     {
+        public int UserId { get; set; }
         public int NearCircleId { get; set; }
     }
 

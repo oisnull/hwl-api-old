@@ -326,5 +326,12 @@ namespace HWL.API.Controllers
         {
             return GenericService.CheckVersion(request);
         }
+
+        [HttpPost]
+        [Description("设置用户圈子背景图片")]
+        public Response<SetUserCircleBackImageResponseBody> SetUserCircleBackImage(Request<SetUserCircleBackImageRequestBody> request)
+        {
+            return UserService.SetUserCircleBackImage(request);
+        }
     }
 }

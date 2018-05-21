@@ -106,6 +106,7 @@ namespace HWL.Service
                 return new GetUserDetails(r.Body).Execute();
             });
         }
+
         public static Response<SetUserInfoResponseBody> SetUserLifeNotes(Request<SetUserLifeNotesRequestBody> request)
         {
             var context = new ServiceContext<SetUserLifeNotesRequestBody>(request, new RequestValidate());
@@ -114,6 +115,7 @@ namespace HWL.Service
                 return new SetUserLifeNotes(r.Body).Execute();
             });
         }
+
         public static Response<SetUserInfoResponseBody> SetUserName(Request<SetUserNameRequestBody> request)
         {
             var context = new ServiceContext<SetUserNameRequestBody>(request, new RequestValidate());
@@ -122,6 +124,7 @@ namespace HWL.Service
                 return new SetUserName(r.Body).Execute();
             });
         }
+
         public static Response<SetUserInfoResponseBody> SetUserHeadImage(Request<SetUserHeadImageRequestBody> request)
         {
             var context = new ServiceContext<SetUserHeadImageRequestBody>(request, new RequestValidate());
@@ -130,7 +133,16 @@ namespace HWL.Service
                 return new SetUserHeadImage(r.Body).Execute();
             });
         }
-        
+
+        public static Response<SetUserCircleBackImageResponseBody> SetUserCircleBackImage(Request<SetUserCircleBackImageRequestBody> request)
+        {
+            var context = new ServiceContext<SetUserCircleBackImageRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new SetUserCircleBackImage(r.Body).Execute();
+            });
+        }
+
         public static Response<SetUserInfoResponseBody> SetUserSex(Request<SetUserSexRequestBody> request)
         {
             var context = new ServiceContext<SetUserSexRequestBody>(request, new RequestValidate());
@@ -139,6 +151,7 @@ namespace HWL.Service
                 return new SetUserSex(r.Body).Execute();
             });
         }
+
         public static Response<SearchUserResponseBody> SearchUser(Request<SearchUserRequestBody> request)
         {
             var context = new ServiceContext<SearchUserRequestBody>(request, new RequestValidate());

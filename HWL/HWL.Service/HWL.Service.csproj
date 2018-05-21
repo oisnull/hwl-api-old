@@ -136,6 +136,7 @@
     <Compile Include="User\Body\GetUserDetailsBody.cs" />
     <Compile Include="User\Body\SearchUserBody.cs" />
     <Compile Include="User\Body\SetFriendRemarkBody.cs" />
+    <Compile Include="User\Body\SetUserCircleBackImageBody.cs" />
     <Compile Include="User\Body\SetUserInfoBody.cs" />
     <Compile Include="User\Body\ResetUserPasswordBody.cs" />
     <Compile Include="User\Body\SetUserPosBody.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="User\Service\GetUserDetails.cs" />
     <Compile Include="User\Service\SearchUser.cs" />
     <Compile Include="User\Service\SetFriendRemark.cs" />
+    <Compile Include="User\Service\SetUserCircleBackImage.cs" />
     <Compile Include="User\Service\SetUserHeadImage.cs" />
     <Compile Include="User\Service\SetUserLifeNotes.cs" />
     <Compile Include="User\Service\ResetUserPassword.cs" />

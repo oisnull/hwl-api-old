@@ -17,7 +17,7 @@
             <p>想要了解你周围发生了什么有趣的事吗，快来看看呗!</p>
         </div>
         <div class="btnConatiner">
-            <button id="btnAndroid" onclick="window.location = 'http://192.168.1.4:8031//upload/apkversion/201805/appdebug20180517220905.apk'">Android</button>
+            <button id="btnAndroid" onclick="@(string.IsNullOrEmpty(ViewBag.AppUrl) ? "alert('没有找到下载地址,你可以到官网去联系官方人员!')" : "window.location ='" + ViewBag.AppUrl + "'" )">Android</button>
             <button onclick="alert('IOS版本正在开发中...');">IOS</button>
         </div>
     </div>

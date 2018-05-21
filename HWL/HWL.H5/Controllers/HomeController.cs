@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HWL.Manage.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,8 @@ namespace HWL.H5.Controllers
 
         public ActionResult ShareApp()
         {
+
+            ViewBag.AppUrl = new AppService().GetAppLastVersionUrl();
             return View();
         }
 

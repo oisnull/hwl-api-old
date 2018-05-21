@@ -36,6 +36,10 @@ namespace HWL.Manage.Service
             }).FirstOrDefault();
         }
 
+        public string GetAppLastVersionUrl()
+        {
+            return dbContext.t_app_version.OrderByDescending(v => v.id).Select(v => v.download_url).FirstOrDefault();
+        }
 
         public int DeleteAppVersion(int id, out string error)
         {

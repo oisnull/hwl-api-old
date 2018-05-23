@@ -16,5 +16,6 @@ namespace HWL.Service.User.Body
     public class SetUserCircleBackImageResponseBody
     {
         public ResultStatus Status { get; set; }
+        public String CircleBackImageUrl { get; set; }
     }
 }

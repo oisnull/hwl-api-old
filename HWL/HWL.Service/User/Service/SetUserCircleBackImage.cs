@@ -29,6 +29,7 @@ namespace HWL.Service.User.Service
 
                 db.SaveChanges();
                 res.Status = ResultStatus.Success;
+                res.CircleBackImageUrl = user.circle_back_image;
                 //res.Name = user.name;
                 //res.Symbol = user.symbol;
                 //res.HeadImage = user.head_image;

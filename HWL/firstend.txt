@@ -43,4 +43,11 @@ opensourceframe https://blog.csdn.net/hbyh632/article/details/78121370
 31,隐私设置后,需要在聊天，附近圈子里面不展示用户的基本数据 V
 34,好友信息更新后需要同步更新到附近圈子和好友圈子中 V
 35,不同分辨率下的表情大小处理
-36,群组图片生成处理
+36,不同分辨率下的字体大小处理
+37,群组图片生成处理
+
+
+2018-05-24:
+android permissions: https://blog.csdn.net/elsdnwn/article/details/50037475
+屏幕适配: https://blog.csdn.net/xxf377376701/article/details/78925646
+Wechat font:http://www.zcool.com.cn/work/ZMTYzNjM2MTI=.html

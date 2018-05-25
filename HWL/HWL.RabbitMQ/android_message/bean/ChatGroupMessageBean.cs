@@ -10,7 +10,7 @@ namespace HWL.RabbitMQ.android_message
     {
         public string groupGuid { get; set; }
         public string groupName { get; set; }
-        public string groupImage { get; set; }
+        public List<string> groupUserImages { get; set; }
         public int fromUserId { get; set; }
         public string fromUserName { get; set; }
         public string fromUserHeadImage { get; set; }

@@ -172,9 +172,6 @@ namespace HWL.Service.User.Service
                 //将用户加入到组中
                 groupAction.SaveGroupUser(res.UserGroupGuid, upos.user_id);
 
-                //发送mq welcome组消息给用户
-                RabbitMQ.android_message.AndroidChatMessage.SendNearGroupWelcome(this.request.UserId, res.UserGroupGuid, "欢迎加入HWL附近聊天组");
-
                 //返回组用户列表
                 List<int> userIds = groupAction.GetGroupUserIds(res.UserGroupGuid);
                 if (userIds == null || userIds.Count <= 0) return res;
@@ -187,6 +184,9 @@ namespace HWL.Service.User.Service
                         UserName = u.name,
                         UserHeadImage = u.head_image,
                     }).ToList();
+
+                //发送mq welcome组消息给用户
+                RabbitMQ.android_message.AndroidChatMessage.SendNearGroupWelcome(this.request.UserId, res.UserGroupGuid, res.GroupUserInfos.Select(g => g.UserHeadImage).Take(9).ToList(), "欢迎加入HWL附近聊天组");
             }
 
             return res;

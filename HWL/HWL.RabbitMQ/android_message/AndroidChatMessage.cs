@@ -14,12 +14,12 @@ namespace HWL.RabbitMQ.android_message
             return string.Format("user-{0}-queue", userId);
         }
 
-        public static void SendNearGroupWelcome(int toUserId, string gruopGruid, string content)
+        public static void SendNearGroupWelcome(int toUserId, string gruopGruid, List<string> groupUserImages, string content)
         {
             ChatGroupMessageBean model = new ChatGroupMessageBean()
             {
                 groupGuid = gruopGruid,
-                groupImage = string.Empty,
+                groupUserImages = groupUserImages,
                 groupName = "我的附近",
                 content = content,
                 contentType = MQConstant.CHAT_MESSAGE_CONTENT_TYPE_WELCOME_TIP,

@@ -13,7 +13,6 @@ namespace HWL.Unit.Controllers
     {
         static int count = 0;
 
-        // GET: Home
         public ActionResult Index()
         {
             RabbitMQ.MQManager.SendMessage("group-queue", GetChatGroupMessageBean());

@@ -146,6 +146,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\QRShare.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Properties\PublishProfiles\hwl-h5.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

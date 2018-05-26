@@ -69,7 +69,7 @@ namespace HWL.Entity
                     path = string.Format("chat-video/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);
                     break;
                 case ResxType.CircleBackImage:
-                    path = string.Format("circle-back/{0}/", DateTime.Now.ToString("yyyy"));
+                    path = string.Format("circle-back-image/{0}/", DateTime.Now.ToString("yyyy"));
                     break;
                 case ResxType.NearCirclePostImage:
                     path = string.Format("circle-near-post/{0}/{1}/", DateTime.Now.ToString("yyyyMMdd"), userId);

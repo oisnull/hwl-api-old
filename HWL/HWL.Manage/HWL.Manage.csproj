@@ -119,6 +119,7 @@
     <Content Include="Scripts\bootstrap.3.3.2\messenger\messenger-theme-future.js" />
     <Content Include="Scripts\bootstrap.3.3.2\messenger\messenger.js" />
     <Content Include="Scripts\bootstrap.3.3.2\messenger\messenger.min.js" />
+    <None Include="Properties\PublishProfiles\hwl-manage.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

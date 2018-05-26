@@ -33,3 +33,17 @@
 /HWL/HWL.Manage/upload/apkversion/201805
 /HWL/HWL.H5/bin
 /HWL/HWL.H5/obj/Debug
+/HWL/HWL.Entity/obj/Release
+/HWL/HWL.H5/obj/Release
+/HWL/HWL.Entity/bin/Release
+/HWL/HWL.Manage/obj/Release
+/HWL/HWL.Manage.Service/obj/Release
+/HWL/HWL.Manage.Service/bin/Release
+/HWL/HWL.MQGroupDistribute/obj/Release
+/HWL/HWL.RabbitMQ/obj/Release
+/HWL/HWL.Redis/obj/Release
+/HWL/HWL.Service/bin/Release
+/HWL/HWL.Service/obj/Release
+/HWL/HWL.Tools/bin/Release
+/HWL/HWL.Tools/obj/Release
+/HWL/HWL.Unit/obj/Release

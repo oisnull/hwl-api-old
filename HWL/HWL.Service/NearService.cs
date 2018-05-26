@@ -8,7 +8,6 @@ namespace HWL.Service
 {
     public class NearService
     {
-        
         public static Response<AddNearCircleInfoResponseBody> AddNearCircleInfo(Request<AddNearCircleInfoRequestBody> request)
         {
             var context = new ServiceContext<AddNearCircleInfoRequestBody>(request, new RequestValidate());

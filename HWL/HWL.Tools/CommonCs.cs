@@ -10,8 +10,6 @@ using System.Web;
 
 namespace HWL.Tools
 {
-
-
     public class CommonCs
     {
         //public static string MD5(string str)

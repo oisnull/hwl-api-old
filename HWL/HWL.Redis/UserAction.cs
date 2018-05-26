@@ -6,7 +6,6 @@ namespace HWL.Redis
 {
     public class UserAction : Client.RedisBase
     {
-
         public UserAction()
             : base(0, RedisConfigService.UserDynamicRedisHosts)
         {

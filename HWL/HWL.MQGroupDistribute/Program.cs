@@ -8,8 +8,6 @@ namespace HWL.MQGroupDistribute
 {
     class Program
     {
-
-
         static void Main(string[] args)
         {
             //ByteTest();

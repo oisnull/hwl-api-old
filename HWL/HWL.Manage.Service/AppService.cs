@@ -9,7 +9,6 @@ namespace HWL.Manage.Service
 {
     public class AppService : BaseService
     {
-
         public List<AppExt> GetAppVersionList()
         {
             return dbContext.t_app_version.Select(v => new AppExt

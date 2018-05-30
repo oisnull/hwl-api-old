@@ -12,11 +12,16 @@ namespace HWL.H5.Models
 {
     public class QRCodeBuild
     {
-        public static void creatQR()
+        public static void CreateQR()
+        {
+            CreateQR(new AppService().GetAppLastVersionUrl() ?? "NONE");
+        }
+
+        public static void CreateQR(string url)
         {
             // 生成二维码的内容
             QRCodeGenerator qrGenerator = new QRCoder.QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(new AppService().GetAppLastVersionUrl()??"NONE", QRCodeGenerator.ECCLevel.Q);
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
             QRCode qrcode = new QRCode(qrCodeData);
 
             // qrcode.GetGraphic 方法可参考最下发“补充说明”

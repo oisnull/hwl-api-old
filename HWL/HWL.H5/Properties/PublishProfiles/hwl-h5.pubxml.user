@@ -16,13 +16,13 @@
       <publishTime>04/17/2018 23:06:00</publishTime>
     </File>
     <File Include="bin/HWL.Entity.dll">
-      <publishTime>05/26/2018 21:46:22</publishTime>
+      <publishTime>05/30/2018 20:13:53</publishTime>
     </File>
     <File Include="bin/HWL.H5.dll">
-      <publishTime>05/26/2018 21:46:26</publishTime>
+      <publishTime>05/30/2018 21:09:27</publishTime>
     </File>
     <File Include="bin/HWL.Manage.Service.dll">
-      <publishTime>05/26/2018 21:46:22</publishTime>
+      <publishTime>05/30/2018 20:13:53</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>04/17/2018 23:06:00</publishTime>
@@ -193,7 +193,7 @@
       <publishTime>05/12/2018 19:19:42</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/26/2018 21:46:27</publishTime>
+      <publishTime>05/30/2018 21:09:28</publishTime>
     </File>
   </ItemGroup>
 </Project>

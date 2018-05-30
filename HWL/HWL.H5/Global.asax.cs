@@ -15,7 +15,7 @@ namespace HWL.H5
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            QRCodeBuild.creatQR();
+            //QRCodeBuild.creatQR();
         }
     }
 }

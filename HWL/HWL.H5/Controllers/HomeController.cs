@@ -1,4 +1,5 @@
-﻿using HWL.Manage.Service;
+﻿using HWL.H5.Models;
+using HWL.Manage.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,14 @@ namespace HWL.H5.Controllers
 
         public ActionResult ShareApp()
         {
-
             ViewBag.AppUrl = new AppService().GetAppLastVersionUrl();
             return View();
         }
 
         public ActionResult QRShare()
         {
+            string url = "http://" + Request.Url.Authority + "/home/shareapp";
+            QRCodeBuild.CreateQR(url);
             return View();
         }
 

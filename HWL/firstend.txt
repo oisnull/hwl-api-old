@@ -30,10 +30,10 @@ android:
 opensourceframe https://blog.csdn.net/hbyh632/article/details/78121370
 
 2018-05-18:
-21,图片发送优化
+21,图片发送优化 V
 22,视频发送优化
 23,发送(near/circle)评论回复MQ消息 V
-24,退出Chat后,如果消息没有发送完毕,可以继续发送
+24,退出Chat后,如果消息没有发送完毕,可以继续发送 V
 25,群/用户消息设置,主页显示屏蔽的图标 V
 26,二维码分享Activity中添加以其它方式分享 V
 27,显示用户备注,如果设置了备注,则以用户备注为准 V

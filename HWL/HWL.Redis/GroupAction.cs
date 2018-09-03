@@ -16,33 +16,10 @@ namespace HWL.Redis
         {
         }
 
-        /*
-         * 功能描述：
-         * 1,存储组位置,格式：db=5 geo group:pos lat lon guid
-         * 2,存储组用户集合,格式：db=6 set groupGuid userids
-         * 
-         */
-
-        /// <summary>
-        /// 组geo的key
-        /// </summary>
-        const string GROUP_GEO_KEY = "group:pos";
-        /// <summary>
-        /// 组所在的数据库
-        /// </summary>
-        const int GROUP_GEO_DB = 10;
-        /// <summary>
-        /// 组的用户set集合所在的数据库
-        /// </summary>
-        const int GROUP_USER_SET_DB = 11;
         /// <summary>
         /// 搜索附近的范围初始值
         /// </summary>
-        const int NEAR_RANGE = 100;
-        /// <summary>
-        /// 个人组所在的数据库
-        /// </summary>
-        //const int GROUP_DB = 12;
+        public const int NEAR_RANGE = 100;
 
         /// <summary>
         /// 检测周围100M内的组数据,并返回对应的组标识列表
@@ -52,10 +29,10 @@ namespace HWL.Redis
             if (lon <= 0 || lat <= 0) return null;
 
             List<string> keys = null;
-            base.DbNum = GROUP_GEO_DB;
+            base.DbNum = RedisConfigService.GROUP_GEO_DB;
             base.Exec(db =>
             {
-                GeoRadiusResult[] results = db.GeoRadius(GROUP_GEO_KEY, lon, lat, NEAR_RANGE, GeoUnit.Miles, 1);
+                GeoRadiusResult[] results = db.GeoRadius(RedisConfigService.GROUP_GEO_KEY, lon, lat, NEAR_RANGE, GeoUnit.Miles, 1);
                 if (results != null && results.Length > 0)
                 {
                     keys = results.Select(s => s.Member.ToString()).ToList();
@@ -89,7 +66,7 @@ namespace HWL.Redis
             if (string.IsNullOrEmpty(groupGuid)) return;
             if (userIds == null || userIds.Length <= 0) return;
 
-            base.DbNum = GROUP_USER_SET_DB;
+            base.DbNum = RedisConfigService.GROUP_USER_SET_DB;
             base.Exec(db =>
             {
                 RedisValue[] array = new RedisValue[userIds.Length];
@@ -106,7 +83,7 @@ namespace HWL.Redis
             if (string.IsNullOrEmpty(groupGuid) || userId <= 0) return false;
 
             bool succ = false;
-            base.DbNum = GROUP_USER_SET_DB;
+            base.DbNum = RedisConfigService.GROUP_USER_SET_DB;
             base.Exec(db =>
             {
                 RedisValue[] array = new RedisValue[1] { userId };
@@ -133,7 +110,7 @@ namespace HWL.Redis
 
             if (userIds != null && userIds.Count > 0)
             {
-                base.DbNum = GROUP_USER_SET_DB;
+                base.DbNum = RedisConfigService.GROUP_USER_SET_DB;
                 base.Exec(db =>
                 {
                     RedisValue[] array = new RedisValue[userIds.Count];
@@ -153,7 +130,7 @@ namespace HWL.Redis
         public int GetGroupUserCount(string groupGuid)
         {
             if (string.IsNullOrEmpty(groupGuid)) return 0;
-            base.DbNum = GROUP_USER_SET_DB;
+            base.DbNum = RedisConfigService.GROUP_USER_SET_DB;
             int count = 0;
             base.Exec(db =>
             {
@@ -190,7 +167,7 @@ namespace HWL.Redis
             if (string.IsNullOrEmpty(groupGuid)) return null;
 
             List<int> userIds = new List<int>();
-            base.DbNum = GROUP_USER_SET_DB;
+            base.DbNum = RedisConfigService.GROUP_USER_SET_DB;
             base.Exec(db =>
             {
                 RedisValue[] users = db.SetMembers(groupGuid);
@@ -264,11 +241,11 @@ namespace HWL.Redis
         public string CreateGroupPos(double lon, double lat)
         {
             bool succ = false;
-            base.DbNum = GROUP_GEO_DB;
+            base.DbNum = RedisConfigService.GROUP_GEO_DB;
             string guid = Guid.NewGuid().ToString();
             base.Exec(db =>
             {
-                succ = db.GeoAdd(GROUP_GEO_KEY, lon, lat, guid);
+                succ = db.GeoAdd(RedisConfigService.GROUP_GEO_KEY, lon, lat, guid);
             });
             if (succ)
             {

@@ -11,32 +11,6 @@ namespace HWL.Redis
         {
         }
 
-        /*
-         * 功能描述：
-         * 1,存储用户的token,格式：db=0 set userid token
-         * 1.1,存储token对应的用户,格式：db=1 set token userid
-         * 
-         * 2,存储用户的sessionid,格式：db=2 set userid sessionid
-         * 3,存储组所属用户的标识,格式：db=3 set userid groupGuid
-         * 
-         * 4,存储用户的位置pos,格式：db=4 geo user:pos lat lon userid
-         * 
-         * 5,存储用户的基本信息,格式:db=7 set userid [name,headimage] 过期时间为 5分钟
-         * 6,存储用户好友信息,格式：db=8 set userid:fuserid remark 过期时间为 5分钟
-         */
-
-        const string USER_GEO_KEY = "user:pos";
-        const int USER_TOKEN_DB = 00;
-        const int TOKEN_USER_DB = 01;
-        const int USER_SESSION_DB = 02;
-        //const int USER_CREAT_GROUP_DB = 03;
-        const int USER_GEO_DB = 04;
-        const int USER_BASEINFO_DB = 07;
-        const int USER_FRIEND_DB = 08;
-
-        const int USER_BASERINFO_ERPIRE_TIME = 30;//用户基本信息过期时间配置，单位：分钟
-        const int USER_FRIEND_ERPIRE_TIME = 30;//用户对应的好友信息过期时间配置，单位：分钟
-
         /// <summary>
         /// 搜索附近用户的范围
         /// </summary>
@@ -48,7 +22,7 @@ namespace HWL.Redis
         {
             if (userId <= 0) return false;
             if (string.IsNullOrEmpty(sessionId)) return false;
-            base.DbNum = USER_SESSION_DB;
+            base.DbNum = RedisConfigService.USER_SESSION_DB;
             bool succ = false;
             Exec(db =>
             {
@@ -61,7 +35,7 @@ namespace HWL.Redis
         {
             if (userId <= 0) return false;
 
-            base.DbNum = USER_SESSION_DB;
+            base.DbNum = RedisConfigService.USER_SESSION_DB;
             bool succ = false;
             Exec(db =>
             {
@@ -79,7 +53,7 @@ namespace HWL.Redis
         {
             if (userId <= 0) return null;
 
-            base.DbNum = USER_SESSION_DB;
+            base.DbNum = RedisConfigService.USER_SESSION_DB;
             string sessionId = null;
             Exec(db =>
             {
@@ -98,7 +72,7 @@ namespace HWL.Redis
             if (userIds == null || userIds.Count <= 0) return null;
 
             List<string> sessions = new List<string>();
-            base.DbNum = USER_SESSION_DB;
+            base.DbNum = RedisConfigService.USER_SESSION_DB;
             base.Exec(db =>
             {
                 RedisValue[] values = db.StringGet(userIds.ConvertAll(u => (RedisKey)u).ToArray());
@@ -121,11 +95,11 @@ namespace HWL.Redis
             if (lon <= 0) return false;
             if (lat <= 0) return false;
 
-            base.DbNum = USER_GEO_DB;
+            base.DbNum = RedisConfigService.USER_GEO_DB;
             bool succ = false;
             base.Exec(db =>
             {
-                succ = db.GeoAdd(USER_GEO_KEY, lon, lat, userId.ToString());
+                succ = db.GeoAdd(RedisConfigService.USER_GEO_KEY, lon, lat, userId.ToString());
             });
             return succ;
         }
@@ -134,10 +108,10 @@ namespace HWL.Redis
         public int[] GetNearUserList(double lon, double lat)
         {
             int[] userIdArray = null;
-            base.DbNum = USER_GEO_DB;
+            base.DbNum = RedisConfigService.USER_GEO_DB;
             base.Exec(db =>
             {
-                GeoRadiusResult[] results = db.GeoRadius(USER_GEO_KEY, lon, lat, USER_SEARCH_RANGE, GeoUnit.Miles);
+                GeoRadiusResult[] results = db.GeoRadius(RedisConfigService.USER_GEO_KEY, lon, lat, USER_SEARCH_RANGE, GeoUnit.Miles);
                 if (results != null && results.Length > 0)
                 {
                     userIdArray = new int[results.Length];
@@ -188,7 +162,7 @@ namespace HWL.Redis
             if (userId <= 0) return false;
             if (string.IsNullOrEmpty(token) || string.IsNullOrWhiteSpace(token)) return false;
             bool succ = false;
-            base.DbNum = USER_TOKEN_DB;
+            base.DbNum = RedisConfigService.USER_TOKEN_DB;
             base.Exec(db =>
             {
                 //直接存token,不管里面有没有
@@ -203,7 +177,7 @@ namespace HWL.Redis
         //token:userid
         private bool SaveTokenUser(int userId, string token, string oldToken = null)
         {
-            base.DbNum = TOKEN_USER_DB;
+            base.DbNum = RedisConfigService.TOKEN_USER_DB;
             bool succ = false;
             base.Exec(db =>
             {
@@ -220,7 +194,7 @@ namespace HWL.Redis
         {
             if (string.IsNullOrEmpty(token)) return 0;
 
-            base.DbNum = TOKEN_USER_DB;
+            base.DbNum = RedisConfigService.TOKEN_USER_DB;
             int userId = 0;
             base.Exec(db =>
             {
@@ -237,7 +211,7 @@ namespace HWL.Redis
         {
             if (userId <= 0) return null;
 
-            base.DbNum = USER_TOKEN_DB;
+            base.DbNum = RedisConfigService.USER_TOKEN_DB;
             string token = null;
             base.Exec(db =>
             {
@@ -253,14 +227,14 @@ namespace HWL.Redis
             string token = GetUserToken(userId);
             if (string.IsNullOrEmpty(token)) return true;
 
-            base.DbNum = USER_TOKEN_DB;
+            base.DbNum = RedisConfigService.USER_TOKEN_DB;
             bool succ = false;
             base.Exec(db =>
             {
                 succ = db.KeyDelete(userId.ToString());
             });
 
-            base.DbNum = TOKEN_USER_DB;
+            base.DbNum = RedisConfigService.TOKEN_USER_DB;
             base.Exec(db =>
             {
                 succ = db.KeyDelete(token);
@@ -376,7 +350,7 @@ namespace HWL.Redis
         public bool SetUserInfoExpire(int userId)
         {
             if (userId <= 0) return false;
-            base.DbNum = USER_BASEINFO_DB;
+            base.DbNum = RedisConfigService.USER_BASEINFO_DB;
             bool succ = false;
             base.Exec(db =>
             {
@@ -397,7 +371,7 @@ namespace HWL.Redis
             if (userId <= 0 || fuserId <= 0) return null;
 
             string[] remarks = null;
-            base.DbNum = USER_FRIEND_DB;
+            base.DbNum = RedisConfigService.USER_FRIEND_DB;
             base.Exec(db =>
             {
                 RedisKey[] keys = new RedisKey[2];
@@ -419,12 +393,12 @@ namespace HWL.Redis
         {
             if (userId <= 0 || fuserId <= 0 || string.IsNullOrEmpty(fremark)) return false;
 
-            base.DbNum = USER_FRIEND_DB;
+            base.DbNum = RedisConfigService.USER_FRIEND_DB;
             bool succ = false;
             base.Exec(db =>
             {
                 string key = string.Format("{0}:{1}", userId, fuserId);
-                succ = db.StringSet(key, fremark, new TimeSpan(0, USER_FRIEND_ERPIRE_TIME, 0));
+                succ = db.StringSet(key, fremark, new TimeSpan(0, RedisConfigService.USER_FRIEND_ERPIRE_TIME, 0));
             });
             return succ;
         }
@@ -435,7 +409,7 @@ namespace HWL.Redis
         public bool SetFriendRemarkExpire(int userId, int fuserId)
         {
             if (userId <= 0 || fuserId <= 0) return false;
-            base.DbNum = USER_FRIEND_DB;
+            base.DbNum = RedisConfigService.USER_FRIEND_DB;
             bool succ = false;
             base.Exec(db =>
             {

@@ -185,8 +185,8 @@ namespace HWL.Service.User.Service
                         UserHeadImage = u.head_image,
                     }).ToList();
 
-                //发送mq welcome组消息给用户
-                RabbitMQ.android_message.AndroidChatMessage.SendNearGroupWelcome(this.request.UserId, res.UserGroupGuid, res.GroupUserInfos.Select(g => g.UserHeadImage).Take(9).ToList(), "欢迎加入HWL附近聊天组");
+                ////发送mq welcome组消息给用户
+                //RabbitMQ.android_message.AndroidChatMessage.SendNearGroupWelcome(this.request.UserId, res.UserGroupGuid, res.GroupUserInfos.Select(g => g.UserHeadImage).Take(9).ToList(), "欢迎加入HWL附近聊天组");
             }
 
             return res;

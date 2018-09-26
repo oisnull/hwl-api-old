@@ -167,10 +167,6 @@
       <Project>{872ceee4-49c1-45ac-905f-8efbd66f1b5a}</Project>
       <Name>HWL.Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HWL.RabbitMQ\HWL.RabbitMQ.csproj">
-      <Project>{2C189826-F491-4840-8072-C187BB24262C}</Project>
-      <Name>HWL.RabbitMQ</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HWL.Redis\HWL.Redis.csproj">
       <Project>{114f979c-c371-4b28-81ca-05c4d68bb466}</Project>
       <Name>HWL.Redis</Name>

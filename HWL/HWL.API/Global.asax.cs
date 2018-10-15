@@ -1,5 +1,4 @@
-﻿using HWL.RabbitMQ;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,7 +13,6 @@ namespace HWL.API
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            MQManager.RegisterConnectionStatusEvent(null);
         }
     }
 }

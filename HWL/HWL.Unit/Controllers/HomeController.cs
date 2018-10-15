@@ -15,8 +15,8 @@ namespace HWL.Unit.Controllers
 
         public ActionResult Index()
         {
-            RabbitMQ.MQManager.SendMessage("group-queue", GetChatGroupMessageBean());
-            RabbitMQ.MQManager.SendMessage("user-3-queue", GetAddFriendBean());
+            //RabbitMQ.MQManager.SendMessage("group-queue", GetChatGroupMessageBean());
+            //RabbitMQ.MQManager.SendMessage("user-3-queue", GetAddFriendBean());
             //RabbitMQ.MQManager.SendMessage("user-1-queue", GetChatUserMessageBean());
             //RabbitMQ.MQManager.SendMessage("user-2-queue", GetChatFriendRequestBean());
             //RabbitMQ.MQManager.SendMessage("user-1-queue", GetAddFriendBean());

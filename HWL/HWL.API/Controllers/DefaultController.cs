@@ -14,7 +14,7 @@ namespace HWL.API.Controllers
     [Route("api/{action}")]
     public class DefaultController : ApiController
     {
-        LogAction log = new LogAction("api-" + System.DateTime.Now.ToString("yyyyMMdd") + ".txt");
+        static LogAction log = new LogAction("api-" + System.DateTime.Now.ToString("yyyyMMdd") + ".txt");
 
         [HttpPost]
         [Description("用户登陆")]
@@ -112,6 +112,7 @@ namespace HWL.API.Controllers
         [Description("设置用户头像")]
         public Response<SetUserInfoResponseBody> SetUserHeadImage(Request<SetUserHeadImageRequestBody> request)
         {
+            //log.WriterLog(Newtonsoft.Json.JsonConvert.SerializeObject(request));
             return UserService.SetUserHeadImage(request);
         }
 

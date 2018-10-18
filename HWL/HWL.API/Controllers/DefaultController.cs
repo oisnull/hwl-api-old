@@ -102,6 +102,13 @@ namespace HWL.API.Controllers
         }
 
         [HttpPost]
+        [Description("获取用户关系信息")]
+        public Response<GetUserRelationInfoResponseBody> GetUserRelationInfo(Request<GetUserRelationInfoRequestBody> request)
+        {
+            return UserService.GetUserRelationInfo(request);
+        }
+
+        [HttpPost]
         [Description("设置用户头像")]
         public Response<SetUserInfoResponseBody> SetUserHeadImage(Request<SetUserHeadImageRequestBody> request)
         {

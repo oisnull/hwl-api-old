@@ -133,6 +133,7 @@
     <Compile Include="User\Body\AddFriendBody.cs" />
     <Compile Include="User\Body\DeleteFriendBody.cs" />
     <Compile Include="User\Body\GetFriendsBody.cs" />
+    <Compile Include="User\Body\GetUserRelationInfo.cs" />
     <Compile Include="User\Body\GetUserDetailsBody.cs" />
     <Compile Include="User\Body\SearchUserBody.cs" />
     <Compile Include="User\Body\SetFriendRemarkBody.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="User\Service\DeleteFriend.cs" />
     <Compile Include="User\Service\GetFriends.cs" />
     <Compile Include="User\Service\GetUserDetails.cs" />
+    <Compile Include="User\Service\GetUserRelationInfo.cs" />
     <Compile Include="User\Service\SearchUser.cs" />
     <Compile Include="User\Service\SetFriendRemark.cs" />
     <Compile Include="User\Service\SetUserCircleBackImage.cs" />

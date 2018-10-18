@@ -160,5 +160,14 @@ namespace HWL.Service
                 return new SearchUser(r.Body).Execute();
             });
         }
+
+        public static Response<GetUserRelationInfoResponseBody> GetUserRelationInfo(Request<GetUserRelationInfoRequestBody> request)
+        {
+            var context = new ServiceContext<GetUserRelationInfoRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new GetUserRelationInfo(r.Body).Execute();
+            });
+        }
     }
 }

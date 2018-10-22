@@ -6,4 +6,7 @@ api:
 andorid:
 1,baidu location test V
 2,add im friend message action V
-3,add im test connection message
+3,add im test connection message V
+4,emotion pannel (
+	https://github.com/angcyo/ExKeyboardDemo
+	https://blog.csdn.net/javazejian/article/details/52126391#11%E8%B7%B3%E9%97%AA%E9%97%AE%E9%A2%98%E6%A6%82%E8%BF%B0)

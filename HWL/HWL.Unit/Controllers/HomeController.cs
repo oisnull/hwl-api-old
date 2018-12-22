@@ -34,7 +34,7 @@ namespace HWL.Unit.Controllers
                 groupName = "group-guid-1",
                 fromUserId = 2,
                 fromUserName = "liy",
-                fromUserHeadImage = "http://192.168.5.7:8033//upload/user-head/2018//2018021009583820180210175841.jpg",
+                fromUserHeadImage = "http://192.168.5.6:8033//upload/user-head/2018//2018021009583820180210175841.jpg",
                 content = "你现在在哪里 - " + count,
                 sendTime = DateTime.Now,
                 contentType = 1,
@@ -46,7 +46,7 @@ namespace HWL.Unit.Controllers
             //    groupName = "group-guid-1",
             //    fromUserId = 3,
             //    fromUserName = "",
-            //    fromUserHeadImage = "http://192.168.5.7:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
+            //    fromUserHeadImage = "http://192.168.5.6:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
             //    content = "hello every one ...",
             //    sendTime = DateTime.Now,
             //    contentType = 1,
@@ -75,7 +75,7 @@ namespace HWL.Unit.Controllers
                 toUserId = 1,
                 fromUserId = 2,
                 fromUserName = "liy",
-                fromUserHeadImage = "http://192.168.5.7:8033//upload/user-head/2018//2018021009583820180210175841.jpg",
+                fromUserHeadImage = "http://192.168.5.6:8033//upload/user-head/2018//2018021009583820180210175841.jpg",
                 content = "你现在在哪里 - "+ count,
                 sendTime = DateTime.Now,
                 contentType = 1,
@@ -90,10 +90,10 @@ namespace HWL.Unit.Controllers
             {
                 toUserId = 2,
                 toUserName = "liy",
-                toUserHeadImage = "http://192.168.5.7:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
+                toUserHeadImage = "http://192.168.5.6:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
                 fromUserId = 1,
                 fromUserName = "2536",
-                fromUserHeadImage = "http://192.168.5.7:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
+                fromUserHeadImage = "http://192.168.5.6:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
                 content = "我们已经成功好友了",
                 sendTime = DateTime.Now,
                 contentType = 1,
@@ -116,7 +116,7 @@ namespace HWL.Unit.Controllers
             //{
             //    friendId = 1,
             //    remark = "我是 2536",
-            //    userHeadImage = "http://192.168.5.7:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
+            //    userHeadImage = "http://192.168.5.6:8033//upload/user-head/2018//2018012613243120180126212432.jpg",
             //    userId = 1,
             //    userName = "2536"
             //};

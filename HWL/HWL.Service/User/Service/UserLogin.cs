@@ -106,7 +106,8 @@ namespace HWL.Service.User.Service
                     LifeNotes = user.life_notes,
                     RegisterPosIdList = posIdList,
                     RegisterPosList = posList,
-                    FriendCount = db.t_user_friend.Where(f => f.user_id == user.id).Count()
+                    FriendCount = db.t_user_friend.Where(f => f.user_id == user.id).Count(),
+                    GroupCount = db.t_group_user.Where(f => f.user_id == user.id).Count()
                 };
 
             }

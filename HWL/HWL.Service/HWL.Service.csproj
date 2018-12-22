@@ -87,9 +87,11 @@
     <Compile Include="Group\Body\AddGroupUsersBody.cs" />
     <Compile Include="Group\Body\DeleteGroupBody.cs" />
     <Compile Include="Group\Body\DeleteGroupUserBody.cs" />
+    <Compile Include="Group\Body\GetGroupAndUsersBody.cs" />
     <Compile Include="Group\Body\GetGroupsBody.cs" />
     <Compile Include="Group\Body\SetGroupNameBody.cs" />
     <Compile Include="Group\Body\SetGroupNoteBody.cs" />
+    <Compile Include="Group\Service\GetGroupAndUsers.cs" />
     <Compile Include="Group\Service\AddGroupUsers.cs" />
     <Compile Include="Group\Service\AddGroup.cs" />
     <Compile Include="Group\Service\DeleteGroup.cs" />

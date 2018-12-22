@@ -98,5 +98,7 @@ namespace HWL.Service
                 return Convert.ToInt32(ConfigurationManager.AppSettings["UserAddFriendDayCount"]);
             }
         }
+
+        public const int GROUP_USER_IMAGE_COUNT = 9;
     }
 }

@@ -15,6 +15,8 @@ namespace HWL.Unit.Controllers
 
         public ActionResult Index()
         {
+            //new Redis.GroupAction().DeleteGroup("11111");
+
             //RabbitMQ.MQManager.SendMessage("group-queue", GetChatGroupMessageBean());
             //RabbitMQ.MQManager.SendMessage("user-3-queue", GetAddFriendBean());
             //RabbitMQ.MQManager.SendMessage("user-1-queue", GetChatUserMessageBean());

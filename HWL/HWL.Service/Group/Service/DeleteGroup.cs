@@ -54,7 +54,7 @@ namespace HWL.Service.Group.Service
 
                 db.SaveChanges();
 
-                new Redis.GroupAction().DeleteGroup(group.group_guid, users.ConvertAll(u => u.user_id));
+                new Redis.GroupAction().DeleteGroup(group.group_guid);
 
                 res.Status = ResultStatus.Success;
             }

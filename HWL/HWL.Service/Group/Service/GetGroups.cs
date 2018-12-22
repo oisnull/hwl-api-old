@@ -70,6 +70,8 @@ namespace HWL.Service.Group.Service
                         BuildDate = GenericUtility.formatDate2(f.build_date),
                         UpdateDate = GenericUtility.formatDate2(f.update_date),
                     };
+                    info.GroupUserImages = info.GroupUsers.Select(u => u.UserHeadImage).Take(ConfigManager.GROUP_USER_IMAGE_COUNT).ToList();
+
                     if (info.GroupUsers == null || info.GroupUsers.Count <= 0)
                     {
                         emptyGroup.Add(f);

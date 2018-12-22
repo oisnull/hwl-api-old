@@ -174,10 +174,17 @@ namespace HWL.API.Controllers
         }
 
         [HttpPost]
-        [Description("添加群组用户列表")]
+        [Description("添加用户的所有群组用户列表")]
         public Response<AddGroupUsersResponseBody> AddGroupUsers(Request<AddGroupUsersRequestBody> request)
         {
             return GroupService.AddGroupUsers(request);
+        }
+
+        [HttpPost]
+        [Description("添加群组用户列表")]
+        public Response<GetGroupAndUsersResponseBody> GetGroupAndUsers(Request<GetGroupAndUsersRequestBody> request)
+        {
+            return GroupService.GetGroupAndUsers(request);
         }
 
         [HttpPost]

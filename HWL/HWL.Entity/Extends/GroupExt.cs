@@ -25,6 +25,7 @@ namespace HWL.Entity.Extends
         public string UpdateDate { get; set; }
         //public string GroupImage { get; set; }
         public List<GroupUserInfo> GroupUsers { get; set; }
+        public List<string> GroupUserImages { get; set; }
     }
 
     public class GroupUserEqualityComparer : IEqualityComparer<t_group_user>

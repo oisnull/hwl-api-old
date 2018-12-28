@@ -32,6 +32,7 @@ namespace HWL.Entity.Extends
         public List<string> RegisterPosList { get; set; }
 
         public int FriendCount { get; set; }
+        public int GroupCount { get; set; }
     }
 
     public class UserManageInfo

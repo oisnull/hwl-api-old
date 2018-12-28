@@ -87,9 +87,11 @@
     <Compile Include="Group\Body\AddGroupUsersBody.cs" />
     <Compile Include="Group\Body\DeleteGroupBody.cs" />
     <Compile Include="Group\Body\DeleteGroupUserBody.cs" />
+    <Compile Include="Group\Body\GetGroupAndUsersBody.cs" />
     <Compile Include="Group\Body\GetGroupsBody.cs" />
     <Compile Include="Group\Body\SetGroupNameBody.cs" />
     <Compile Include="Group\Body\SetGroupNoteBody.cs" />
+    <Compile Include="Group\Service\GetGroupAndUsers.cs" />
     <Compile Include="Group\Service\AddGroupUsers.cs" />
     <Compile Include="Group\Service\AddGroup.cs" />
     <Compile Include="Group\Service\DeleteGroup.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="User\Body\AddFriendBody.cs" />
     <Compile Include="User\Body\DeleteFriendBody.cs" />
     <Compile Include="User\Body\GetFriendsBody.cs" />
+    <Compile Include="User\Body\GetUserRelationInfo.cs" />
     <Compile Include="User\Body\GetUserDetailsBody.cs" />
     <Compile Include="User\Body\SearchUserBody.cs" />
     <Compile Include="User\Body\SetFriendRemarkBody.cs" />
@@ -147,6 +150,7 @@
     <Compile Include="User\Service\DeleteFriend.cs" />
     <Compile Include="User\Service\GetFriends.cs" />
     <Compile Include="User\Service\GetUserDetails.cs" />
+    <Compile Include="User\Service\GetUserRelationInfo.cs" />
     <Compile Include="User\Service\SearchUser.cs" />
     <Compile Include="User\Service\SetFriendRemark.cs" />
     <Compile Include="User\Service\SetUserCircleBackImage.cs" />
@@ -166,10 +170,6 @@
     <ProjectReference Include="..\HWL.Entity\HWL.Entity.csproj">
       <Project>{872ceee4-49c1-45ac-905f-8efbd66f1b5a}</Project>
       <Name>HWL.Entity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HWL.RabbitMQ\HWL.RabbitMQ.csproj">
-      <Project>{2C189826-F491-4840-8072-C187BB24262C}</Project>
-      <Name>HWL.RabbitMQ</Name>
     </ProjectReference>
     <ProjectReference Include="..\HWL.Redis\HWL.Redis.csproj">
       <Project>{114f979c-c371-4b28-81ca-05c4d68bb466}</Project>

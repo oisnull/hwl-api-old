@@ -1,5 +1,4 @@
 ﻿using HWL.Entity;
-using HWL.RabbitMQ.android_message;
 using HWL.Service.User.Body;
 using System;
 using System.Collections.Generic;
@@ -53,7 +52,7 @@ namespace HWL.Service.User.Service
                 string oldToken = userAction.GetUserToken(user.id);
                 if (!string.IsNullOrEmpty(oldToken))
                 {
-                    AndroidChatMessage.SendLogoutMessage(user.id, oldToken, "您的帐号已经在其它位置登录,如果不是您本人操作,建议重新登录后立即更换密码!");
+                    //AndroidChatMessage.SendLogoutMessage(user.id, oldToken, "您的帐号已经在其它位置登录,如果不是您本人操作,建议重新登录后立即更换密码!");
                 }
 
                 //清除用户之前登录用过的TOKEN
@@ -107,7 +106,8 @@ namespace HWL.Service.User.Service
                     LifeNotes = user.life_notes,
                     RegisterPosIdList = posIdList,
                     RegisterPosList = posList,
-                    FriendCount = db.t_user_friend.Where(f => f.user_id == user.id).Count()
+                    FriendCount = db.t_user_friend.Where(f => f.user_id == user.id).Count(),
+                    GroupCount = db.t_group_user.Where(f => f.user_id == user.id).Count()
                 };
 
             }

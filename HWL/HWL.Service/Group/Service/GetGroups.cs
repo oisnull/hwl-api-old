@@ -32,10 +32,13 @@ namespace HWL.Service.Group.Service
 
             using (HWLEntities db = new HWLEntities())
             {
-                var groups = db.t_group.Where(g => g.build_user_id == this.request.UserId).ToList();
+                //获取用户所在组的guid
+                List<string> groupGuids = db.t_group_user.Where(g => g.user_id == this.request.UserId).Select(g => g.group_guid).ToList();
+                if (groupGuids == null || groupGuids.Count <= 0) return res;
+
+                var groups = db.t_group.Where(g => groupGuids.Contains(g.group_guid)).ToList();
                 if (groups == null || groups.Count <= 0) return res;
 
-                List<string> groupGuids = groups.Select(g => g.group_guid).ToList();
                 var groupUsers = db.t_group_user.Where(u => groupGuids.Contains(u.group_guid)).ToList();
 
                 List<int> userIds = groupUsers.Select(u => u.user_id).ToList();
@@ -67,6 +70,8 @@ namespace HWL.Service.Group.Service
                         BuildDate = GenericUtility.formatDate2(f.build_date),
                         UpdateDate = GenericUtility.formatDate2(f.update_date),
                     };
+                    info.GroupUserImages = info.GroupUsers.Select(u => u.UserHeadImage).Take(ConfigManager.GROUP_USER_IMAGE_COUNT).ToList();
+
                     if (info.GroupUsers == null || info.GroupUsers.Count <= 0)
                     {
                         emptyGroup.Add(f);

@@ -14,7 +14,7 @@ namespace HWL.API.Controllers
     [Route("api/{action}")]
     public class DefaultController : ApiController
     {
-        LogAction log = new LogAction("api-" + System.DateTime.Now.ToString("yyyyMMdd") + ".txt");
+        static LogAction log = new LogAction("api-" + System.DateTime.Now.ToString("yyyyMMdd") + ".txt");
 
         [HttpPost]
         [Description("用户登陆")]
@@ -102,9 +102,17 @@ namespace HWL.API.Controllers
         }
 
         [HttpPost]
+        [Description("获取用户关系信息")]
+        public Response<GetUserRelationInfoResponseBody> GetUserRelationInfo(Request<GetUserRelationInfoRequestBody> request)
+        {
+            return UserService.GetUserRelationInfo(request);
+        }
+
+        [HttpPost]
         [Description("设置用户头像")]
         public Response<SetUserInfoResponseBody> SetUserHeadImage(Request<SetUserHeadImageRequestBody> request)
         {
+            //log.WriterLog(Newtonsoft.Json.JsonConvert.SerializeObject(request));
             return UserService.SetUserHeadImage(request);
         }
 
@@ -166,10 +174,17 @@ namespace HWL.API.Controllers
         }
 
         [HttpPost]
-        [Description("添加群组用户列表")]
+        [Description("添加用户的所有群组用户列表")]
         public Response<AddGroupUsersResponseBody> AddGroupUsers(Request<AddGroupUsersRequestBody> request)
         {
             return GroupService.AddGroupUsers(request);
+        }
+
+        [HttpPost]
+        [Description("添加群组用户列表")]
+        public Response<GetGroupAndUsersResponseBody> GetGroupAndUsers(Request<GetGroupAndUsersRequestBody> request)
+        {
+            return GroupService.GetGroupAndUsers(request);
         }
 
         [HttpPost]

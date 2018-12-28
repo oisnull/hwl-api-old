@@ -1,0 +1,20 @@
+2018-10-18
+api:
+1,add api => get chat user relationship info V
+2,remove mq dependency V
+
+andorid:
+1,baidu location test V
+2,add im friend message action V
+3,add im test connection message V
+4,emotion pannel V
+
+2018-11-21
+api:
+1,use c# netty component
+2,insert system welcome message to im when user login succeed
+
+android:
+1,group module
+2,chat user setting
+3,chat group and group setting

@@ -95,6 +95,19 @@ namespace HWL.Redis
             return succ;
         }
 
+        public bool DeleteGroup(string groupGuid)
+        {
+            if (string.IsNullOrEmpty(groupGuid)) return false;
+
+            base.DbNum = RedisConfigService.GROUP_USER_SET_DB;
+            bool succ = false;
+            base.Exec(db =>
+            {
+                succ = db.KeyDelete(groupGuid);
+            });
+            return succ;
+        }
+
         public bool DeleteGroup(string groupGuid, List<int> userIds)
         {
             if (string.IsNullOrEmpty(groupGuid)) return false;

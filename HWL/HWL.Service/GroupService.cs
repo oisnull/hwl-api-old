@@ -79,5 +79,14 @@ namespace HWL.Service
                 return new GetGroups(r.Body).Execute();
             });
         }
+
+        public static Response<GetGroupAndUsersResponseBody> GetGroupAndUsers(Request<GetGroupAndUsersRequestBody> request)
+        {
+            var context = new ServiceContext<GetGroupAndUsersRequestBody>(request, new RequestValidate());
+            return ContextProcessor.Execute(context, r =>
+            {
+                return new GetGroupAndUsers(r.Body).Execute();
+            });
+        }
     }
 }

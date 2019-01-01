@@ -76,7 +76,11 @@ namespace HWL.Service.Group.Service
             {
                 throw new Exception("组成员不能为空");
             }
-            //this.request.GroupUserIds.Add(this.request.BuildUserId);
+
+            if (!this.request.GroupUserIds.Contains(this.request.BuildUserId))
+            {
+                this.request.GroupUserIds.Add(this.request.BuildUserId);
+            }
 
             if (string.IsNullOrEmpty(this.request.GroupName))
             {

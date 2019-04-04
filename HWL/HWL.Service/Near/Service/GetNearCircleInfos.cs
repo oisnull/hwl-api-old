@@ -43,7 +43,6 @@ namespace HWL.Service.Near.Service
                 return res;
             }
 
-            //从redis中获取附近圈子信息id列表
             List<int> geoIdList = new NearCircleAction().GetNearCircleIds(this.request.Lon, this.request.Lat);
             if (geoIdList == null || geoIdList.Count <= 0) return res;
 
@@ -76,7 +75,12 @@ namespace HWL.Service.Near.Service
             var list = db.t_near_circle.Where(c => ids.Contains(c.id)).OrderByDescending(c => c.id).ToList();
             if (list == null || list.Count <= 0) return res;
 
-            res.NearCircleInfos = list.Select(c => new NearCircleInfo
+            if (this.request.NearCircleMatchInfos != null && this.request.NearCircleMatchInfos.Count > 0)
+            {
+                list.RemoveAll(r => this.request.NearCircleMatchInfos.Exists(c => c.NearCircleId == r.id && c.UpdateTime == GenericUtility.formatDate2(r.update_time)));
+            }
+
+            res.NearCircleInfos = list.ConvertAll(c => new NearCircleInfo
             {
                 NearCircleId = c.id,
                 CommentCount = c.comment_count,
@@ -91,22 +95,23 @@ namespace HWL.Service.Near.Service
                 PublishTime = GenericUtility.formatDate(c.publish_time),
                 UpdateTime = GenericUtility.formatDate2(c.update_time),
                 PublishUserId = c.user_id,
-            }).ToList();
+            });
 
-            if (this.request.NearCircleMatchInfos != null && this.request.NearCircleMatchInfos.Count > 0)
-            {
-                int removeCount = res.NearCircleInfos.RemoveAll(r => this.request.NearCircleMatchInfos.Exists(c => c.NearCircleId == r.NearCircleId && c.UpdateTime == r.UpdateTime));
-            }
-            if (res.NearCircleInfos == null || res.NearCircleInfos.Count <= 0) return res;
+            //if (this.request.NearCircleMatchInfos != null && this.request.NearCircleMatchInfos.Count > 0)
+            //{
+            //    int removeCount = res.NearCircleInfos.RemoveAll(r => this.request.NearCircleMatchInfos.Exists(c => c.NearCircleId == r.NearCircleId && c.UpdateTime == r.UpdateTime));
+            //}
+            //if (res.NearCircleInfos == null || res.NearCircleInfos.Count <= 0) return res;
 
             BindInfo(res.NearCircleInfos);
 
             return res;
         }
 
-
         private void BindInfo(List<NearCircleInfo> infos)
         {
+            if (infos == null || infos.Count <= 0) return;
+
             List<int> imageCircleIds = infos.Where(n => CustomerEnumDesc.ImageContentTypes().Contains(n.ContentType)).Select(n => n.NearCircleId).ToList();
             List<t_near_circle_image> imageList = null;
             if (imageCircleIds != null && imageCircleIds.Count > 0)

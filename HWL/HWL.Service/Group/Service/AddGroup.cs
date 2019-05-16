@@ -47,7 +47,7 @@ namespace HWL.Service.Group.Service
 
                 res.Status = ResultStatus.Success;
                 res.GroupGuid = groupGuid;
-                res.BuildTime = GenericUtility.formatDate2(group.build_date);
+                res.BuildTime = GenericUtility.FormatDate2(group.build_date);
 
                 //不能在这里发送创建成功的消息，因为创建群组是客户端的行为，应由客户端来决定MQ消息的发送规则
                 //往redis中添加数据

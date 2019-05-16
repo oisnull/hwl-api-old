@@ -75,7 +75,7 @@ namespace HWL.Service.User.Service
                         Sex = u.Sex,
                         CircleBackImage = u.CircleBackImage,
                         LifeNotes = u.LifeNotes,
-                        UpdateTime = GenericUtility.formatDate2(u.UpdateTime),
+                        UpdateTime = GenericUtility.FormatDate2(u.UpdateTime),
                     });
                 });
             }

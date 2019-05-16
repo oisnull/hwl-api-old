@@ -14,6 +14,7 @@ namespace HWL.Service.Circle.Body
         /// </summary>
         public int UserId { get; set; }
         public int CircleId { get; set; }
+        public string UpdateTime { get; set; }
     }
     public class GetCircleDetailResponseBody
     {

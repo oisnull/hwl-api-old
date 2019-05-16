@@ -65,7 +65,7 @@ namespace HWL.Service.Near.Service
                 {
                     CommentId = model.id,
                     Content = model.content_info,
-                    CommentTime = GenericUtility.formatDate(model.comment_time),
+                    CommentTime = GenericUtility.FormatDate(model.comment_time),
                     CommentUserId = model.comment_user_id,
                     //CommentUserImage = model.com,
                     //CommentUserName = model.content_info,

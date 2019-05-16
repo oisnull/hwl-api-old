@@ -24,12 +24,16 @@ namespace HWL.Service.Circle.Body
         public int MinCircleId { get; set; }
 
         public int Count { get; set; }
+
+        public List<CircleMatchInfo> CircleMatchInfos { get; set; }
     }
     public class GetUserCircleInfosResponseBody
     {
         public int ViewUserId { get; set; }
         public string ViewUserName { get; set; }
         public string ViewUserImage { get; set; }
+        //public string CircleBackImage { get; set; }
+        //public string LifeNotes { get; set; }
 
         public List<CircleInfo> CircleInfos { get; set; }
     }

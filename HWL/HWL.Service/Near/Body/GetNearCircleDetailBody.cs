@@ -10,6 +10,7 @@ namespace HWL.Service.Near.Body
         /// </summary>
         public int UserId { get; set; }
         public int NearCircleId { get; set; }
+        public string UpdateTime { get; set; }
     }
 
     public class GetNearCircleDetailResponseBody

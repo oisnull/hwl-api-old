@@ -40,6 +40,10 @@ namespace HWL.Service.Near.Service
             {
                 return res;
             }
+            if (this.request.UpdateTime != null && this.request.UpdateTime == GenericUtility.FormatDate2(model.update_time))
+            {
+                return res;
+            }
 
             res.NearCircleInfo = new NearCircleInfo()
             {

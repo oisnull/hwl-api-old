@@ -67,8 +67,8 @@ namespace HWL.Service.Group.Service
                             UserName = users.Where(i => i.id == u.user_id).Select(i => i.name).FirstOrDefault()
                         };
                     }).ToList(),
-                    BuildDate = GenericUtility.formatDate2(group.build_date),
-                    UpdateDate = GenericUtility.formatDate2(group.update_date),
+                    BuildDate = GenericUtility.FormatDate2(group.build_date),
+                    UpdateDate = GenericUtility.FormatDate2(group.update_date),
                 };
                 res.GroupInfo.GroupUserImages = res.GroupInfo.GroupUsers.Select(u => u.UserHeadImage).Take(ConfigManager.GROUP_USER_IMAGE_COUNT).ToList();
             }

@@ -40,6 +40,10 @@ namespace HWL.Service.Near.Service
             {
                 return res;
             }
+            if (this.request.UpdateTime != null && this.request.UpdateTime == GenericUtility.FormatDate2(model.update_time))
+            {
+                return res;
+            }
 
             res.NearCircleInfo = new NearCircleInfo()
             {
@@ -53,8 +57,8 @@ namespace HWL.Service.Near.Service
                 LinkImage = model.link_image,
                 LinkTitle = model.link_title,
                 LinkUrl = model.link_url,
-                PublishTime = GenericUtility.formatDate(model.publish_time),
-                UpdateTime = GenericUtility.formatDate2(model.update_time),
+                PublishTime = GenericUtility.FormatDate(model.publish_time),
+                UpdateTime = GenericUtility.FormatDate2(model.update_time),
                 PublishUserId = model.user_id,
                 CommentInfos = NearUtility.GetNearComments(this.request.UserId, model.id, 3),
                 LikeInfos = NearUtility.GetNearLikes(this.request.UserId, model.id)

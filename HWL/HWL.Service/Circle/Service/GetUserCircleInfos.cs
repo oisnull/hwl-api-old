@@ -47,6 +47,8 @@ namespace HWL.Service.Circle.Service
                 res.ViewUserId = postUser.id;
                 res.ViewUserImage = postUser.head_image;
                 res.ViewUserName = postUser.name;
+                //res.CircleBackImage = postUser.circle_back_image;
+                //res.LifeNotes = postUser.life_notes;
 
                 IQueryable<t_circle> query = db.t_circle.OrderByDescending(r => r.id);
                 if (this.request.ViewUserId > 0)
@@ -57,7 +59,7 @@ namespace HWL.Service.Circle.Service
                 {
                     query = query.Where(q => q.id < this.request.MinCircleId).Take(this.request.Count);
                 }
-                
+
                 var list = query.ToList();
                 if (list == null || list.Count <= 0) return res;
 
@@ -76,35 +78,24 @@ namespace HWL.Service.Circle.Service
                     LinkUrl = q.link_url,
                     Lon = q.lon,
                     PosId = q.pos_id,
-                    PublishTime = GenericUtility.formatDate(q.publish_time),
-                    UpdateTime = GenericUtility.formatDate2(q.update_time),
+                    PublishTime = GenericUtility.FormatDate(q.publish_time),
+                    UpdateTime = GenericUtility.FormatDate2(q.update_time),
 
                     //IsLike = false,
                     //CommentInfos = null,
                     //Images = null,
                     //LikeUserInfos = null,
                     //PostUserInfo = null,
-
                 });
 
-                List<int> circleIds = res.CircleInfos.Select(c => c.CircleId).ToList();
-
-                //获取发布的图片
-                var images = db.t_circle_image.Where(i => circleIds.Contains(i.circle_id)).ToList();
-
-                //绑定到列表
-                res.CircleInfos.ForEach(f =>
+                if (this.request.CircleMatchInfos != null && this.request.CircleMatchInfos.Count > 0)
                 {
-                    if (f.ImageCount > 0 && images != null && images.Count > 0)
-                    {
-                        f.Images = images.Where(i => i.circle_id == f.CircleId).Select(i => new ImageInfo
-                        {
-                            Url = i.image_url,
-                            Height = i.height,
-                            Width = i.width
-                        }).ToList();
-                    }
-                });
+                    int removeCount = res.CircleInfos.RemoveAll(r => this.request.CircleMatchInfos.Exists(c => c.CircleId == r.CircleId && c.UpdateTime == r.UpdateTime));
+                }
+
+                if (res.CircleInfos == null || res.CircleInfos.Count <= 0) return res;
+
+                GetCircleInfos.BindCircleInfos(db, this.request.ViewUserId, res.CircleInfos);
             }
 
             return res;

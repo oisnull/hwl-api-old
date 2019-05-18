@@ -8,13 +8,13 @@ namespace HWL.Service.Generic
 {
     public class GenericUtility
     {
-        public static String formatDate(DateTime? dt)
+        public static String FormatDate(DateTime? dt)
         {
             if (dt == null) return null;
             return dt.Value.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        public static String formatDate2(DateTime? dt)
+        public static String FormatDate2(DateTime? dt)
         {
             if (dt == null) return null;
             return dt.Value.ToString("yyyy-MM-dd HH:mm:ss fff");

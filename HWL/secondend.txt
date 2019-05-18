@@ -15,6 +15,15 @@ api:
 2,insert system welcome message to im when user login succeed
 
 android:
-1,group module
-2,chat user setting
-3,chat group and group setting
+1,group module V
+2,chat user setting V
+3,chat group and group setting V
+
+2019-05-17
+android:
+1,debug/fix near / circle im function
+2,fix image overlap for near infos
+3,update login mode
+4,add near / circle comment function
+5,optimizing code
+6,...

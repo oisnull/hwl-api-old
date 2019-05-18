@@ -48,12 +48,12 @@ namespace HWL.Service.User.Service
                 if (user.password != this.request.Password) throw new Exception("密码错误");//CommonCs.GetMd5Str32(this.request.Password)
 
                 Redis.UserAction userAction = new Redis.UserAction();
-                //获取用户之前是否已经登录过，如果登录过则需要发送消息通知用户在其它位置登录
-                string oldToken = userAction.GetUserToken(user.id);
-                if (!string.IsNullOrEmpty(oldToken))
-                {
-                    //AndroidChatMessage.SendLogoutMessage(user.id, oldToken, "您的帐号已经在其它位置登录,如果不是您本人操作,建议重新登录后立即更换密码!");
-                }
+                ////获取用户之前是否已经登录过，如果登录过则需要发送消息通知用户在其它位置登录
+                //string oldToken = userAction.GetUserToken(user.id);
+                //if (!string.IsNullOrEmpty(oldToken))
+                //{
+                //    //AndroidChatMessage.SendLogoutMessage(user.id, oldToken, "您的帐号已经在其它位置登录,如果不是您本人操作,建议重新登录后立即更换密码!");
+                //}
 
                 //清除用户之前登录用过的TOKEN
                 userAction.RemoveUserToken(user.id);
@@ -110,6 +110,7 @@ namespace HWL.Service.User.Service
                     GroupCount = db.t_group_user.Where(f => f.user_id == user.id).Count()
                 };
 
+                //new Redis.ImMessageAction().AddWelcomeImMessage(user.id,, pos != null ? pos.DistName : string.Empty);
             }
 
             return res;

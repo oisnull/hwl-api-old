@@ -13,8 +13,6 @@ namespace HWL.Service.Circle.Service
 {
     public class GetCircleInfos : GMSF.ServiceHandler<GetCircleInfosRequestBody, GetCircleInfosResponseBody>
     {
-        private HWLEntities db = null;
-
         public GetCircleInfos(GetCircleInfosRequestBody request) : base(request)
         {
         }
@@ -38,7 +36,7 @@ namespace HWL.Service.Circle.Service
         {
             GetCircleInfosResponseBody res = new GetCircleInfosResponseBody();
 
-            using (db = new HWLEntities())
+            using (HWLEntities db = new HWLEntities())
             {
                 List<int> userIds = null;
                 IQueryable<t_circle> query = null;
@@ -76,7 +74,7 @@ namespace HWL.Service.Circle.Service
                 var list = query.OrderByDescending(c => c.id).ToList();
                 if (list == null || list.Count <= 0) return res;
 
-                var circleList = list.ConvertAll(q => new CircleInfo
+                res.CircleInfos = list.ConvertAll(q => new CircleInfo
                 {
                     CircleId = q.id,
                     UserId = q.user_id,
@@ -92,32 +90,30 @@ namespace HWL.Service.Circle.Service
                     Lon = q.lon,
                     PosId = q.pos_id,
                     PublishUserId = q.user_id,
-                    PublishTime = GenericUtility.formatDate(q.publish_time),
-                    UpdateTime = GenericUtility.formatDate2(q.update_time),
+                    PublishTime = GenericUtility.FormatDate(q.publish_time),
+                    UpdateTime = GenericUtility.FormatDate2(q.update_time),
 
                     //IsLike = false,
                     //CommentInfos = null,
                     //Images = null,
                     //LikeUserInfos = null,
                     //PostUserInfo = null,
-
                 });
 
                 if (this.request.CircleMatchInfos != null && this.request.CircleMatchInfos.Count > 0)
                 {
-                    int removeCount = circleList.RemoveAll(r => this.request.CircleMatchInfos.Exists(c => c.CircleId == r.CircleId && c.UpdateTime == r.UpdateTime));
+                    int removeCount = res.CircleInfos.RemoveAll(r => this.request.CircleMatchInfos.Exists(c => c.CircleId == r.CircleId && c.UpdateTime == r.UpdateTime));
                 }
 
-                if (circleList == null || circleList.Count <= 0) return res;
-                res.CircleInfos = circleList;
+                if (res.CircleInfos == null || res.CircleInfos.Count <= 0) return res;
 
-                BindInfo(res.CircleInfos);
+                BindCircleInfos(db, this.request.UserId, res.CircleInfos);
             }
 
             return res;
         }
 
-        private void BindInfo(List<CircleInfo> infos)
+        public static void BindCircleInfos(HWLEntities db, int userId, List<CircleInfo> infos)
         {
             List<int> imageCircleIds = infos.Where(n => CustomerEnumDesc.ImageContentTypes().Contains(n.ContentType)).Select(n => n.CircleId).ToList();
             List<t_circle_image> imageList = null;
@@ -140,7 +136,7 @@ namespace HWL.Service.Circle.Service
                 userIds.AddRange(commentList.Select(c => c.reply_user_id).ToList());
             }
             var userList = db.t_user.Where(i => userIds.Contains(i.id)).Select(i => new { i.id, i.name, i.head_image }).ToList();
-            var friendList = db.t_user_friend.Where(f => f.user_id == this.request.UserId && userIds.Contains(f.friend_user_id)).Select(f => new { f.friend_user_id, f.friend_user_remark }).ToList();
+            var friendList = db.t_user_friend.Where(f => f.user_id == userId && userIds.Contains(f.friend_user_id)).Select(f => new { f.friend_user_id, f.friend_user_remark }).ToList();
 
             foreach (var item in infos)
             {
@@ -167,7 +163,7 @@ namespace HWL.Service.Circle.Service
 
                 if (likeList != null && likeList.Count > 0)
                 {
-                    item.IsLiked = likeList.Where(l => l.circle_id == item.CircleId && l.like_user_id == this.request.UserId).Select(l => l.id).FirstOrDefault() > 0 ? true : false;
+                    item.IsLiked = likeList.Where(l => l.circle_id == item.CircleId && l.like_user_id == userId).Select(l => l.id).FirstOrDefault() > 0 ? true : false;
                     item.LikeInfos = likeList.Where(l => l.circle_id == item.CircleId)
                         .Select(l =>
                         {
@@ -176,7 +172,7 @@ namespace HWL.Service.Circle.Service
                                 LikeId = l.id,
                                 LikeUserId = l.like_user_id,
                                 CircleId = l.circle_id,
-                                LikeTime = GenericUtility.formatDate(l.like_time),
+                                LikeTime = GenericUtility.FormatDate(l.like_time),
                             };
                             if (userList != null && userList.Count > 0)
                             {
@@ -202,7 +198,7 @@ namespace HWL.Service.Circle.Service
                                 CommentId = c.id,
                                 Content = c.com_content,
                                 CircleId = c.circle_id,
-                                CommentTime = GenericUtility.formatDate(c.comment_time),
+                                CommentTime = GenericUtility.FormatDate(c.comment_time),
                                 CommentUserId = c.com_user_id,
                                 CommentUserImage = null,
                                 CommentUserName = null,

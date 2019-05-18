@@ -77,7 +77,7 @@ namespace HWL.Service.Near.Service
 
             if (this.request.NearCircleMatchInfos != null && this.request.NearCircleMatchInfos.Count > 0)
             {
-                list.RemoveAll(r => this.request.NearCircleMatchInfos.Exists(c => c.NearCircleId == r.id && c.UpdateTime == GenericUtility.formatDate2(r.update_time)));
+                list.RemoveAll(r => this.request.NearCircleMatchInfos.Exists(c => c.NearCircleId == r.id && c.UpdateTime == GenericUtility.FormatDate2(r.update_time)));
             }
 
             res.NearCircleInfos = list.ConvertAll(c => new NearCircleInfo
@@ -92,8 +92,8 @@ namespace HWL.Service.Near.Service
                 LinkImage = c.link_image,
                 LinkTitle = c.link_title,
                 LinkUrl = c.link_url,
-                PublishTime = GenericUtility.formatDate(c.publish_time),
-                UpdateTime = GenericUtility.formatDate2(c.update_time),
+                PublishTime = GenericUtility.FormatDate(c.publish_time),
+                UpdateTime = GenericUtility.FormatDate2(c.update_time),
                 PublishUserId = c.user_id,
             });
 

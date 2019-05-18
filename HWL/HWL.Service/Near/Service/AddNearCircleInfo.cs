@@ -82,7 +82,7 @@ namespace HWL.Service.Near.Service
                     like_count = 0,
                     publish_time = DateTime.Now,
                     update_time = DateTime.Now
-            };
+                };
                 db.t_near_circle.Add(model);
                 db.SaveChanges();
 

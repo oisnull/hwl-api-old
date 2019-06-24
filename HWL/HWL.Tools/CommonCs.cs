@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -422,6 +424,35 @@ namespace HWL.Tools
             DateTime old = Convert.ToDateTime("2017-01-01");
             DateTime newTime = Convert.ToDateTime(time.ToString("yyyy-MM-dd HH:mm:ss"));
             return (newTime - old).TotalMilliseconds.ToString();
+        }
+
+        /// <summary> 
+        /// 将一个object对象序列化，返回一个byte[]         
+        /// </summary> 
+        /// <param name="obj">能序列化的对象</param>         
+        /// <returns></returns> 
+        public static byte[] ObjectToBytes(object obj)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                return ms.GetBuffer();
+            }
+        }
+
+        /// <summary> 
+        /// 将一个序列化后的byte[]数组还原         
+        /// </summary>
+        /// <param name="Bytes"></param>         
+        /// <returns></returns> 
+        public static object BytesToObject(byte[] bytes)
+        {
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                IFormatter formatter = new BinaryFormatter();
+                return formatter.Deserialize(ms);
+            }
         }
     }
 }

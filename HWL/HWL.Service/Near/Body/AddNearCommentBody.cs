@@ -23,11 +23,13 @@ namespace HWL.Service.Near.Body
         /// </summary>
         public int ReplyUserId { get; set; }
         public string Content { get; set; }
+        public string NearCircleUpdateTime { get; set; }
     }
 
     public class AddNearCommentResponseBody
     {
         public int NearCirclePublishUserId { get; set; }
+        public string NearCircleLastUpdateTime { get; set; }
         public NearCircleCommentInfo NearCircleCommentInfo { get; set; }
     }
 }

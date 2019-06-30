@@ -17,7 +17,7 @@ namespace HWL.Service.Generic
         public static String FormatDate2(DateTime? dt)
         {
             if (dt == null) return null;
-            return dt.Value.ToString("yyyy-MM-dd HH:mm:ss fff");
+            return dt.Value.ToString("yyyy-MM-dd HH:mm:ss ff");
         }
 
         /// <summary>

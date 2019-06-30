@@ -1,4 +1,5 @@
 ﻿using HWL.Entity;
+using HWL.Service.Generic;
 using HWL.Service.Near.Body;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,8 @@ namespace HWL.Service.Near.Service
                     throw new Exception("你点赞的信息已经被用户删除");
                 }
 
+                bool isChanged = string.IsNullOrEmpty(this.request.NearCircleUpdateTime) || this.request.NearCircleUpdateTime != GenericUtility.FormatDate2(circleModel.update_time);
+
                 t_near_circle_like model = db.t_near_circle_like.Where(l => l.near_circle_id == this.request.NearCircleId && l.like_user_id == this.request.LikeUserId).FirstOrDefault();
                 if (this.request.ActionType == 0)//取消点赞
                 {
@@ -64,8 +67,10 @@ namespace HWL.Service.Near.Service
                         {
                             circleModel.like_count = 0;
                         }
-                        res.Status = ResultStatus.Success;
                         db.SaveChanges();
+                        res.Status = ResultStatus.Success;
+                        if (!isChanged)
+                            res.NearCircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
                         return res;
                     }
                 }
@@ -86,6 +91,8 @@ namespace HWL.Service.Near.Service
                         circleModel.update_time = DateTime.Now;
                         db.SaveChanges();
                         res.Status = ResultStatus.Success;
+                        if (!isChanged)
+                            res.NearCircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
                         return res;
                     }
                     else
@@ -97,8 +104,11 @@ namespace HWL.Service.Near.Service
                             circleModel.update_time = DateTime.Now;
                             db.SaveChanges();
                             res.Status = ResultStatus.Success;
+                            if (!isChanged)
+                                res.NearCircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
                             return res;
-                        }else
+                        }
+                        else
                         {
                             res.Status = ResultStatus.Success;
                             return res;

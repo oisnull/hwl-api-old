@@ -14,11 +14,14 @@ namespace HWL.Service.Near.Body
         /// </summary>
         public int LikeUserId { get; set; }
         public int NearCircleId { get; set; }
+        public string NearCircleUpdateTime { get; set; }
 
         //public int LikeInfoId { get; set; }
     }
+
     public class SetNearLikeInfoResponseBody
     {
         public ResultStatus Status { get; set; }
+        public string NearCircleLastUpdateTime { get; set; }
     }
 }

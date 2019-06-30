@@ -9,7 +9,7 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <ProjectView>ProjectFiles</ProjectView>
-    <NameOfLastUsedPublishProfile>hwl-api</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>hwl-api-release</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

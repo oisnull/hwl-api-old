@@ -14,9 +14,11 @@ namespace HWL.Service.Near.Body
         /// </summary>
         public int UserId { get; set; }
         public int CommentId { get; set; }
+        public string NearCircleUpdateTime { get; set; }
     }
     public class DeleteNearCommentResponseBody
     {
         public ResultStatus Status { get; set; }
+        public string NearCircleLastUpdateTime { get; set; }
     }
 }

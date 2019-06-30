@@ -46,6 +46,8 @@ namespace HWL.Service.Near.Service
                     throw new Exception("你评论的信息已经被用户删除");
                 }
 
+                bool isChanged = string.IsNullOrEmpty(this.request.NearCircleUpdateTime) || this.request.NearCircleUpdateTime != GenericUtility.FormatDate2(circleModel.update_time);
+
                 t_near_circle_comment model = new t_near_circle_comment()
                 {
                     comment_user_id = this.request.CommentUserId,
@@ -93,6 +95,7 @@ namespace HWL.Service.Near.Service
 
                 res.NearCirclePublishUserId = circleModel.user_id;
                 res.NearCircleCommentInfo = info;
+                res.NearCircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
             }
 
             return res;

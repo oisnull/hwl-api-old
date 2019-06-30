@@ -22,8 +22,14 @@ android:
 2019-05-17
 android:
 1,debug/fix near / circle im function
-2,fix image overlap for near infos
+2,fix image overlap for near infos V
 3,update login mode
 4,add near / circle comment function
 5,optimizing code
 6,...
+
+2019-05-21
+7,emotion pannel non display in v20
+
+2019-05-23
+8,recycler view partial update

@@ -1,6 +1,7 @@
 ﻿using HWL.Entity;
 using HWL.Entity.Extends;
 using HWL.Service.Circle.Body;
+using HWL.Service.Generic;
 using HWL.Service.User;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace HWL.Service.Circle.Service
                                 CircleId = c.circle_id,
                                 LikeUserId = c.like_user_id,
                                 LikeTime = c.like_time
-                            }).OrderBy(c=>c.LikeId).ToList();
+                            }).OrderBy(c => c.LikeId).ToList();
                 if (likes == null || likes.Count <= 0) return res;
                 res.CircleLikeInfos = new List<CircleLikeInfo>();
 
@@ -56,7 +57,7 @@ namespace HWL.Service.Circle.Service
                         LikeId = f.LikeId,
                         LikeUserId = f.LikeUserId,
                         CircleId = f.CircleId,
-                        LikeTime = f.LikeTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                        LikeTime = GenericUtility.FormatDate(f.LikeTime),
                     };
 
                     if (userList != null && userList.Count > 0)

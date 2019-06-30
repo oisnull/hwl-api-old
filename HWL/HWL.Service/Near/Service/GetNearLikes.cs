@@ -1,5 +1,6 @@
 ﻿using HWL.Entity;
 using HWL.Entity.Extends;
+using HWL.Service.Generic;
 using HWL.Service.Near.Body;
 using HWL.Service.User;
 using System;
@@ -57,7 +58,7 @@ namespace HWL.Service.Near.Service
                         LikeId = f.LikeId,
                         LikeUserId = f.LikeUserId,
                         NearCircleId = f.NearCircleId,
-                        LikeTime = f.LikeTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                        LikeTime = GenericUtility.FormatDate(f.LikeTime),
                     };
 
                     if (userList != null && userList.Count > 0)

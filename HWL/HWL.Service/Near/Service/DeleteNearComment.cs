@@ -1,4 +1,5 @@
 ﻿using HWL.Entity;
+using HWL.Service.Generic;
 using HWL.Service.Near.Body;
 using System;
 using System.Collections.Generic;
@@ -37,11 +38,22 @@ namespace HWL.Service.Near.Service
                 if (model != null)
                 {
                     db.t_near_circle_comment.Remove(model);
-                    db.SaveChanges();
-                    res.Status = ResultStatus.Success;
+                    var circleModel = db.t_near_circle.Where(c => c.id == model.near_circle_id).FirstOrDefault();
+                    if (circleModel != null)
+                    {
+                        bool isChanged = string.IsNullOrEmpty(this.request.NearCircleUpdateTime) || this.request.NearCircleUpdateTime != GenericUtility.FormatDate2(circleModel.update_time);
+                        circleModel.update_time = DateTime.Now;
+
+                        res.NearCircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
+                    }
+                    else
+                    {
+                        db.SaveChanges();
+                    }
                 }
             }
 
+            res.Status = ResultStatus.Success;
             return res;
         }
     }

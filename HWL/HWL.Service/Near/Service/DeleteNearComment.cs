@@ -44,6 +44,7 @@ namespace HWL.Service.Near.Service
                         bool isChanged = string.IsNullOrEmpty(this.request.NearCircleUpdateTime) || this.request.NearCircleUpdateTime != GenericUtility.FormatDate2(circleModel.update_time);
                         circleModel.update_time = DateTime.Now;
 
+                        db.SaveChanges();
                         res.NearCircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
                     }
                     else

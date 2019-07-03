@@ -40,7 +40,7 @@ namespace HWL.Service.Circle.Service
             {
                 List<int> userIds = null;
                 IQueryable<t_circle> query = null;
-                if (this.request.ViewUserId > 0)
+                if (this.request.ViewUserId > 0 && this.request.ViewUserId != this.request.UserId)
                 {
                     //获取查看用户的信息
                     var postUser = db.t_user.Where(u => u.id == this.request.ViewUserId).FirstOrDefault();
@@ -74,6 +74,11 @@ namespace HWL.Service.Circle.Service
                 var list = query.OrderByDescending(c => c.id).ToList();
                 if (list == null || list.Count <= 0) return res;
 
+                if (this.request.CircleMatchInfos != null && this.request.CircleMatchInfos.Count > 0)
+                {
+                    list.RemoveAll(r => this.request.CircleMatchInfos.Exists(c => c.CircleId == r.id && c.UpdateTime == GenericUtility.FormatDate2(r.update_time)));
+                }
+
                 res.CircleInfos = list.ConvertAll(q => new CircleInfo
                 {
                     CircleId = q.id,
@@ -99,13 +104,6 @@ namespace HWL.Service.Circle.Service
                     //LikeUserInfos = null,
                     //PostUserInfo = null,
                 });
-
-                if (this.request.CircleMatchInfos != null && this.request.CircleMatchInfos.Count > 0)
-                {
-                    int removeCount = res.CircleInfos.RemoveAll(r => this.request.CircleMatchInfos.Exists(c => c.CircleId == r.CircleId && c.UpdateTime == r.UpdateTime));
-                }
-
-                if (res.CircleInfos == null || res.CircleInfos.Count <= 0) return res;
 
                 BindCircleInfos(db, this.request.UserId, res.CircleInfos);
             }

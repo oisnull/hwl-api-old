@@ -97,12 +97,6 @@ namespace HWL.Service.Near.Service
                 PublishUserId = c.user_id,
             });
 
-            //if (this.request.NearCircleMatchInfos != null && this.request.NearCircleMatchInfos.Count > 0)
-            //{
-            //    int removeCount = res.NearCircleInfos.RemoveAll(r => this.request.NearCircleMatchInfos.Exists(c => c.NearCircleId == r.NearCircleId && c.UpdateTime == r.UpdateTime));
-            //}
-            //if (res.NearCircleInfos == null || res.NearCircleInfos.Count <= 0) return res;
-
             BindInfo(res.NearCircleInfos);
 
             return res;

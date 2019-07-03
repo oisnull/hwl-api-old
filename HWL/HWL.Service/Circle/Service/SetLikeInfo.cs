@@ -1,5 +1,6 @@
 ﻿using HWL.Entity;
 using HWL.Service.Circle.Body;
+using HWL.Service.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,8 @@ namespace HWL.Service.Circle.Service
                     throw new Exception("你点赞的信息已经被用户删除");
                 }
 
+                bool isChanged = string.IsNullOrEmpty(this.request.CircleUpdateTime) || this.request.CircleUpdateTime != GenericUtility.FormatDate2(circleModel.update_time);
+
                 t_circle_like model = db.t_circle_like.Where(l => l.circle_id == this.request.CircleId && l.like_user_id == this.request.LikeUserId).FirstOrDefault();
                 if (this.request.ActionType == 0)//取消点赞
                 {
@@ -66,6 +69,8 @@ namespace HWL.Service.Circle.Service
                         }
                         res.Status = ResultStatus.Success;
                         db.SaveChanges();
+                        if (!isChanged)
+                            res.CircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
                         return res;
                     }
                 }
@@ -86,6 +91,8 @@ namespace HWL.Service.Circle.Service
                         circleModel.update_time = DateTime.Now;
                         db.SaveChanges();
                         res.Status = ResultStatus.Success;
+                        if (!isChanged)
+                            res.CircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
                         return res;
                     }
                     else
@@ -97,6 +104,8 @@ namespace HWL.Service.Circle.Service
                             circleModel.update_time = DateTime.Now;
                             db.SaveChanges();
                             res.Status = ResultStatus.Success;
+                            if (!isChanged)
+                                res.CircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
                             return res;
                         }
                         else

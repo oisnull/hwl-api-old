@@ -19,9 +19,11 @@ namespace HWL.Service.Circle.Body
         public int ReplyUserId { get; set; }
         public int CircleId { get; set; }
         public string Content { get; set; }
+        public string CircleUpdateTime { get; set; }
     }
     public class AddCommentInfoResponseBody
     {
         public CircleCommentInfo CommentInfo { get; set; }
+        public string CircleLastUpdateTime { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using HWL.Entity;
 using HWL.Service.Circle.Body;
+using HWL.Service.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,11 +38,24 @@ namespace HWL.Service.Circle.Service
                 if (model != null)
                 {
                     db.t_circle_comment.Remove(model);
-                    db.SaveChanges();
-                    res.Status = ResultStatus.Success;
+                    var circleModel = db.t_circle.Where(c => c.id == model.circle_id).FirstOrDefault();
+                    if (circleModel != null)
+                    {
+                        bool isChanged = string.IsNullOrEmpty(this.request.CircleUpdateTime) || this.request.CircleUpdateTime != GenericUtility.FormatDate2(circleModel.update_time);
+                        circleModel.update_time = DateTime.Now;
+
+                        db.SaveChanges();
+                        if (!isChanged)
+                            res.CircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
+                    }
+                    else
+                    {
+                        db.SaveChanges();
+                    }
                 }
             }
 
+            res.Status = ResultStatus.Success;
             return res;
         }
     }

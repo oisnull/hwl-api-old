@@ -1,6 +1,7 @@
 ﻿using HWL.Entity;
 using HWL.Entity.Extends;
 using HWL.Service.Circle.Body;
+using HWL.Service.Generic;
 using HWL.Service.User;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,8 @@ namespace HWL.Service.Circle.Service
                 {
                     throw new Exception("你评论的信息已经被用户删除");
                 }
+
+                bool isChanged = string.IsNullOrEmpty(this.request.CircleUpdateTime) || this.request.CircleUpdateTime != GenericUtility.FormatDate2(circleModel.update_time);
 
                 t_circle_comment model = new t_circle_comment()
                 {
@@ -91,6 +94,8 @@ namespace HWL.Service.Circle.Service
                 }
 
                 res.CommentInfo = info;
+                if (!isChanged)
+                    res.CircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
             }
 
 

@@ -9,9 +9,6 @@ namespace HWL.Service.Near.Body
 {
     public class DeleteNearCommentRequestBody
     {
-        /// <summary>
-        /// 用户id
-        /// </summary>
         public int UserId { get; set; }
         public int CommentId { get; set; }
         public string NearCircleUpdateTime { get; set; }

@@ -16,9 +16,11 @@ namespace HWL.Service.Circle.Body
         public int CircleId { get; set; }
 
         //public int LikeInfoId { get; set; }
+        public string CircleUpdateTime { get; set; }
     }
     public class SetLikeInfoResponseBody
     {
         public ResultStatus Status { get; set; }
+        public string CircleLastUpdateTime { get; set; }
     }
 }

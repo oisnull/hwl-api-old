@@ -95,7 +95,8 @@ namespace HWL.Service.Near.Service
 
                 res.NearCirclePublishUserId = circleModel.user_id;
                 res.NearCircleCommentInfo = info;
-                res.NearCircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
+                if (!isChanged)
+                    res.NearCircleLastUpdateTime = GenericUtility.FormatDate2(circleModel.update_time);
             }
 
             return res;

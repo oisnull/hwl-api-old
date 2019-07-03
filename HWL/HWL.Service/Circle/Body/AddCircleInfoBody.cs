@@ -10,9 +10,6 @@ namespace HWL.Service.Circle.Body
 {
     public class AddCircleInfoRequestBody
     {
-        /// <summary>
-        /// 当前登录的用户id
-        /// </summary>
         public int UserId { get; set; }
         //public CircleContentType ContentType { get; set; }
         public string Content { get; set; }

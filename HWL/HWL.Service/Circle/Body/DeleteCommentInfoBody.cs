@@ -9,14 +9,13 @@ namespace HWL.Service.Circle.Body
 {
     public class DeleteCommentInfoRequestBody
     {
-        /// <summary>
-        /// 用户id
-        /// </summary>
         public int UserId { get; set; }
         public int CommentId { get; set; }
+        public string CircleUpdateTime { get; set; }
     }
     public class DeleteCommentInfoResponseBody
     {
         public ResultStatus Status { get; set; }
+        public string CircleLastUpdateTime { get; set; }
     }
 }

@@ -14,7 +14,6 @@
 /HWL/HWL.Tools/obj/Debug
 /HWL/HWL.Resx/obj/Debug
 /HWL/HWL.Resx/bin
-/HWL/HWL.Resx
 /HWL/HWL.MQGroupDistribute/bin
 /HWL/HWL.MQGroupDistribute/obj/Debug
 /HWL/HWL.RabbitMQ/bin
@@ -47,3 +46,5 @@
 /HWL/HWL.Tools/bin/Release
 /HWL/HWL.Tools/obj/Release
 /HWL/HWL.Unit/obj/Release
+/HWL/HWL.Resx/obj/Release
+/HWL/HWL.Resx/upload

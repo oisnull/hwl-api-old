@@ -86,8 +86,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\circleback.png" />
-    <Content Include="Content\default.png" />
     <Content Include="Content\ffmpeg\ffmpeg.exe" />
     <Content Include="Content\ffmpeg\pthreadGC2.dll" />
     <Content Include="Content\image.html" />
@@ -95,6 +93,8 @@
     <Content Include="Content\jquery.form.js" />
     <Content Include="Content\video.html" />
     <Content Include="Global.asax" />
+    <Content Include="upload\user\circleback.png" />
+    <Content Include="upload\user\default.png" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

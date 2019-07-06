@@ -11,7 +11,11 @@ namespace HWL.Service.Near
 {
     public class NearUtility
     {
-        public static List<NearCircleCommentInfo> GetNearComments(int userId, int nearCircleId, int count = 30)
+        public const int NEAR_PAGE_COUNT = 15;
+        public const int NEAR_COMMENT_PAGE_COUNT = 15;
+
+
+        public static List<NearCircleCommentInfo> GetNearComments(int userId, int nearCircleId, int count = NEAR_COMMENT_PAGE_COUNT)
         {
             if (nearCircleId <= 0) return null;
             GetNearCommentsResponseBody response = new GetNearComments(new GetNearCommentsRequestBody()

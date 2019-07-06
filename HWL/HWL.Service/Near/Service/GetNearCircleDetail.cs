@@ -60,7 +60,7 @@ namespace HWL.Service.Near.Service
                 PublishTime = GenericUtility.FormatDate(model.publish_time),
                 UpdateTime = GenericUtility.FormatDate2(model.update_time),
                 PublishUserId = model.user_id,
-                CommentInfos = NearUtility.GetNearComments(this.request.UserId, model.id, 3),
+                CommentInfos = NearUtility.GetNearComments(this.request.UserId, model.id),
                 LikeInfos = NearUtility.GetNearLikes(this.request.UserId, model.id)
             };
 

@@ -36,7 +36,6 @@ namespace HWL.Service.Near.Service
         public override GetNearCommentsResponseBody ExecuteCore()
         {
             GetNearCommentsResponseBody res = new GetNearCommentsResponseBody();
-            System.Threading.Thread.Sleep(1000);
             using (HWLEntities db = new HWLEntities())
             {
                 var comments = db.t_near_circle_comment.Where(c => c.near_circle_id == this.request.NearCircleId && c.id > this.request.LastCommentId)

@@ -36,7 +36,6 @@ namespace HWL.Service.Circle.Service
         public override GetCircleCommentsResponseBody ExecuteCore()
         {
             GetCircleCommentsResponseBody res = new GetCircleCommentsResponseBody();
-            System.Threading.Thread.Sleep(1000);
             using (HWLEntities db = new HWLEntities())
             {
                 var comments = db.t_circle_comment.Where(c => c.circle_id == this.request.CircleId && c.id > this.request.LastCommentId)

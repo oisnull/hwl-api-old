@@ -12,7 +12,10 @@ namespace HWL.Service.Circle
 {
     public class CircleUtility
     {
-        public static List<CircleCommentInfo> GetComments(int userId, int circleId, int count = 30)
+        public const int CIRCLE_PAGE_COUNT = 15;
+        public const int CIRCLE_COMMENT_PAGE_COUNT = 15;
+
+        public static List<CircleCommentInfo> GetComments(int userId, int circleId, int count = CIRCLE_COMMENT_PAGE_COUNT)
         {
             if (circleId <= 0) return null;
             GetCircleCommentsResponseBody response = new GetCircleComments(new GetCircleCommentsRequestBody()

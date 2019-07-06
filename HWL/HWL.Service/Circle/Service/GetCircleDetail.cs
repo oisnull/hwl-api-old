@@ -63,7 +63,7 @@ namespace HWL.Service.Circle.Service
                 PublishTime = GenericUtility.FormatDate(model.publish_time),
                 UpdateTime = GenericUtility.FormatDate2(model.update_time),
                 PublishUserId = model.user_id,
-                CommentInfos = CircleUtility.GetComments(this.request.UserId, model.id, 3),
+                CommentInfos = CircleUtility.GetComments(this.request.UserId, model.id),
                 LikeInfos = CircleUtility.GetLikes(this.request.UserId, model.id)
             };
 

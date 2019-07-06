@@ -286,6 +286,14 @@ namespace HWL.API.Controllers
             return CircleService.AddCircleInfo(request);
         }
 
+
+        [HttpPost]
+        [Description("获取朋友圈子评论列表")]
+        public Response<GetCircleCommentsResponseBody> GetCircleComments(Request<GetCircleCommentsRequestBody> request)
+        {
+            return CircleService.GetCircleComments(request);
+        }
+
         [HttpPost]
         [Description("添加朋友圈子评论信息")]
         public Response<AddCommentInfoResponseBody> AddCircleCommentInfo(Request<AddCommentInfoRequestBody> request)

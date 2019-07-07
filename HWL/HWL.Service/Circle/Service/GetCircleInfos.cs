@@ -113,6 +113,8 @@ namespace HWL.Service.Circle.Service
 
         public static void BindCircleInfos(HWLEntities db, int userId, List<CircleInfo> infos)
         {
+            if (infos == null || infos.Count <= 0) return;
+
             List<int> imageCircleIds = infos.Where(n => CustomerEnumDesc.ImageContentTypes().Contains(n.ContentType)).Select(n => n.CircleId).ToList();
             List<t_circle_image> imageList = null;
             if (imageCircleIds != null && imageCircleIds.Count > 0)

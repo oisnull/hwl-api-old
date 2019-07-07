@@ -63,6 +63,11 @@ namespace HWL.Service.Circle.Service
                 var list = query.ToList();
                 if (list == null || list.Count <= 0) return res;
 
+                if (this.request.CircleMatchInfos != null && this.request.CircleMatchInfos.Count > 0)
+                {
+                    list.RemoveAll(r => this.request.CircleMatchInfos.Exists(c => c.CircleId == r.id && c.UpdateTime == GenericUtility.FormatDate2(r.update_time)));
+                }
+
                 res.CircleInfos = list.ConvertAll(q => new CircleInfo
                 {
                     CircleId = q.id,
@@ -87,13 +92,6 @@ namespace HWL.Service.Circle.Service
                     //LikeUserInfos = null,
                     //PostUserInfo = null,
                 });
-
-                if (this.request.CircleMatchInfos != null && this.request.CircleMatchInfos.Count > 0)
-                {
-                    int removeCount = res.CircleInfos.RemoveAll(r => this.request.CircleMatchInfos.Exists(c => c.CircleId == r.CircleId && c.UpdateTime == r.UpdateTime));
-                }
-
-                if (res.CircleInfos == null || res.CircleInfos.Count <= 0) return res;
 
                 GetCircleInfos.BindCircleInfos(db, this.request.ViewUserId, res.CircleInfos);
             }

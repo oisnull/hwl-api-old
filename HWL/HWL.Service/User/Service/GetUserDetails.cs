@@ -46,8 +46,8 @@ namespace HWL.Service.User.Service
                     CircleBackImage = user.circle_back_image,
 
                     NameRemark = "",
-                    Country = "",
-                    Province = "",
+                    //Country = "",
+                    //Province = "",
                 };
 
 
@@ -57,51 +57,51 @@ namespace HWL.Service.User.Service
                 {
                     res.UserDetailsInfo.IsFriend = true;
                     res.UserDetailsInfo.NameRemark = fmodel.friend_user_remark;
-                    res.UserDetailsInfo.FirstSpell = fmodel.friend_first_spell;
+                    //res.UserDetailsInfo.FirstSpell = fmodel.friend_first_spell;
                 }
                 else
                 {
                     res.UserDetailsInfo.IsFriend = false;
                 }
 
-                //获取位置
-                if (user.register_country > 0 && user.register_province > 0 && user.register_city > 0 && user.register_district > 0)
-                {
-                    //获取地址信息
-                    var pos = (from country in db.t_country
-                               join province in db.t_province on country.id equals province.country_id
-                               join city in db.t_city on province.id equals city.province_id
-                               join dist in db.t_district on city.id equals dist.city_id
-                               where country.id == user.register_country && province.id == user.register_province && city.id == user.register_city && dist.id == user.register_district
-                               select new
-                               {
-                                   CountryName = country.name,
-                                   ProvinceName = province.name,
-                                   CityName = city.name,
-                                   DistName = dist.name,
-                               }).FirstOrDefault();
-                    if (pos != null)
-                    {
-                        res.UserDetailsInfo.Country = pos.CountryName;
-                        res.UserDetailsInfo.Province = pos.ProvinceName;
-                    }
-                }
+                ////获取位置
+                //if (user.register_country > 0 && user.register_province > 0 && user.register_city > 0 && user.register_district > 0)
+                //{
+                //    //获取地址信息
+                //    var pos = (from country in db.t_country
+                //               join province in db.t_province on country.id equals province.country_id
+                //               join city in db.t_city on province.id equals city.province_id
+                //               join dist in db.t_district on city.id equals dist.city_id
+                //               where country.id == user.register_country && province.id == user.register_province && city.id == user.register_city && dist.id == user.register_district
+                //               select new
+                //               {
+                //                   CountryName = country.name,
+                //                   ProvinceName = province.name,
+                //                   CityName = city.name,
+                //                   DistName = dist.name,
+                //               }).FirstOrDefault();
+                //    if (pos != null)
+                //    {
+                //        res.UserDetailsInfo.Country = pos.CountryName;
+                //        res.UserDetailsInfo.Province = pos.ProvinceName;
+                //    }
+                //}
 
-                if (res.UserDetailsInfo.IsFriend)
-                {
-                    var info = CircleUtility.GetCircleNewInfo(db, this.request.GetUserId);
-                    if (info != null)
-                    {
-                        if (info.Item1)
-                        {
-                            res.UserDetailsInfo.CircleImages = info.Item2;
-                        }
-                        else
-                        {
-                            res.UserDetailsInfo.CircleTexts = info.Item2;
-                        }
-                    }
-                }
+                //if (res.UserDetailsInfo.IsFriend)
+                //{
+                //    var info = CircleUtility.GetCircleNewInfo(db, this.request.GetUserId);
+                //    if (info != null)
+                //    {
+                //        if (info.Item1)
+                //        {
+                //            res.UserDetailsInfo.CircleImages = info.Item2;
+                //        }
+                //        else
+                //        {
+                //            res.UserDetailsInfo.CircleTexts = info.Item2;
+                //        }
+                //    }
+                //}
             }
 
             return res;

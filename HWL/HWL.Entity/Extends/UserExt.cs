@@ -77,19 +77,19 @@ namespace HWL.Entity.Extends
         public UserSex Sex { get; set; }
         public string NameRemark { get; set; }
         public string HeadImage { get; set; }
-        public string Country { get; set; }
-        public string Province { get; set; }
+        //public string Country { get; set; }
+        //public string Province { get; set; }
         public string CircleBackImage { get; set; }
         public string LifeNotes { get; set; }
         /// <summary>
         /// 是否是好友
         /// </summary>
         public bool IsFriend { get; set; }
-        public string FirstSpell { get; set; }
+        //public string FirstSpell { get; set; }
         public string UpdateTime { get; set; }
 
-        public List<string> CircleImages { get; set; }
-        public List<string> CircleTexts { get; set; }
+        //public List<string> CircleImages { get; set; }
+        //public List<string> CircleTexts { get; set; }
     }
 
     /// <summary>

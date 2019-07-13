@@ -14,7 +14,6 @@ namespace HWL.Entity.Extends
     public class CircleInfo
     {
         public int CircleId { get; set; }
-        public int UserId { get; set; }
         public CircleContentType ContentType { get; set; }
         public string CircleContent { get; set; }
         public string PublishTime { get; set; }

@@ -82,7 +82,6 @@ namespace HWL.Service.Circle.Service
                 res.CircleInfos = list.ConvertAll(q => new CircleInfo
                 {
                     CircleId = q.id,
-                    UserId = q.user_id,
                     ContentType = q.content_type,
                     CircleContent = q.circle_content,
                     CommentCount = q.comment_count,

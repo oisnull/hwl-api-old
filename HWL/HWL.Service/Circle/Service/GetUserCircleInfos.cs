@@ -59,6 +59,10 @@ namespace HWL.Service.Circle.Service
                 {
                     query = query.Where(q => q.id < this.request.MinCircleId).Take(this.request.Count);
                 }
+                if (this.request.Count > 0)
+                {
+                    query = query.Take(this.request.Count);
+                }
 
                 var list = query.ToList();
                 if (list == null || list.Count <= 0) return res;
@@ -71,7 +75,6 @@ namespace HWL.Service.Circle.Service
                 res.CircleInfos = list.ConvertAll(q => new CircleInfo
                 {
                     CircleId = q.id,
-                    UserId = q.user_id,
                     ContentType = q.content_type,
                     CircleContent = q.circle_content,
                     CommentCount = q.comment_count,
@@ -83,6 +86,7 @@ namespace HWL.Service.Circle.Service
                     LinkUrl = q.link_url,
                     Lon = q.lon,
                     PosId = q.pos_id,
+                    PublishUserId = q.user_id,
                     PublishTime = GenericUtility.FormatDate(q.publish_time),
                     UpdateTime = GenericUtility.FormatDate2(q.update_time),
 

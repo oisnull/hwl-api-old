@@ -78,6 +78,17 @@ namespace HWL.Redis
             });
         }
 
+        public bool ExistsInGroup(string groupGuid, int userId)
+        {
+            bool succ = false;
+            base.DbNum = RedisConfigService.GROUP_USER_SET_DB;
+            base.Exec(db =>
+            {
+                succ = db.SetContains(groupGuid, userId);
+            });
+            return succ;
+        }
+
         public bool DeleteGroupUser(string groupGuid, int userId)
         {
             if (string.IsNullOrEmpty(groupGuid) || userId <= 0) return false;
@@ -251,20 +262,15 @@ namespace HWL.Redis
         /// <summary>
         /// 创建组位置数据,返回创建成功后的组标识
         /// </summary>
-        public string CreateGroupPos(double lon, double lat)
+        public string CreateNearGroupPos(double lon, double lat)
         {
-            bool succ = false;
             base.DbNum = RedisConfigService.GROUP_GEO_DB;
             string guid = Guid.NewGuid().ToString();
             base.Exec(db =>
             {
-                succ = db.GeoAdd(RedisConfigService.GROUP_GEO_KEY, lon, lat, guid);
+                db.GeoAdd(RedisConfigService.GROUP_GEO_KEY, lon, lat, guid);
             });
-            if (succ)
-            {
-                return guid;
-            }
-            return null;
+            return guid;
         }
 
         //#region 组的创建人操作

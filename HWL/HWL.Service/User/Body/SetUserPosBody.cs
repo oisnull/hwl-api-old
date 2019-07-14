@@ -14,8 +14,8 @@ namespace HWL.Service.User.Body
         public string District { get; set; }
         public string Street { get; set; }
         public string Details { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
 
     public class SetUserPosResponseBody
@@ -26,6 +26,6 @@ namespace HWL.Service.User.Body
 
         public string UserGroupGuid { get; set; }
 
-        public List<GroupUserInfo> GroupUserInfos { get; set; }
+        public List<UserSecretInfo> GroupUserInfos { get; set; }
     }
 }

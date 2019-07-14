@@ -12,8 +12,8 @@ namespace HWL.Service.User.Service
 {
     public class SetUserPos : GMSF.ServiceHandler<SetUserPosRequestBody, SetUserPosResponseBody>
     {
-        double lat = 0;
-        double lon = 0;
+        //double lat = 0;
+        //double lon = 0;
 
         public SetUserPos(SetUserPosRequestBody request) : base(request)
         {
@@ -27,17 +27,10 @@ namespace HWL.Service.User.Service
             {
                 throw new ArgumentNullException("UserId");
             }
-            if (string.IsNullOrEmpty(this.request.Latitude) || string.IsNullOrEmpty(this.request.Longitude))
-            {
-                throw new Exception("经度和纬度不能为空");
-            }
 
-            double.TryParse(this.request.Latitude, out lat);
-            double.TryParse(this.request.Longitude, out lon);
-
-            if (lat <= 0 || lon <= 0)
+            if (this.request.Latitude <= 0 && this.request.Latitude <= 0)
             {
-                throw new Exception("经度和纬度的值错误");
+                throw new Exception("经度或者纬度的值是错误的");
             }
         }
 
@@ -128,9 +121,9 @@ namespace HWL.Service.User.Service
                         id = 0,
                         create_date = DateTime.Now,
                         update_date = DateTime.Now,
-                        geohash_key = Geohash.Encode(lat, lon),
-                        lat = lat,
-                        lon = lon,
+                        geohash_key = Geohash.Encode(this.request.Latitude, this.request.Longitude),
+                        lat = this.request.Latitude,
+                        lon = this.request.Longitude,
                         pos_details = this.request.Details,
                         user_id = this.request.UserId,
                         city_id = city.id,
@@ -159,34 +152,42 @@ namespace HWL.Service.User.Service
                 if (string.IsNullOrEmpty(res.UserGroupGuid))
                 {
                     //如果没有组数据，创建一个组
-                    res.UserGroupGuid = groupAction.CreateGroupPos(upos.lon, upos.lat);
+                    res.UserGroupGuid = groupAction.CreateNearGroupPos(upos.lon, upos.lat);
+                    //将用户加入到组中
+                    groupAction.SaveGroupUser(res.UserGroupGuid, upos.user_id);
                 }
                 else
                 {
-                    if (this.request.LastGroupGuid == res.UserGroupGuid)
+                    if (groupAction.ExistsInGroup(res.UserGroupGuid, upos.user_id))
                     {
+                        //如果用户当前所在位置与上次所在的位置不一样，则需要将用户从上次的群组里面移出来
+                        if (!string.IsNullOrEmpty(this.request.LastGroupGuid) && this.request.LastGroupGuid != res.UserGroupGuid)
+                            groupAction.DeleteGroupUser(this.request.LastGroupGuid, upos.user_id);
+
                         return res;
+                    }
+                    else
+                    {
+                        //将用户加入到组中
+                        groupAction.SaveGroupUser(res.UserGroupGuid, upos.user_id);
                     }
                 }
 
-                //将用户加入到组中
-                groupAction.SaveGroupUser(res.UserGroupGuid, upos.user_id);
+                //如果用户当前所在位置与上次所在的位置不一样，则需要将用户从上次的群组里面移出来
+                if (!string.IsNullOrEmpty(this.request.LastGroupGuid) && this.request.LastGroupGuid != res.UserGroupGuid)
+                    groupAction.DeleteGroupUser(this.request.LastGroupGuid, upos.user_id);
 
                 //返回组用户列表
                 List<int> userIds = groupAction.GetGroupUserIds(res.UserGroupGuid);
                 if (userIds == null || userIds.Count <= 0) return res;
 
                 res.GroupUserInfos = db.t_user.Where(u => userIds.Contains(u.id))
-                    .Select(u => new GroupUserInfo()
+                    .Select(u => new UserSecretInfo()
                     {
-                        GroupGuid = res.UserGroupGuid,
                         UserId = u.id,
                         UserName = u.name,
-                        UserHeadImage = u.head_image,
+                        UserImage = u.head_image,
                     }).ToList();
-
-                ////发送mq welcome组消息给用户
-                //RabbitMQ.android_message.AndroidChatMessage.SendNearGroupWelcome(this.request.UserId, res.UserGroupGuid, res.GroupUserInfos.Select(g => g.UserHeadImage).Take(9).ToList(), "欢迎加入HWL附近聊天组");
             }
 
             return res;

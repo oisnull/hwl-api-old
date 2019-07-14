@@ -102,4 +102,11 @@ namespace HWL.Entity.Extends
         public string Symbol { get; set; }
         public string HeadImage { get; set; }
     }
+
+    public class UserSecretInfo
+    {
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string UserImage { get; set; }
+    }
 }

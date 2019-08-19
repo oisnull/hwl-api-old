@@ -12,7 +12,7 @@ andorid:
 2018-11-21
 api:
 1,use c# netty component
-2,insert system welcome message to im when user login succeed
+2,insert system welcome message to im when user login succeeded
 
 android:
 1,group module V
@@ -35,6 +35,19 @@ android:
 1,recycler view partial update V
 
 2019-07-08
-1,user activity UI
+1,user activity UI V
 2,v20 GPS location process issue
 3,image disk cache
+4,online update app version
+5,app share
+6,emotion extend browse
+7,near/circle comment action more
+8,send chat location message
+9,glide cache
+
+2019-08-16
+1,im client(c# dotnetty)
+//NUGET Reset command:
+Update-Package -ProjectName 'HWL.IMClient'  -Reinstall
+//nuget download:
+https://www.nuget.org/downloads

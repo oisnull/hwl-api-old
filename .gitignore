@@ -48,3 +48,11 @@
 /HWL/HWL.Unit/obj/Release
 /HWL/HWL.Resx/obj/Release
 /HWL/HWL.Resx/upload
+/HWL/HWL.IMClient/obj/Debug
+/HWL/HWL.IMClientTest/obj/Debug
+/HWL/HWL.IMClient/bin/Debug
+/HWL/HWL.IMClientTest/bin/Debug
+/HWL/packages
+/HWL/HWL.IMCore/obj/Debug
+/HWL/HWL.IMCore/bin/Debug
+/HWL/HWL.IMCore/bin

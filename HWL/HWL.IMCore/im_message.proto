@@ -1,0 +1,330 @@
+syntax = "proto3";
+//protoc --java_out=src/main/java src/main/java/com/hwl/imcore/protocol/im_message.proto
+//protoc --csharp_out=Protocol im_message.proto
+option csharp_namespace = "HWL.IMCore.Protocol";
+option java_multiple_files = true;
+option java_package = "com.hwl.imcore.improto";
+
+enum ImMessageType {
+    Base = 0;
+    UserValidate = 1;
+    ChatUser = 2;
+    ChatGroup = 3;
+    HeartBeat = 4;
+    AddFriend = 5;
+    TestConnection = 6;
+    ClientAckMessage = 7;
+    ChatSetting = 8;
+    GroupOperate = 9;
+    NearCircleOperate = 10;
+    CircleOperate = 11;
+	SystemMessage = 12;
+}
+
+enum ImMessageResponseCode {
+    Other = 0;
+    Success = 100;
+    Failed = 200;
+    SessionidInvalid = 201;
+}
+
+enum ImMessageSourcePosition {
+    None = 0;
+    RealTime = 1;
+    Offline = 2;
+    Retry = 3;
+}
+
+//context body
+message ImMessageContext {
+    ImMessageType type = 1;
+    oneof body {
+        ImMessageRequest request = 2;
+        ImMessageResponse response = 3;
+    }
+}
+
+//request package
+message ImMessageRequest {
+    ImMessageRequestHead requestHead = 1;
+    oneof requestBody {
+        ImUserValidateRequest userValidateRequest = 2;
+        ImChatUserMessageRequest chatUserMessageRequest = 3;
+        ImChatGroupMessageRequest chatGroupMessageRequest = 4;
+        ImHeartBeatMessageRequest heartBeatMessageRequest = 5;
+        ImAddFriendMessageRequest addFriendMessageRequest = 6;
+        ImTestConnectionMessageRequest testConnectionMessageRequest = 7;
+        ImAckMessageRequest ackMessageRequest = 8;
+        ImChatSettingMessageRequest chatSettingMessageRequest = 9;
+        ImGroupOperateMessageRequest groupOperateMessageRequest = 10;
+        ImNearCircleOperateMessageRequest nearCircleOperateMessageRequest = 11;
+        ImCircleOperateMessageRequest circleOperateMessageRequest = 12;
+		ImSystemMessageRequest systemMessageRequest = 13;
+    }
+}
+
+message ImMessageRequestHead {
+    uint64 timestamp = 1;
+    string client = 2;
+    string sessionid = 3;
+    string language = 4;
+    string version = 5;
+}
+
+//response package
+message ImMessageResponse {
+    ImMessageResponseHead responseHead = 1;
+    oneof responseBody {
+        ImUserValidateResponse userValidateResponse = 2;
+        ImChatUserMessageResponse chatUserMessageResponse = 3;
+        ImChatGroupMessageResponse chatGroupMessageResponse = 4;
+        ImAddFriendMessageResponse addFriendMessageResponse = 5;
+        ImTestConnectionMessageResponse testConnectionMessageResponse = 6;
+        ImChatSettingMessageResponse chatSettingMessageResponse = 7;
+        ImGroupOperateMessageResponse groupOperateMessageResponse = 8;
+        ImNearCircleOperateMessageResponse nearCircleOperateMessageResponse = 9;
+        ImCircleOperateMessageResponse circleOperateMessageResponse = 10;
+		ImSystemMessageResponse systemMessageResponse = 11;
+    }
+}
+
+message ImMessageResponseHead {
+    uint32 code = 1;
+    string message = 2;
+    bool isack = 3;
+    string messageid = 4;
+    ImMessageSourcePosition source = 5;
+}
+
+//user validate message
+message ImUserValidateRequest {
+    uint64 userId = 1;
+    string token = 2;
+    string messageid = 3;
+}
+
+message ImUserValidateResponse {
+    bool isSuccess = 1;
+    string message = 2;
+    bool isOnline = 3;
+    string sessionid = 4;
+}
+
+//chat user message
+message ImChatUserMessageRequest {
+    ImChatUserMessageContent chatUserMessageContent = 1;
+}
+
+message ImChatUserMessageResponse {
+    ImChatUserMessageContent chatUserMessageContent = 1;
+    uint64 buildTime = 2;
+}
+
+message ImChatUserMessageContent {
+    uint64 fromUserId = 1;
+    string fromUserName = 2;
+    string fromUserImage = 3;
+    uint64 toUserId = 4;
+    uint32 contentType = 5;
+    string content = 6;
+    string originalUrl = 7;
+    string previewUrl = 8;
+    uint32 imageWidth = 9;
+    uint32 imageHeight = 10;
+    uint32 size = 11;
+    uint32 playTime = 12;
+    bool isFriend = 13;
+}
+
+//chat group message
+message ImChatGroupMessageRequest {
+    ImChatGroupMessageContent chatGroupMessageContent = 1;
+}
+
+message ImChatGroupMessageResponse {
+    ImChatGroupMessageContent chatGroupMessageContent = 1;
+    uint64 buildTime = 2;
+}
+
+message ImChatGroupMessageContent {
+    uint64 fromUserId = 1;
+    string fromUserName = 2;
+    string fromUserImage = 3;
+    string toGroupGuid = 4;
+    uint32 contentType = 5;
+    string content = 6;
+    string originalUrl = 7;
+    string previewUrl = 8;
+    uint32 imageWidth = 9;
+    uint32 imageHeight = 10;
+    uint32 size = 11;
+    uint32 playTime = 12;
+    bool isFriend = 13;
+}
+
+//heart beat check
+message ImHeartBeatMessageRequest {
+    uint64 fromUserId = 1;
+    uint64 currentTime = 2;
+}
+
+//add friend message
+message ImAddFriendMessageRequest {
+    ImAddFriendMessageContent addFriendMessageContent = 1;
+}
+
+message ImAddFriendMessageResponse {
+    ImAddFriendMessageContent addFriendMessageContent = 1;
+    uint64 buildTime = 2;
+}
+
+message ImAddFriendMessageContent {
+    uint64 fromUserId = 1;
+    string fromUserName = 2;
+    string fromUserHeadImage = 3;
+    uint64 toUserId = 4;
+    string content = 6;
+}
+
+//test message
+message ImTestConnectionMessageRequest {
+    uint64 fromUserId = 1;
+    string content = 2;
+}
+
+message ImTestConnectionMessageResponse {
+    string content = 1;
+    uint64 sendTime = 2;
+}
+
+// ack message
+message ImAckMessageRequest {
+    uint64 fromUserId = 1;
+    string messageid = 2;
+}
+
+//chat setting message
+message ImChatSettingMessageRequest {
+    ImChatSettingMessageContent chatSettingMessageContent = 1;
+}
+
+message ImChatSettingMessageResponse {
+    ImChatSettingMessageContent chatSettingMessageContent = 1;
+    uint64 buildTime = 2;
+}
+
+message ImChatSettingMessageContent {
+    ImChatSettingType settingType = 1;
+    ImUserContent settingUser = 2;
+    string groupGuid = 3;
+    string groupNote = 4;
+    string groupName = 5;
+}
+
+enum ImChatSettingType {
+    SettingNone = 0;
+    GroupNote = 1;
+    GroupName = 2;
+    UserRemark = 3;
+}
+
+//group operate message
+message ImGroupOperateMessageRequest {
+    ImGroupOperateMessageContent groupOperateMessageContent = 1;
+}
+message ImGroupOperateMessageResponse {
+    ImGroupOperateMessageContent groupOperateMessageContent = 1;
+    uint64 buildTime = 2;
+}
+
+message ImGroupOperateMessageContent {
+    ImGroupOperateType operateType = 1;
+    ImUserContent operateUser = 2;
+    string groupGuid = 3;
+    string groupName = 4;
+    repeated ImUserContent groupUsers = 5;
+}
+
+message ImUserContent {
+    uint64 userId = 1;
+    string userName = 2;
+    string userImage = 3;
+    string groupUserRemark = 4;
+}
+
+enum ImGroupOperateType {
+    GroupOperateNone = 0;
+    CreateGroup = 1;
+    ExitGroup = 2;
+    DismissGroup = 3;
+    AddUser = 4;
+    RemoveUser = 5;
+}
+
+//near circle operate message
+enum ImCircleOperateType {
+    NearCircleOperateNone = 0;
+    AddLike = 1;
+    CancelLike = 2;
+    PostComment = 3;
+    CancelComment = 4;
+}
+
+message ImNearCircleOperateMessageRequest {
+    ImNearCircleOperateMessageContent nearCircleOperateMessageContent = 1;
+}
+message ImNearCircleOperateMessageResponse {
+    ImNearCircleOperateMessageContent nearCircleOperateMessageContent = 1;
+    uint64 buildTime = 2;
+}
+
+message ImNearCircleOperateMessageContent {
+    ImCircleOperateType operateType = 1;
+    ImUserContent postUser = 2;
+    ImUserContent originUser = 3;
+    ImUserContent replyUser = 4;
+    uint64 nearCircleId = 5;
+    uint64 commentId = 6;
+    string commentCont = 7;
+}
+
+//circle operate message
+message ImCircleOperateMessageRequest {
+    ImCircleOperateMessageContent circleOperateMessageContent = 1;
+}
+message ImCircleOperateMessageResponse {
+    ImCircleOperateMessageContent circleOperateMessageContent = 1;
+    uint64 buildTime = 2;
+}
+
+message ImCircleOperateMessageContent {
+    ImCircleOperateType operateType = 1;
+    ImUserContent postUser = 2;
+    ImUserContent originUser = 3;
+    ImUserContent replyUser = 4;
+    uint64 circleId = 5;
+    uint64 commentId = 6;
+    string commentCont = 7;
+}
+
+//system message
+enum ImSystemMessageType {
+    AddNearGroup = 0;
+}
+
+message ImSystemMessageRequest {
+	uint64 toUserId = 1;
+    string toGroupGuid = 2;
+    ImSystemMessageContent systemMessageContent = 3;
+}
+
+message ImSystemMessageResponse {
+    ImSystemMessageContent systemMessageContent = 1;
+    uint64 buildTime = 2;
+}
+
+message ImSystemMessageContent {
+	ImSystemMessageType systemMessageType = 1;
+	string toUserDesc = 2;
+    string addGroupDesc = 3;
+}

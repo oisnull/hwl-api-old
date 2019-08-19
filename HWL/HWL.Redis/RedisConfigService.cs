@@ -90,8 +90,6 @@ namespace HWL.Redis
         /// </summary>
         public const int NEAR_CIRCLE_GEO_DB = 20;
 
-
-
         /*
          * 功能描述：
          * 1,存储组位置,格式：db=5 geo group:pos lat lon guid
@@ -115,5 +113,11 @@ namespace HWL.Redis
         /// 个人组所在的数据库
         /// </summary>
         //public const int GROUP_DB = 12;
+
+        /// <summary>
+        /// 用户离线消息数据库
+        /// </summary>
+        public const int OFFLINE_MESSAGE_DB = 9;
+
     }
 }

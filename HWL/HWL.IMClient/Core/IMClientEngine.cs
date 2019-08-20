@@ -75,7 +75,7 @@ namespace HWL.IMClient.Core
             try
             {
                 Task<IChannel> task = bootstrap.ConnectAsync(IPAddress.Parse(host), port);
-                task.Wait();
+                //task.Wait();
 
                 this.currentChannel = task.Result;
                 status = STATUS_CONNECT;

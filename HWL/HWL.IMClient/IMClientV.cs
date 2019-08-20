@@ -45,14 +45,11 @@ namespace HWL.IMClient
             }
         }
 
-        public void SendSystemMessageAsync(ulong toUserId, string toUserName, string toGroupGuid)
+        public void SendSystemMessage(ulong toUserId, string toUserName, string toGroupGuid)
         {
-            Task.Run(() =>
-            {
-                checkConnect();
+            checkConnect();
 
-                im.send(new SystemMessageSend(toUserId, toUserName, toGroupGuid));
-            });
+            im.send(new SystemMessageSend(toUserId, toUserName, toGroupGuid));
         }
     }
 }

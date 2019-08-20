@@ -160,7 +160,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Doc\" />
   </ItemGroup>
@@ -168,6 +167,10 @@
     <ProjectReference Include="..\HWL.Entity\HWL.Entity.csproj">
       <Project>{872ceee4-49c1-45ac-905f-8efbd66f1b5a}</Project>
       <Name>HWL.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HWL.IMClient\HWL.IMClient.csproj">
+      <Project>{43CFAE73-159B-4683-87B7-F77B8E69F837}</Project>
+      <Name>HWL.IMClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\HWL.Service\HWL.Service.csproj">
       <Project>{7e2e78be-a30f-463d-a00d-b6bd53441479}</Project>

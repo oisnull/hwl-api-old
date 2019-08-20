@@ -100,5 +100,21 @@ namespace HWL.Service
         }
 
         public const int GROUP_USER_IMAGE_COUNT = 9;
+
+        public static string IMHost
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["IMHost"];
+            }
+        }
+
+        public static int IMPort
+        {
+            get
+            {
+                return Convert.ToInt32(ConfigurationManager.AppSettings["IMPort"]);
+            }
+        }
     }
 }

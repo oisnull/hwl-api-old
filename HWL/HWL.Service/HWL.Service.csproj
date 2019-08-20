@@ -100,6 +100,8 @@
     <Compile Include="Group\Service\GetGroups.cs" />
     <Compile Include="Group\Service\SetGroupName.cs" />
     <Compile Include="Group\Service\SetGroupNote.cs" />
+    <Compile Include="IMClientConnectListener.cs" />
+    <Compile Include="InitService.cs" />
     <Compile Include="NearService.cs" />
     <Compile Include="GenericService.cs" />
     <Compile Include="Generic\AreaUtility.cs" />
@@ -171,6 +173,10 @@
     <ProjectReference Include="..\HWL.Entity\HWL.Entity.csproj">
       <Project>{872ceee4-49c1-45ac-905f-8efbd66f1b5a}</Project>
       <Name>HWL.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HWL.IMClient\HWL.IMClient.csproj">
+      <Project>{43CFAE73-159B-4683-87B7-F77B8E69F837}</Project>
+      <Name>HWL.IMClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\HWL.Redis\HWL.Redis.csproj">
       <Project>{114f979c-c371-4b28-81ca-05c4d68bb466}</Project>

@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>web api 测试</title>
+    <title>web api test</title>
     <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/jquery.form.js"></script>
     <script src="js/jsonf.js"></script>
@@ -29,7 +29,7 @@
                     //isAction = false;
                 }
                 console.log(JSON.stringify(jsonObj));
-                $("#div_result").html("<font color='blue'>数据发送中，请稍后...</font>");
+                $("#div_result").html("<font color='blue'>Sending...</font>");
                 $(this).ajaxSubmit({
                     type: "post",
                     dataType: "json",
@@ -46,7 +46,7 @@
                         isAction = false;
                     }
                 });
-                return false; //不刷新页面
+                return false;
             });
 
             InitTxt();
@@ -87,11 +87,11 @@
     <form id="form1" action="#" method="post">
         <table style="width:100%;">
             <tr>
-                <td style="width:120px;">请求地址：</td>
+                <td style="width:150px;">Request Endpoint：</td>
                 <td><input type="text" id="txt_url" value="/api/UserLogin" style="width:300px;" /></td>
             </tr>
             <tr>
-                <td>协议头：</td>
+                <td>Request Head：</td>
                 <td>
                     <textarea id="txt_head" style="width:80%;height:180px;">
 {
@@ -108,7 +108,7 @@
                 </td>
             </tr>
             <tr>
-                <td>请求参数：</td>
+                <td>Request Body：</td>
                 <td>
                     <textarea id="txt_body" style="width:80%;height:200px;"></textarea>
                 </td>
@@ -116,15 +116,15 @@
             <tr>
                 <td></td>
                 <td>
-                    <input type="submit" value="发送" />
+                    <input type="submit" value="Send" />
 
-                    <input type="button" value="格式化" onclick="Fjson()" />
+                    <input type="button" value="Format Body" onclick="Fjson()" />
 
                     <div id="div_result"></div>
                 </td>
             </tr>
             <tr>
-                <td>返回结果：</td>
+                <td>Response Result：</td>
                 <td>
                     <textarea id="txt_result" name="request" style="width:80%;height:300px;margin-top:5px;"></textarea>
                 </td>

@@ -6,20 +6,20 @@ using System.Text;
 
 namespace HWL.IMClient.Core
 {
-    public class ClientMessageChannelHandler : ChannelHandlerAdapter
+    public class ClientMessageChannelHandler : SimpleChannelInboundHandler<ImMessageContext>
     {
         private IClientChannelListener _channelListener;
-        private Action disConnected;
+        private Action _disConnected;
 
         public ClientMessageChannelHandler(IClientChannelListener channelListener, Action disConnected)
         {
             this._channelListener = channelListener;
+            this._disConnected = disConnected;
         }
 
-        public override void ChannelRead(IChannelHandlerContext ctx, object msg)
+        protected override void ChannelRead0(IChannelHandlerContext ctx, ImMessageContext msg)
         {
-            //Console.WriteLine("Client listen : {0}", msg.ToString());
-            //this._messageOperator.listen(msg as ImMessageContext);
+            Console.WriteLine("Client listen : {0}", msg.ToString());
         }
 
         public override void ChannelReadComplete(IChannelHandlerContext context) => context.Flush();
@@ -33,14 +33,14 @@ namespace HWL.IMClient.Core
         public override void ChannelInactive(IChannelHandlerContext context)
         {
             base.ChannelInactive(context);
-            disConnected();
+            _disConnected();
             _channelListener.onDisconnected(context.Channel.LocalAddress.ToString());
         }
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
         {
             base.ExceptionCaught(context, exception);
-            disConnected();
+            _disConnected();
             _channelListener.onError(context.Channel.LocalAddress.ToString(), exception.Message);
         }
     }

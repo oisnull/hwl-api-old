@@ -15,12 +15,12 @@ namespace HWL.IMClient
         private static int imPort;
         private static IClientConnectListener clientConnectListener;
 
-        public static void setIMAddress(string host, int port)
+        public static void SetIMAddress(string host, int port)
         {
             imHost = host;
             imPort = port;
         }
-        public static void setConnectListener(IClientConnectListener connectListener)
+        public static void SetConnectListener(IClientConnectListener connectListener)
         {
             clientConnectListener = connectListener;
         }
@@ -45,11 +45,14 @@ namespace HWL.IMClient
             }
         }
 
-        public void sendSystemMessage(ulong toUserId, string toUserName, string toGroupGuid)
+        public void SendSystemMessageAsync(ulong toUserId, string toUserName, string toGroupGuid)
         {
-            checkConnect();
+            Task.Run(() =>
+            {
+                checkConnect();
 
-            im.send(new SystemMessageSend(toUserId, toUserName, toGroupGuid));
+                im.send(new SystemMessageSend(toUserId, toUserName, toGroupGuid));
+            });
         }
     }
 }

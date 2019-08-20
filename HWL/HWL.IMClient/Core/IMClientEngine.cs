@@ -1,4 +1,5 @@
-﻿using DotNetty.Transport.Bootstrapping;
+﻿using DotNetty.Codecs.Protobuf;
+using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using HWL.IMCore.Protocol;
@@ -57,10 +58,10 @@ namespace HWL.IMClient.Core
             bootstrap.Handler(new ActionChannelInitializer<ISocketChannel>(channel =>
             {
                 IChannelPipeline pipeline = channel.Pipeline;
-                //pipeline.AddLast(new ProtobufVarint32FrameDecoder());
-                //pipeline.AddLast(new ProtobufDecoder(ImMessageContext.Parser));
-                //pipeline.AddLast(new ProtobufVarint32LengthFieldPrepender());
-                //pipeline.AddLast(new ProtobufEncoder());
+                pipeline.AddLast(new ProtobufVarint32FrameDecoder());
+                pipeline.AddLast(new ProtobufDecoder(ImMessageContext.Parser));
+                pipeline.AddLast(new ProtobufVarint32LengthFieldPrepender());
+                pipeline.AddLast(new ProtobufEncoder());
 
                 pipeline.AddLast(new ClientMessageChannelHandler(_connectListener, resetStatus));
             }));

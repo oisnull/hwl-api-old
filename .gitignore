@@ -53,6 +53,9 @@
 /HWL/HWL.IMClient/bin/Debug
 /HWL/HWL.IMClientTest/bin/Debug
 /HWL/packages
-/HWL/HWL.IMCore/obj/Debug
-/HWL/HWL.IMCore/bin/Debug
+/HWL/HWL.IMCore/obj
 /HWL/HWL.IMCore/bin
+/HWL/HWL.PushStandard/bin
+/HWL/HWL.PushStandard/obj
+/HWL/HWL.PushTest/obj
+/HWL/HWL.PushTest/bin

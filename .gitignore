@@ -5,8 +5,8 @@
 /HWL/.vs
 /HWL/HWL.API/bin
 /HWL/HWL.API/obj
-/HWL/HWL.Entity/bin/Debug
-/HWL/HWL.Entity/obj/Debug
+/HWL/HWL.Entity/bin
+/HWL/HWL.Entity/obj
 /HWL/HWL.Test/bin
 /HWL/HWL.Test/obj/Debug
 /HWL/HWL.Tools/bin
@@ -42,3 +42,5 @@
 /HWL/HWL.PushTest/bin
 /HWL/HWL.PushTest/obj
 /HWL/packages
+/HWL/HWL.API/log
+/HWL/HWL.API/Properties/PublishProfiles
